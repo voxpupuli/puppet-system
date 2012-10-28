@@ -1,0 +1,34 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+open(FACTER, "facter operatingsystem |") or die "$!\n";
+my $operatingsystem = <FACTER>;
+chomp($operatingsystem);
+close(FACTER);
+
+open(FACTER, "facter operatingsystemrelease |") or die "$!\n";
+my $operatingsystemrelease = <FACTER>;
+chomp($operatingsystemrelease);
+close(FACTER);
+
+my $output_file = "${operatingsystem}-${operatingsystemrelease}.yaml";
+
+my %packages;
+open(RPM,"rpm -qa --queryformat '%{NAME} %{VERSION} %{RELEASE}\n' |") or die "$!\n";
+while(<RPM>) {
+  chomp;
+  my ($name, $version, $release) = split(/\s+/, $_, 3);
+  $packages{$name} = "${version}-${release}";
+}
+close(RPM);
+
+open(OUTPUT,">$output_file") or die "$!\n";
+print OUTPUT "packages:\n";
+foreach my $name (sort keys %packages) {
+  my $ensure = $packages{$name};
+  #my $ensure = 'installed';
+  printf OUTPUT "  %s:\n", $name;
+  printf OUTPUT "    ensure: '%s'\n", $ensure;
+}
+close(OUTPUT);
