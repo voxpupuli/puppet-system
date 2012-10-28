@@ -1,0 +1,38 @@
+groups:
+  'keith':
+    ensure: 'present'
+    gid:    '500'
+  'fred':
+    gid:    '503'
+
+users:
+  'keith':
+    ensure:    'present'
+    comment:   'Keith Burdis'
+    gid:       '500'
+    groups:    ['wheel']
+    home:      '/home/keith'
+    password:  '$6$...'
+    shell:     '/bin/bash'
+    uid:       '500'
+  'fred':
+    comment:   'Fred Bloggs'
+    uid:       '503'
+    gid:       '503'
+    home:      '/home/fred'
+    managehome: true
+
+yumrepos:
+  'puppetlabs-deps':
+    baseurl:  'http://yum.puppetlabs.com/fedora/f17/dependencies/$basearch'
+    descr:    'Puppet Labs Dependencies Fedora 17 - $basearch'
+    enabled:  '1'
+    gpgcheck: '1'
+    gpgkey:   'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
+  'puppetlabs-products':
+    baseurl:  'http://yum.puppetlabs.com/fedora/f17/products/$basearch'
+    descr:    'Puppet Labs Products Fedora 17 - $basearch'
+    enabled:  '1'
+    gpgcheck: '1'
+    gpgkey:   'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
+

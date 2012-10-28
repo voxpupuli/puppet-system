@@ -1,0 +1,6 @@
+name    'erwbgy-system'
+version '0.0.1'
+author 'erwbgy'
+license 'Apache License, Version 2.0'
+summary 'Manage users, groups, repositories and packages '
+project_page 'https://github.com/erwbgy/puppet-system'
