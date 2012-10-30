@@ -9,6 +9,7 @@ class system {
   }
 
   include system::yumrepos
+  include system::mounts
   include system::packages
   include system::groups
   include system::users
