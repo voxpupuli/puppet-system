@@ -1,6 +1,9 @@
 class system::groups {
-  $defaults = {
-    ensure => 'present',
+  $groups = hiera_hash('groups', undef)
+  if $groups {
+    $defaults = {
+      ensure => 'present',
+    }
+    create_resources(group, $groups, $defaults)
   }
-  create_resources(group, hiera_hash('groups'), $defaults)
 }

@@ -1,7 +1,10 @@
 class system::yumrepos {
-  $defaults = {
-    'enabled'  => '1',
-    'gpgcheck' => '1',
+  $yum_repos = hiera_hash('yumrepos', undef)
+  if $yum_repos {
+    $defaults = {
+      'enabled'  => '1',
+      'gpgcheck' => '1',
+    }
+    create_resources(yumrepo, hiera_hash('yumrepos'), $defaults)
   }
-  create_resources(yumrepo, hiera_hash('yumrepos'), $defaults)
 }
