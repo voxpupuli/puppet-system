@@ -47,5 +47,8 @@ class system (
     if $system['syslog'] {
       class { 'system::syslog':    syslog    => $system['syslog'] }
     }
+    if $system['limits'] {
+      class { 'system::limits':    limits    => $system['limits'] }
+    }
   }
 }
