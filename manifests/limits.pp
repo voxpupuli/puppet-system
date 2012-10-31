@@ -3,7 +3,7 @@ class system::limits (
 ) {
   if $limits {
     include limits
-    class { 'limits':
+    class { '::limits':
       config    => $limits,
       use_hiera => false,
     }
