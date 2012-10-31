@@ -1,6 +1,7 @@
-class system::yumrepos {
-  $yum_repos = hiera_hash('yumrepos', undef)
-  if $yum_repos {
+class system::yumrepos (
+  $yumrepos = undef
+) {
+  if $yumrepos {
     $defaults = {
       'enabled'  => '1',
       'gpgcheck' => '1',

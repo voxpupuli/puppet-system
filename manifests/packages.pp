@@ -1,5 +1,6 @@
-class system::packages {
-  $packages = hiera_hash('packages', undef)
+class system::packages (
+  $packages = undef
+) {
   if $packages {
     $defaults = {
       'ensure' => installed,

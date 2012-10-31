@@ -1,5 +1,6 @@
-class system::users {
-  $users = hiera_hash('users', undef)
+class system::users (
+  $users = undef
+) {
   if $users {
     $defaults = {
       ensure => 'present',

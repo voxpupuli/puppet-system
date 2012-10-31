@@ -1,5 +1,6 @@
-class system::mounts {
-  $mounts = hiera_hash('mounts', undef)
+class system::mounts (
+  $mounts = undef
+) {
   if $mounts {
     $defaults = {
       'atboot' => true,

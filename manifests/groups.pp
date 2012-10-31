@@ -1,5 +1,6 @@
-class system::groups {
-  $groups = hiera_hash('groups', undef)
+class system::groups (
+  $groups = undef
+) {
   if $groups {
     $defaults = {
       ensure => 'present',
