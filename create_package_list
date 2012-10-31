@@ -24,11 +24,12 @@ while(<RPM>) {
 close(RPM);
 
 open(OUTPUT,">$output_file") or die "$!\n";
-print OUTPUT "packages:\n";
+print OUTPUT "system:\n";
+print OUTPUT "  packages:\n";
 foreach my $name (sort keys %packages) {
   my $ensure = $packages{$name};
   #my $ensure = 'installed';
-  printf OUTPUT "  %s:\n", $name;
-  printf OUTPUT "    ensure: '%s'\n", $ensure;
+  printf OUTPUT "    %s:\n", $name;
+  printf OUTPUT "      ensure: '%s'\n", $ensure;
 }
 close(OUTPUT);
