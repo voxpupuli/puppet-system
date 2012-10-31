@@ -1,12 +1,13 @@
 # puppet-system
 
-Manage system resources (users, groups, mounts, yum repositories and packages)
-and configuration (syslog, limits, sshd) using hiera configuration.
+Manage system resources (users, groups, mounts, yum repositories, packages,
+hosts, mail aliases) and configuration (syslog, limits, sshd) using hiera
+configuration.
 
 ## Documentation
 
 For default types (users, groups, mounts, yumrepos, packages) see the
-documentation at http://docs.puppetlabs.com/references/latest/type.html qor the
+documentation at http://docs.puppetlabs.com/references/latest/type.html for the
 parameters that can be passed to each of the resources.
 
 For augeasproviders types (sysctl, syslog, sshd) see
@@ -40,6 +41,24 @@ Defaults:
 
 * ensure: present
 
+## hosts
+
+Manage entries in /etc/hosts
+
+Example configuration:
+
+    system:
+      hosts:
+        puppet:
+          ensure:       'present'
+          ip:           '10.5.11.19'
+          host_aliases: [ 'puppet.local' ]
+
+Defaults:
+* ensure: present
+
+See: http://docs.puppetlabs.com/references/latest/type.html#host
+
 ## limits
 
 Manages entries in /etc/security/limits.conf
@@ -59,7 +78,26 @@ Example configuration:
 
 No defaults.
 
+## mailaliases
+
+Manage entries in /etc/aliases
+
+Example configuration:
+
+    system:
+      mailaliases:
+        postmaster:
+          recipient: 'root'
+        webmaster:
+          recipient: 'fred@domain.com'
+
+No defaults.
+
+See: http://docs.puppetlabs.com/references/latest/type.html#mailalias
+
 ## mounts
+
+Manage entries in /etc/fstab
 
 Example configuration:
 
@@ -78,6 +116,8 @@ Defaults:
 * ensure: mounted
 
 ## packages
+
+Manage system packages
 
 Example configuration:
 
@@ -130,6 +170,8 @@ Example configuration:
         kernel.msgmax:
           value: '131072'
           comment: ' Controls the maximum size of a message, in bytes'
+
+No defaults.
 
 See:
 

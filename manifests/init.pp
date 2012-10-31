@@ -21,9 +21,19 @@ class system (
         stage     => first
       }
     }
+    if $system['hosts'] {
+      class { '::system::hosts':
+        yumrepos  => $system['hosts']
+      }
+    }
     if $system['yumrepos'] {
       class { '::system::yumrepos':
         yumrepos  => $system['yumrepos']
+      }
+    }
+    if $system['mailaliases'] {
+      class { '::system::mailaliases':
+        yumrepos  => $system['mailaliases']
       }
     }
     if $system['mounts'] {
