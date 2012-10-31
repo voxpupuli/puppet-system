@@ -1,13 +1,24 @@
 # puppet-system
 
-Manage users, groups, mounts, repositories and packages
+Manage system resources (users, groups, mounts, yum repositories and packages)
+and configuration (syslog, limits, sshd) using hiera configuration.
 
-A simple module to configure puppet's built-in user, group, mount, package and
-yumrepo resources using hiera configuration.  See the documentation at:
+## Documentation
+
+For default types (users, groups, mounts, yumrepos, packages) see the
+documentation at:
 
   http://docs.puppetlabs.com/references/latest/type.html
 
 for the parameters that can be passed to each of the resources.
+
+For augeasproviders types (syslog, sshd) see:
+
+  http://forge.puppetlabs.com/domcleal/augeasproviders
+
+For limits see:
+
+  http://forge.puppetlabs.com/erwbgy/limits
 
 ## Usage
 
@@ -17,7 +28,133 @@ Include the system module in your puppet configuration:
 
 and add required hiera configuration.
 
+## groups
+
+Managed local groups
+
+Example configuration:
+
+    system:
+      groups:
+        'keith':
+          ensure: 'present'
+          gid:    '500'
+        'fred':
+          gid:    '503'
+ 
+Defaults:
+
+* ensure: present
+
+## limits
+
+Manages entries in /etc/security/limits.conf
+
+Example configuration:
+
+     system:
+       limits:
+         '*':
+           item: 'nofile'
+           soft: '2048'
+           hard: '8192'
+         '@mygroup':
+           item: 'nproc'
+           soft: '20'
+           hard: '50'
+
+No defaults.
+
+## mounts
+
+Example configuration:
+
+    system:
+      mounts:
+        '/home':
+          ensure:  'mounted'
+          device:  '/dev/mapper/vg_x120-lv_home'
+          atboot:  'true'
+          fstype:  'ext4'
+          options: 'defaults'
+
+Defaults:
+
+* atboot: true
+* ensure: mounted
+
+## packages
+
+Example configuration:
+
+    system:
+      packages:
+        AdobeReader_enu:
+          ensure: '9.5.1-1'
+        ConsoleKit:
+          ensure: '0.4.5-2.fc17'
+
+Defaults:
+
+* ensure: installed
+
+## sshd
+
+Manage /etc/ssh/sshd.conf settings.
+
+Example configuration:
+
+    system:
+      sshd:
+        config:
+          AllowGroups: [ 'sshusers', 'admin' ]
+          PermitRootLogin:
+            value:     'without-password'
+            condition: 'Host example.net'
+        subsystem:
+          sftp:
+            command: '/usr/libexec/openssh/sftp-server'
+
+No defaults.
+
+See:
+
+* https://github.com/domcleal/augeasproviders/blob/master/lib/puppet/type/sshd_config.rb
+* https://github.com/domcleal/augeasproviders/blob/master/lib/puppet/type/sshd_config_subsystem.rb
+
+## sysctl
+
+Manage settings in /etc/sysctl.conf
+
+Example configuration:
+
+    system:
+      sysctl:
+        kernel.msgmnb:
+          value: '131072'
+          comment: 'Controls the default maxmimum size of a message queue'
+        kernel.msgmax:
+          value: '131072'
+          comment: ' Controls the maximum size of a message, in bytes'
+
+See:
+
+* https://github.com/domcleal/augeasproviders/blob/master/lib/puppet/type/sysctl.rb
+
+## syslog
+
+Manages settings in syslog.conf
+
+TODO - I use rsyslog
+
+Example configuration:
+
+    system:
+      syslog:
+
 ## users
+
+Manages local users
 
 Example configuration:
 
@@ -38,43 +175,14 @@ Example configuration:
           home:      '/home/fred'
           managehome: true
 
-## groups
+Defaults:
 
-Example configuration:
-
-    system:
-      groups:
-        'keith':
-          ensure: 'present'
-          gid:    '500'
-        'fred':
-          gid:    '503'
-    
-## mount
-
-Example configuration:
-
-    system:
-      mounts:
-        '/home':
-          ensure:  'mounted'
-          device:  '/dev/mapper/vg_x120-lv_home'
-          atboot:  'true'
-          fstype:  'ext4'
-          options: 'defaults'
-
-## package
-
-Example configuration:
-
-    system:
-      packages:
-        AdobeReader_enu:
-          ensure: '9.5.1-1'
-        ConsoleKit:
-          ensure: '0.4.5-2.fc17'
+* ensure: present
+* shell:  /bin/bash
 
 ## yumrepos
+
+Managed yum repository files under /etc/yum.repos.d
 
 Example configuration:
 
@@ -92,6 +200,11 @@ Example configuration:
           enabled:  '1'
           gpgcheck: '1'
           gpgkey:   'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
+
+Defaults:
+
+* enabled: 1
+* gpgcheck: 1
 
 ## Support
 
