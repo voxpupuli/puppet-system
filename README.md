@@ -6,19 +6,13 @@ and configuration (syslog, limits, sshd) using hiera configuration.
 ## Documentation
 
 For default types (users, groups, mounts, yumrepos, packages) see the
-documentation at:
+documentation at http://docs.puppetlabs.com/references/latest/type.html qor the
+parameters that can be passed to each of the resources.
 
-  http://docs.puppetlabs.com/references/latest/type.html
+For augeasproviders types (sysctl, syslog, sshd) see
+http://forge.puppetlabs.com/domcleal/augeasproviders.
 
-for the parameters that can be passed to each of the resources.
-
-For augeasproviders types (syslog, sshd) see:
-
-  http://forge.puppetlabs.com/domcleal/augeasproviders
-
-For limits see:
-
-  http://forge.puppetlabs.com/erwbgy/limits
+For limits see http://forge.puppetlabs.com/erwbgy/limits.
 
 ## Usage
 
@@ -205,6 +199,19 @@ Defaults:
 
 * enabled: 1
 * gpgcheck: 1
+
+## providers
+
+The augeasproviders module can be an alternate provider for the host, mailalias
+and mounttab types.
+
+Example configuration:
+
+    system:
+      providers:
+        host: 'augeas'
+        mailalias: 'augeas'
+        mounttab: 'augeas'
 
 ## Support
 
