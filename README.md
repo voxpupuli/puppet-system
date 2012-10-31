@@ -1,8 +1,18 @@
 # puppet-system
 
-Manage system resources (users, groups, mounts, yum repositories, packages,
-hosts, mail aliases) and configuration (syslog, limits, sshd) using hiera
-configuration.
+Manage system resources and using hiera configuration:
+
+* *groups*: manage entries in /etc/group
+* *hosts*: manage entries in /etc/hosts
+* *limits*: manage entries in /etc/security/limits.conf
+* *mailaliases* manage entries in /etc/aliases
+* *mounts*: manage entries in /etc/fstab
+* *ntp*: manage server entries in /etc/ntp.conf
+* *packages*: manage system packages
+* *sshd*: manage configuration in /etc/ssh/sshd_config including subsystems like sftp
+* *systcl*: manage entries in /etc/sysctl.conf
+* *users*: manage users in /etc/passwd and /etc/shadow
+* *yumrepos*: manage yum repository files under /etc/yum.repos.d
 
 ## Documentation
 
@@ -15,6 +25,8 @@ http://forge.puppetlabs.com/domcleal/augeasproviders.
 
 For limits see http://forge.puppetlabs.com/erwbgy/limits.
 
+For ntp see http://forge.puppetlabs.com/erwbgy/ntp.
+
 ## Usage
 
 Include the system module in your puppet configuration:
@@ -25,7 +37,7 @@ and add required hiera configuration.
 
 ## groups
 
-Managed local groups
+Managed entries in /etc/group
 
 Example configuration:
 
@@ -99,6 +111,9 @@ See: http://docs.puppetlabs.com/references/latest/type.html#mailalias
 
 Manage entries in /etc/fstab
 
+*NOTE: The mounts configuration will change when support is added for the
+mountpoint and mounttab types.*
+
 Example configuration:
 
     system:
@@ -114,6 +129,38 @@ Defaults:
 
 * atboot: true
 * ensure: mounted
+
+## ntp
+
+Manage server entries in /etc/ntp.conf
+
+Examples:
+
+1) Specify a list of time server hostnames:
+
+    system:
+      ntp:
+        servers:
+          - ntp1.domain.com
+          - ntp2.domain.com
+
+
+2) Use default pool.ntp.org time servers:
+
+    system:
+      ntp:
+
+3) Use pool.ntp.org time servers for a particular country:
+
+    system:
+      ntp:
+        country: 'de'
+
+4) Use pool.ntp.org time servers for a particular continent:
+
+    system:
+      ntp:
+        continent: 'africa'
 
 ## packages
 
@@ -134,7 +181,7 @@ Defaults:
 
 ## sshd
 
-Manage /etc/ssh/sshd.conf settings.
+Manage settings in /etc/ssh/sshd.conf
 
 Example configuration:
 
@@ -147,7 +194,7 @@ Example configuration:
             condition: 'Host example.net'
         subsystem:
           sftp:
-            command: '/usr/libexec/openssh/sftp-server'
+            command: '/usr/libexec/openssh/sftp-server -u 0002'
 
 No defaults.
 
@@ -177,20 +224,9 @@ See:
 
 * https://github.com/domcleal/augeasproviders/blob/master/lib/puppet/type/sysctl.rb
 
-## syslog
-
-Manages settings in syslog.conf
-
-TODO - I use rsyslog
-
-Example configuration:
-
-    system:
-      syslog:
-
 ## users
 
-Manages local users
+Manages users entries in /etc/passwd and /etc/shadow
 
 Example configuration:
 
@@ -254,6 +290,11 @@ Example configuration:
         host: 'augeas'
         mailalias: 'augeas'
         mounttab: 'augeas'
+
+## Notes
+
+* As with many default types you can often specific a 'target' parameter to
+  specify a different configuration filename to change.
 
 ## Support
 

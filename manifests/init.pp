@@ -41,6 +41,11 @@ class system (
         mounts    => $system['mounts'],
       }
     }
+    if $system['ntp'] {
+      class { '::system::ntp':
+        ntp       => $system['ntp'],
+      }
+    }
     if $system['packages'] {
       class { '::system::packages':
         packages  => $system['packages'],
@@ -57,11 +62,11 @@ class system (
         systcl    => $system['sysctl'],
       }
     }
-    if $system['syslog'] {
-      class { '::system::syslog':
-        syslog    => $system['syslog'],
-      }
-    }
+    #if $system['syslog'] {
+    #  class { '::system::syslog':
+    #    syslog    => $system['syslog'],
+    #  }
+    #}
     if $system['users'] {
       class { '::system::users':
         users     => $system['users'],
