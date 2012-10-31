@@ -15,10 +15,10 @@ class system (
     $system = $config
   }
   if $system {
-    if $system['providers'] {
-      class { '::system::providers':
-        providers => $system['providers'],
-        stage     => first
+    if $system['groups'] {
+      class { '::system::groups':
+        groups    => $system['groups'],
+        stage     => second,
       }
     }
     if $system['hosts'] {
@@ -26,9 +26,9 @@ class system (
         yumrepos  => $system['hosts']
       }
     }
-    if $system['yumrepos'] {
-      class { '::system::yumrepos':
-        yumrepos  => $system['yumrepos']
+    if $system['limits'] {
+      class { '::system::limits':
+        limits    => $system['limits'],
       }
     }
     if $system['mailaliases'] {
@@ -47,18 +47,6 @@ class system (
         stage     => second,
       }
     }
-    if $system['groups'] {
-      class { '::system::groups':
-        groups    => $system['groups'],
-        stage     => second,
-      }
-    }
-    if $system['users'] {
-      class { '::system::users':
-        users     => $system['users'],
-        stage     => second,
-      }
-    }
     if $system['sshd'] {
       class { '::system::sshd':
         sshd      => $system['sshd'],
@@ -74,9 +62,21 @@ class system (
         syslog    => $system['syslog'],
       }
     }
-    if $system['limits'] {
-      class { '::system::limits':
-        limits    => $system['limits'],
+    if $system['users'] {
+      class { '::system::users':
+        users     => $system['users'],
+        stage     => second,
+      }
+    }
+    if $system['yumrepos'] {
+      class { '::system::yumrepos':
+        yumrepos  => $system['yumrepos']
+      }
+    }
+    if $system['providers'] {
+      class { '::system::providers':
+        providers => $system['providers'],
+        stage     => first
       }
     }
   }
