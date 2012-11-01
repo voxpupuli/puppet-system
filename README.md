@@ -1,6 +1,6 @@
 # puppet-system
 
-Manage system resources and using hiera configuration:
+Create and manage system resources using hiera configuration:
 
 * *groups*: manage entries in /etc/group
 * *hosts*: manage entries in /etc/hosts
