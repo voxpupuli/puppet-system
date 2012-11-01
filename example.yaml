@@ -6,6 +6,65 @@ system:
     'fred':
       gid:    '503'
   
+  hosts:
+    puppet:
+      ensure:       'present'
+      ip:           '10.5.11.19'
+      host_aliases: [ 'puppet.local' ]
+
+  limits:
+    '*':
+      item: 'nofile'
+      soft: '2048'
+      hard: '8192'
+    '@mygroup':
+      item: 'nproc'
+      soft: '20'
+      hard: '50'
+
+  mailaliases:
+    postmaster:
+      recipient: 'root'
+    webmaster:
+      recipient: 'fred@domain.com'
+
+  mounts:
+    '/home':
+      ensure:  'mounted'
+      device:  '/dev/mapper/vg_x120-lv_home'
+      atboot:  'true'
+      fstype:  'ext4'
+      options: 'defaults'
+
+  ntp:
+    servers:
+      - ntp1.domain.com
+      - ntp2.domain.com
+
+  packages:
+    AdobeReader_enu:
+      ensure: '9.5.1-1'
+    ConsoleKit:
+      ensure: '0.4.5-2.fc17'
+
+  sshd:
+    config:
+      AllowGroups: [ 'sshusers', 'admin' ]
+      PermitRootLogin:
+        value:     'without-password'
+        condition: 'Host example.net'
+    subsystem:
+      sftp:
+        command: '/usr/libexec/openssh/sftp-server -u 0002'
+
+  sysctl:
+    kernel.msgmnb:
+      value: '131072'
+      comment: 'Controls the default maxmimum size of a message queue'
+    kernel.msgmax:
+      value: '131072'
+      comment: ' Controls the maximum size of a message, in bytes'
+
   users:
     'keith':
       ensure:    'present'
@@ -37,3 +96,9 @@ system:
       gpgcheck: '1'
       gpgkey:   'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
   
+
+  providers:
+    host: 'augeas'
+    mailalias: 'augeas'
+    mounttab: 'augeas'
+
