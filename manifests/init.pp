@@ -2,11 +2,15 @@ class system (
   $config    = {},
   $use_hiera = true
 ){
-  # Ensure providers are set before resources are created
-  stage { 'first':  before => Stage['second'] }
   # Ensure packages, users and groups are created
   # before other resources that may depend on them
-  stage { 'second': before => Stage['main'] }
+  if ! defined(Stage['second']) {
+    stage { 'second': before => Stage['main'] }
+  }
+  # Ensure providers are set before resources are created
+  if ! defined(Stage['first']) {
+    stage { 'first':  before => Stage['second'] }
+  }
 
   if $use_hiera {
     $system = hiera_hash('system', $config)
