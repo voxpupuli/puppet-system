@@ -45,11 +45,6 @@ class system (
         mounts    => $system['mounts'],
       }
     }
-    if $system['ntp'] {
-      class { '::system::ntp':
-        ntp       => $system['ntp'],
-      }
-    }
     if $system['packages'] {
       class { '::system::packages':
         packages  => $system['packages'],

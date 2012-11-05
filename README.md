@@ -7,7 +7,6 @@ Manage Linux system resources and services from hiera configuration.
 * *limits*: manage entries in /etc/security/limits.conf
 * *mailaliases* manage entries in /etc/aliases
 * *mounts*: manage entries in /etc/fstab
-* *ntp*: manage server entries in /etc/ntp.conf
 * *packages*: manage system packages
 * *sshd*: manage configuration in /etc/ssh/sshd_config including subsystems like sftp
 * *systcl*: manage entries in /etc/sysctl.conf
@@ -24,8 +23,6 @@ For augeasproviders types (sysctl, syslog, sshd) see
 http://forge.puppetlabs.com/domcleal/augeasproviders.
 
 For limits see http://forge.puppetlabs.com/erwbgy/limits.
-
-For ntp see http://forge.puppetlabs.com/erwbgy/ntp.
 
 ## Usage
 
@@ -129,38 +126,6 @@ Defaults:
 
 * atboot: true
 * ensure: mounted
-
-## ntp
-
-Manage server entries in /etc/ntp.conf
-
-Examples:
-
-1) Specify a list of time server hostnames:
-
-    system:
-      ntp:
-        servers:
-          - ntp1.domain.com
-          - ntp2.domain.com
-
-
-2) Use default pool.ntp.org time servers:
-
-    system:
-      ntp:
-
-3) Use pool.ntp.org time servers for a particular country:
-
-    system:
-      ntp:
-        country: 'de'
-
-4) Use pool.ntp.org time servers for a particular continent:
-
-    system:
-      ntp:
-        continent: 'africa'
 
 ## packages
 
