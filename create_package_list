@@ -19,7 +19,12 @@ open(RPM,"rpm -qa --queryformat '%{NAME} %{VERSION} %{RELEASE}\n' |") or die "$!
 while(<RPM>) {
   chomp;
   my ($name, $version, $release) = split(/\s+/, $_, 3);
-  $packages{$name} = "${version}-${release}";
+  if ($name eq 'gpg-pubkey') {
+    $packages{"${name}-${version}-${release}"} = 'installed';
+  }
+  else {
+    $packages{$name} = "${version}-${release}";
+  }
 }
 close(RPM);
 
