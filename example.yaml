@@ -58,6 +58,14 @@ system:
       sftp:
         command:   '/usr/libexec/openssh/sftp-server -u 0002'
 
+  services:
+    cups:
+      ensure: 'stopped'
+      enable: 'false'
+    sshd:
+      ensure: 'running'
+      enable: 'true'
+
   sysctl:
     kernel.msgmnb:
       value: '131072'

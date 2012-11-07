@@ -157,15 +157,15 @@ Example configuration:
           ensure: 'stopped'
           enable: 'false'
         sshd:
-          ensure: 'started'
+          ensure: 'running'
           enable: 'true'
         ntpd:
-          ensure: 'started'
+          ensure: 'running'
           enable: 'true'
 
 Defaults:
 
-* ensure: started
+* ensure: running
 
 Note:
 
