@@ -27,7 +27,7 @@ class system (
     }
     if $system['hosts'] {
       class { '::system::hosts':
-        yumrepos  => $system['hosts']
+        hosts     => $system['hosts']
       }
     }
     if $system['limits'] {
@@ -58,7 +58,7 @@ class system (
     }
     if $system['sysctl'] {
       class { '::system::sysctl':
-        systcl    => $system['sysctl'],
+        sysctl    => $system['sysctl'],
       }
     }
     #if $system['syslog'] {
