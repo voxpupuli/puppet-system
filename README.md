@@ -35,7 +35,7 @@ and add required hiera configuration.
 
 ## groups
 
-Managed entries in /etc/group
+Manage entries in /etc/group
 
 Example configuration:
 
@@ -71,7 +71,7 @@ See: http://docs.puppetlabs.com/references/latest/type.html#host
 
 ## limits
 
-Manages entries in /etc/security/limits.conf
+Manage entries in /etc/security/limits.conf
 
 Example configuration:
 
@@ -220,7 +220,7 @@ See:
 
 ## users
 
-Manages users entries in /etc/passwd and /etc/shadow
+Manage users entries in /etc/passwd and /etc/shadow
 
 Example configuration:
 
@@ -248,7 +248,7 @@ Defaults:
 
 ## yumrepos
 
-Managed yum repository files under /etc/yum.repos.d
+Manage yum repository files under /etc/yum.repos.d
 
 Example configuration:
 
