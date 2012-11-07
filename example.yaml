@@ -49,13 +49,14 @@ system:
 
   sshd:
     config:
-      AllowGroups: [ 'sshusers', 'admin' ]
+      AllowGroups:
+        value:     [ 'sshusers', 'admin' ]
       PermitRootLogin:
         value:     'without-password'
         condition: 'Host example.net'
     subsystem:
       sftp:
-        command: '/usr/libexec/openssh/sftp-server -u 0002'
+        command:   '/usr/libexec/openssh/sftp-server -u 0002'
 
   sysctl:
     kernel.msgmnb:
