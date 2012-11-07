@@ -37,7 +37,7 @@ class system (
     }
     if $system['mailaliases'] {
       class { '::system::mailaliases':
-        yumrepos  => $system['mailaliases']
+        mailaliases => $system['mailaliases']
       }
     }
     if $system['mounts'] {
@@ -59,6 +59,11 @@ class system (
     if $system['sshd'] {
       class { '::system::sshd':
         sshd      => $system['sshd'],
+      }
+    }
+    if $system['sysconfig'] {
+      class { '::system::sysconfig':
+        sysconfig => $system['sysconfig'],
       }
     }
     if $system['sysctl'] {
