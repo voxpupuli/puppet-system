@@ -8,6 +8,7 @@ Manage Linux system resources and services from hiera configuration.
 * *mailaliases* manage entries in /etc/aliases
 * *mounts*: manage entries in /etc/fstab
 * *packages*: manage system packages
+* *services*: manage system services
 * *sshd*: manage configuration in /etc/ssh/sshd_config including subsystems like sftp
 * *systcl*: manage entries in /etc/sysctl.conf
 * *users*: manage users in /etc/passwd and /etc/shadow
@@ -143,6 +144,33 @@ Example configuration:
 Defaults:
 
 * ensure: installed
+
+## services
+
+Manage system services
+
+Example configuration:
+
+    system:
+      services:
+        cups:
+          ensure: 'stopped'
+          enable: 'false'
+        sshd:
+          ensure: 'started'
+          enable: 'true'
+        ntpd:
+          ensure: 'started'
+          enable: 'true'
+
+Defaults:
+
+* ensure: started
+
+Note:
+
+* Do not specify any services that are managed by other Puppet modules (eg.
+  ntpd or network) otherwise you may get conflicts
 
 ## sshd
 

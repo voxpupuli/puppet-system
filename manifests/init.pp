@@ -51,6 +51,11 @@ class system (
         stage     => second,
       }
     }
+    if $system['services'] {
+      class { '::system::services':
+        services  => $system['services'],
+      }
+    }
     if $system['sshd'] {
       class { '::system::sshd':
         sshd      => $system['sshd'],
