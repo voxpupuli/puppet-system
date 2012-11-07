@@ -181,7 +181,8 @@ Example configuration:
     system:
       sshd:
         config:
-          AllowGroups: [ 'sshusers', 'admin' ]
+          AllowGroups:
+            value:     [ 'sshusers', 'admin' ]
           PermitRootLogin:
             value:     'without-password'
             condition: 'Host example.net'
