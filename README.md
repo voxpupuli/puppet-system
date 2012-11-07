@@ -10,7 +10,7 @@ Manage Linux system resources and services from hiera configuration.
 * *packages*: manage system packages
 * *services*: manage system services
 * *sshd*: manage configuration in /etc/ssh/sshd_config including subsystems like sftp
-* *systcl*: manage entries in /etc/sysctl.conf
+* *sysctl*: manage entries in /etc/sysctl.conf
 * *users*: manage users in /etc/passwd and /etc/shadow
 * *yumrepos*: manage yum repository files under /etc/yum.repos.d
 
@@ -20,7 +20,7 @@ For default types (users, groups, mounts, yumrepos, packages) see the
 documentation at http://docs.puppetlabs.com/references/latest/type.html for the
 parameters that can be passed to each of the resources.
 
-For augeasproviders types (sysctl, syslog, sshd) see
+For augeasproviders types (sysctl, sshd) see
 http://forge.puppetlabs.com/domcleal/augeasproviders.
 
 For limits see http://forge.puppetlabs.com/erwbgy/limits.
