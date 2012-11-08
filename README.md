@@ -10,6 +10,7 @@ Manage Linux system resources and services from hiera configuration.
 * *packages*: manage system packages
 * *services*: manage system services
 * *sshd*: manage configuration in /etc/ssh/sshd_config including subsystems like sftp
+* *sysconfig*: manage files under /etc/sysconfig: clock, i18n, keyboard, puppet-dashboard, puppet, puppetmaster, selinux
 * *sysctl*: manage entries in /etc/sysctl.conf
 * *users*: manage users in /etc/passwd and /etc/shadow
 * *yumrepos*: manage yum repository files under /etc/yum.repos.d
@@ -196,6 +197,30 @@ See:
 
 * https://github.com/domcleal/augeasproviders/blob/master/lib/puppet/type/sshd_config.rb
 * https://github.com/domcleal/augeasproviders/blob/master/lib/puppet/type/sshd_config_subsystem.rb
+
+## sysconfig
+
+Manage settings in files under /etc/sysconfig
+
+Example configuration:
+
+    sysconfig:
+      clock:
+        timezone:     'Europe/London'
+      i18n:
+        # Run 'locale -a' to see possible lang values
+        lang:         'en_GB.utf8'
+      keyboard:
+        keytable:     'uk'
+        model:        'pc105'
+        layout:       'gb'
+        keyboardtype: 'pc'
+      puppet:
+        server:       'puppet.sbet'
+      selinux:
+        state:        'enforcing'
+
+No defaults.
 
 ## sysctl
 
