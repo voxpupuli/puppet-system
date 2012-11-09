@@ -173,15 +173,15 @@ Manage settings in /etc/ssh/sshd.conf
 Example configuration:
 
     system::sshd:
-      config:
-        AllowGroups:
-          value:     [ 'sshusers', 'admin' ]
-        PermitRootLogin:
-          value:     'without-password'
-          condition: 'Host example.net'
-      subsystem:
-        sftp:
-          command: '/usr/libexec/openssh/sftp-server -u 0002'
+      AllowGroups:
+        value:     [ 'sshusers', 'admin' ]
+      PermitRootLogin:
+        value:     'without-password'
+        condition: 'Host example.net'
+
+    system::sshd::subsystem:
+      sftp:
+        command: '/usr/libexec/openssh/sftp-server -u 0002'
 
 No defaults.
 
