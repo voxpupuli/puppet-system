@@ -1,11 +1,11 @@
 class system::users (
-  $users = undef
+  $config = undef
 ) {
-  if $users {
+  if $config {
     $defaults = {
       ensure => 'present',
       shell  => '/bin/bash'
     }
-    create_resources(user, $users, $defaults)
+    create_resources(user, $config, $defaults)
   }
 }

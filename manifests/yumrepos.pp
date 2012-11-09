@@ -1,11 +1,11 @@
 class system::yumrepos (
-  $yumrepos = undef
+  $config = undef
 ) {
-  if $yumrepos {
+  if $config {
     $defaults = {
       'enabled'  => '1',
       'gpgcheck' => '1',
     }
-    create_resources(yumrepo, $yumrepos, $defaults)
+    create_resources(yumrepo, $config, $defaults)
   }
 }

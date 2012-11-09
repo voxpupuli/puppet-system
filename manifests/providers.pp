@@ -1,16 +1,16 @@
 class system::providers (
-  $providers = undef
+  $config = undef
 ) {
-  if $providers {
-    if $providers['host'] == 'augeas' {
+  if $config {
+    if $config['host'] == 'augeas' {
       include augeasproviders
       Host { provider => 'augeas' }
     }
-    if $providers['mailalias'] == 'augeas' {
+    if $config['mailalias'] == 'augeas' {
       include augeasproviders
       Mailalias { provider => 'augeas' }
     }
-    if $providers['mounttab'] == 'augeas' {
+    if $config['mounttab'] == 'augeas' {
       include augeasproviders
       Mounttab { provider => 'augeas' }
     }

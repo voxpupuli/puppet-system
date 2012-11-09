@@ -1,10 +1,10 @@
 class system::groups (
-  $groups = undef
+  $config = undef
 ) {
-  if $groups {
+  if $config {
     $defaults = {
       ensure => 'present',
     }
-    create_resources(group, $groups, $defaults)
+    create_resources(group, $config, $defaults)
   }
 }

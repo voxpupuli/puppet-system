@@ -1,10 +1,10 @@
 class system::packages (
-  $packages = undef
+  $config = undef
 ) {
-  if $packages {
+  if $config {
     $defaults = {
       'ensure' => installed,
     }
-    create_resources(package, $packages, $defaults)
+    create_resources(package, $config, $defaults)
   }
 }

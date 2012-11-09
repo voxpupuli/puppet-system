@@ -1,12 +1,12 @@
 class system::services (
-  $services = undef
+  $config = undef
 ) {
-  if $services {
+  if $config {
     $defaults = {
       ensure     => 'running',
-      hasrestart => 'true',
-      hasstatus  => 'true',
+      hasrestart => true,
+      hasstatus  => true,
     }
-    create_resources(service, $services, $defaults)
+    create_resources(service, $config, $defaults)
   }
 }

@@ -40,13 +40,12 @@ Manage entries in /etc/group
 
 Example configuration:
 
-    system:
-      groups:
-        'keith':
-          ensure: 'present'
-          gid:    '500'
-        'fred':
-          gid:    '503'
+    system::groups:
+      'keith':
+        ensure: 'present'
+        gid:    '500'
+      'fred':
+        gid:    '503'
  
 Defaults:
 
@@ -58,12 +57,11 @@ Manage entries in /etc/hosts
 
 Example configuration:
 
-    system:
-      hosts:
-        puppet:
-          ensure:       'present'
-          ip:           '10.5.11.19'
-          host_aliases: [ 'puppet.local' ]
+    system::hosts:
+      puppet:
+        ensure:       'present'
+        ip:           '10.5.11.19'
+        host_aliases: [ 'puppet.local' ]
 
 Defaults:
 * ensure: present
@@ -76,16 +74,15 @@ Manage entries in /etc/security/limits.conf
 
 Example configuration:
 
-     system:
-       limits:
-         '*':
-           item: 'nofile'
-           soft: '2048'
-           hard: '8192'
-         '@mygroup':
-           item: 'nproc'
-           soft: '20'
-           hard: '50'
+     system::limits:
+       '*':
+         item: 'nofile'
+         soft: '2048'
+         hard: '8192'
+       '@mygroup':
+         item: 'nproc'
+         soft: '20'
+         hard: '50'
 
 No defaults.
 
@@ -95,12 +92,11 @@ Manage entries in /etc/aliases
 
 Example configuration:
 
-    system:
-      mailaliases:
-        postmaster:
-          recipient: 'root'
-        webmaster:
-          recipient: 'fred@domain.com'
+    system::mailaliases:
+      postmaster:
+        recipient: 'root'
+      webmaster:
+        recipient: 'fred@domain.com'
 
 No defaults.
 
@@ -115,14 +111,13 @@ mountpoint and mounttab types.*
 
 Example configuration:
 
-    system:
-      mounts:
-        '/home':
-          ensure:  'mounted'
-          device:  '/dev/mapper/vg_x120-lv_home'
-          atboot:  'true'
-          fstype:  'ext4'
-          options: 'defaults'
+    system::mounts:
+      '/home':
+        ensure:  'mounted'
+        device:  '/dev/mapper/vg_x120-lv_home'
+        atboot:  'true'
+        fstype:  'ext4'
+        options: 'defaults'
 
 Defaults:
 
@@ -135,12 +130,11 @@ Manage system packages
 
 Example configuration:
 
-    system:
-      packages:
-        AdobeReader_enu:
-          ensure: '9.5.1-1'
-        ConsoleKit:
-          ensure: '0.4.5-2.fc17'
+    system::packages:
+      AdobeReader_enu:
+        ensure: '9.5.1-1'
+      ConsoleKit:
+        ensure: '0.4.5-2.fc17'
 
 Defaults:
 
@@ -152,17 +146,16 @@ Manage system services
 
 Example configuration:
 
-    system:
-      services:
-        cups:
-          ensure: 'stopped'
-          enable: 'false'
-        sshd:
-          ensure: 'running'
-          enable: 'true'
-        ntpd:
-          ensure: 'running'
-          enable: 'true'
+    system::services:
+      cups:
+        ensure: 'stopped'
+        enable: 'false'
+      sshd:
+        ensure: 'running'
+        enable: 'true'
+      ntpd:
+        ensure: 'running'
+        enable: 'true'
 
 Defaults:
 
@@ -179,17 +172,16 @@ Manage settings in /etc/ssh/sshd.conf
 
 Example configuration:
 
-    system:
-      sshd:
-        config:
-          AllowGroups:
-            value:     [ 'sshusers', 'admin' ]
-          PermitRootLogin:
-            value:     'without-password'
-            condition: 'Host example.net'
-        subsystem:
-          sftp:
-            command: '/usr/libexec/openssh/sftp-server -u 0002'
+    system::sshd:
+      config:
+        AllowGroups:
+          value:     [ 'sshusers', 'admin' ]
+        PermitRootLogin:
+          value:     'without-password'
+          condition: 'Host example.net'
+      subsystem:
+        sftp:
+          command: '/usr/libexec/openssh/sftp-server -u 0002'
 
 No defaults.
 
@@ -204,21 +196,24 @@ Manage settings in files under /etc/sysconfig
 
 Example configuration:
 
-    sysconfig:
-      clock:
-        timezone:     'Europe/London'
-      i18n:
-        # Run 'locale -a' to see possible lang values
-        lang:         'en_GB.utf8'
-      keyboard:
-        keytable:     'uk'
-        model:        'pc105'
-        layout:       'gb'
-        keyboardtype: 'pc'
-      puppet:
-        server:       'puppet.sbet'
-      selinux:
-        state:        'enforcing'
+    system::sysconfig::clock:
+      timezone: 'Europe/London'
+
+    system::sysconfig::i18n:
+      # Run 'locale -a' to see possible lang values
+      lang: 'en_GB.utf8'
+
+    system::sysconfig::keyboard:
+      keytable:     'uk'
+      model:        'pc105'
+      layout:       'gb'
+      keyboardtype: 'pc'
+
+    system::sysconfig::puppet:
+      server: 'puppet.sbet'
+
+    system::sysconfig::selinux:
+      state: 'enforcing'
 
 No defaults.
 
@@ -228,14 +223,13 @@ Manage settings in /etc/sysctl.conf
 
 Example configuration:
 
-    system:
-      sysctl:
-        kernel.msgmnb:
-          value: '131072'
-          comment: 'Controls the default maxmimum size of a message queue'
-        kernel.msgmax:
-          value: '131072'
-          comment: ' Controls the maximum size of a message, in bytes'
+    system::sysctl:
+      kernel.msgmnb:
+        value: '131072'
+        comment: 'Controls the default maxmimum size of a message queue'
+      kernel.msgmax:
+        value: '131072'
+        comment: ' Controls the maximum size of a message, in bytes'
 
 No defaults.
 
@@ -249,22 +243,21 @@ Manage users entries in /etc/passwd and /etc/shadow
 
 Example configuration:
 
-    system:
-      users:
-        'keith':
-          ensure:    'present'
-          comment:   'Keith Burdis'
-          gid:       '500'
-          groups:    ['wheel']
-          home:      '/home/keith'
-          shell:     '/bin/bash'
-          uid:       '500'
-        'fred':
-          comment:   'Fred Bloggs'
-          uid:       '503'
-          gid:       '503'
-          home:      '/home/fred'
-          managehome: true
+    system::users:
+      'keith':
+        ensure:    'present'
+        comment:   'Keith Burdis'
+        gid:       '500'
+        groups:    ['wheel']
+        home:      '/home/keith'
+        shell:     '/bin/bash'
+        uid:       '500'
+      'fred':
+        comment:   'Fred Bloggs'
+        uid:       '503'
+        gid:       '503'
+        home:      '/home/fred'
+        managehome: true
 
 Defaults:
 
@@ -277,20 +270,19 @@ Manage yum repository files under /etc/yum.repos.d
 
 Example configuration:
 
-    system:
-      yumrepos:
-        'puppetlabs-deps':
-          baseurl:  'http://yum.puppetlabs.com/fedora/f17/dependencies/$basearch'
-          descr:    'Puppet Labs Dependencies Fedora 17 - $basearch'
-          enabled:  '1'
-          gpgcheck: '1'
-          gpgkey:   'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
-        'puppetlabs-products':
-          baseurl:  'http://yum.puppetlabs.com/fedora/f17/products/$basearch'
-          descr:    'Puppet Labs Products Fedora 17 - $basearch'
-          enabled:  '1'
-          gpgcheck: '1'
-          gpgkey:   'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
+    system::yumrepos:
+      'puppetlabs-deps':
+        baseurl:  'http://yum.puppetlabs.com/fedora/f17/dependencies/$basearch'
+        descr:    'Puppet Labs Dependencies Fedora 17 - $basearch'
+        enabled:  '1'
+        gpgcheck: '1'
+        gpgkey:   'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
+      'puppetlabs-products':
+        baseurl:  'http://yum.puppetlabs.com/fedora/f17/products/$basearch'
+        descr:    'Puppet Labs Products Fedora 17 - $basearch'
+        enabled:  '1'
+        gpgcheck: '1'
+        gpgkey:   'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'
 
 Defaults:
 
@@ -304,11 +296,10 @@ and mounttab types.
 
 Example configuration:
 
-    system:
-      providers:
-        host: 'augeas'
-        mailalias: 'augeas'
-        mounttab: 'augeas'
+    system::providers:
+      host: 'augeas'
+      mailalias: 'augeas'
+      mounttab: 'augeas'
 
 ## Notes
 

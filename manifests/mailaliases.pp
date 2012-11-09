@@ -1,8 +1,8 @@
 class system::mailaliases (
-  $mailaliases = undef
+  $config = undef
 ) {
-  if $mailaliases {
+  if $config {
     $defaults = { }
-    create_resources(mailalias, $mailaliases, $defaults)
+    create_resources(mailalias, $config, $defaults)
   }
 }

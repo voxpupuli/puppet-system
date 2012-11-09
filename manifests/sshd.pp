@@ -1,14 +1,14 @@
 class system::sshd (
-  $sshd = undef
+  $config = undef
 ) {
-  if $sshd {
-    if $sshd['config'] {
+  if $config {
+    if $config['config'] {
       $config_defaults = {}
-      create_resources(sshd_config, $sshd['config'], $config_defaults)
+      create_resources(sshd_config, $config['config'], $config_defaults)
     }
-    if $sshd['subsystem'] {
+    if $config['subsystem'] {
       $subsystem_defaults = {}
-      create_resources(sshd_config_subsystem, $sshd['subsystem'], $subsystem_defaults)
+      create_resources(sshd_config_subsystem, $config['subsystem'], $subsystem_defaults)
     }
   }
 }

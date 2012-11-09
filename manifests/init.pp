@@ -1,6 +1,5 @@
 class system (
-  $config    = {},
-  $use_hiera = true
+  $config = {},
 ){
   # Ensure packages, users and groups are created
   # before other resources that may depend on them
@@ -12,86 +11,107 @@ class system (
     stage { 'first':  before => Stage['second'] }
   }
 
-  if $use_hiera {
-    $system = hiera_hash('system', $config)
+  $groups = hiera_hash('system::groups', $config['groups'])
+  class { '::system::groups':
+    config => $groups,
+    stage  => second,
+  }
+
+  $hosts = hiera_hash('system::hosts', $config['hosts'])
+  class { '::system::hosts':
+    config => $hosts,
+  }
+
+  $limits = hiera_hash('system::limits', $config['limits'])
+  class { '::system::limits':
+    config => $limits,
+  }
+
+  $mailaliases = hiera_hash('system::mailaliases', $config['mailaliases'])
+  class { '::system::mailaliases':
+    config => $mailaliases,
+  }
+
+  $mounts = hiera_hash('system::mounts', $config['mounts'])
+  class { '::system::mounts':
+    config => $mounts,
+  }
+
+  $packages = hiera_hash('system::packages', $config['packages'])
+  class { '::system::packages':
+    config => $packages,
+    stage  => second,
+  }
+
+  $services = hiera_hash('system::services', $config['services'])
+  class { '::system::services':
+    config => $services,
+  }
+
+  $sshd = hiera_hash('system::sshd', $config['sshd'])
+  class { '::system::sshd':
+    config => $sshd,
+  }
+
+  if $config['sysconfig'] {
+    $sysconfig = $config['sysconfig']
   }
   else {
-    $system = $config
+    $sysconfig = {}
   }
-  if $system {
-    if $system['groups'] {
-      class { '::system::groups':
-        groups    => $system['groups'],
-        stage     => second,
-      }
-    }
-    if $system['hosts'] {
-      class { '::system::hosts':
-        hosts     => $system['hosts']
-      }
-    }
-    if $system['limits'] {
-      class { '::system::limits':
-        limits    => $system['limits'],
-      }
-    }
-    if $system['mailaliases'] {
-      class { '::system::mailaliases':
-        mailaliases => $system['mailaliases']
-      }
-    }
-    if $system['mounts'] {
-      class { '::system::mounts':
-        mounts    => $system['mounts'],
-      }
-    }
-    if $system['packages'] {
-      class { '::system::packages':
-        packages  => $system['packages'],
-        stage     => second,
-      }
-    }
-    if $system['services'] {
-      class { '::system::services':
-        services  => $system['services'],
-      }
-    }
-    if $system['sshd'] {
-      class { '::system::sshd':
-        sshd      => $system['sshd'],
-      }
-    }
-    if $system['sysconfig'] {
-      class { '::system::sysconfig':
-        sysconfig => $system['sysconfig'],
-      }
-    }
-    if $system['sysctl'] {
-      class { '::system::sysctl':
-        sysctl    => $system['sysctl'],
-      }
-    }
-    #if $system['syslog'] {
-    #  class { '::system::syslog':
-    #    syslog    => $system['syslog'],
-    #  }
-    #}
-    if $system['users'] {
-      class { '::system::users':
-        users     => $system['users'],
-        stage     => second,
-      }
-    }
-    if $system['yumrepos'] {
-      class { '::system::yumrepos':
-        yumrepos  => $system['yumrepos']
-      }
-    }
-    if $system['providers'] {
-      class { '::system::providers':
-        providers => $system['providers'],
-        stage     => first
-      }
-    }
+  $clock = hiera_hash('system::sysconfig::clock', $sysconfig['clock'])
+  class { '::system::sysconfig::clock':
+    config => $clock,
+  }
+  $i18n = hiera_hash('system::sysconfig::i18n', $sysconfig['i18n'])
+  class { '::system::sysconfig::i18n':
+    config => $i18n,
+  }
+  $keyboard = hiera_hash('system::sysconfig::keyboard', $sysconfig['keyboard'])
+  class { '::system::sysconfig::keyboard':
+    config => $keyboard,
+  }
+  $puppetdashboard = hiera_hash('system::sysconfig::puppetdashboard', $sysconfig['puppetdashboard'])
+  class { '::system::sysconfig::puppetdashboard':
+    config => $puppetdashboard,
+  }
+  $puppetmaster = hiera_hash('system::sysconfig::puppetmaster', $sysconfig['puppetmaster'])
+  class { '::system::sysconfig::puppetmaster':
+    config => $puppetmaster,
+  }
+  $puppet = hiera_hash('system::sysconfig::puppet', $sysconfig['puppet'])
+  class { '::system::sysconfig::puppet':
+    config => $puppet,
+  }
+  $selinux = hiera_hash('system::sysconfig::selinux', $sysconfig['selinux'])
+  class { '::system::sysconfig::selinux':
+    config => $selinux,
+  }
+
+  $sysctl = hiera_hash('system::sysctl', $config['sysctl'])
+  class { '::system::sysctl':
+    config => $sysctl,
+  }
+
+  #$syslog = hiera_hash('system::syslog', $config['syslog'])
+  #class { '::system::syslog':
+  #  config => $syslog,
+  #}
+
+  $users = hiera_hash('system::users', $config['users'])
+  class { '::system::users':
+    config => $users,
+    stage  => second,
+  }
+
+  $yumrepos = hiera_hash('system::yumrepos', $config['yumrepos'])
+  class { '::system::yumrepos':
+    config => $yumrepos,
+  }
+
+  $providers = hiera_hash('system::providers', $config['providers'])
+  class { '::system::providers':
+    config => $providers,
+    stage  => first
   }
 }

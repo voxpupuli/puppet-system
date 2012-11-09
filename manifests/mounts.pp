@@ -1,11 +1,11 @@
 class system::mounts (
-  $mounts = undef
+  $config = undef
 ) {
-  if $mounts {
+  if $config {
     $defaults = {
       'atboot' => true,
       'ensure' => 'mounted',
     }
-    create_resources(package, $mounts, $defaults)
+    create_resources(package, $config, $defaults)
   }
 }

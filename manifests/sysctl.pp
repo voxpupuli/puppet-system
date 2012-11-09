@@ -1,9 +1,9 @@
 class system::sysctl (
-  $sysctl = undef
+  $config = undef
 ) {
-  if $sysctl {
+  if $config {
     include augeasproviders
     $defaults = { }
-    create_resources(sysctl, $sysctl, $defaults)
+    create_resources(sysctl, $config, $defaults)
   }
 }

@@ -1,10 +1,10 @@
 class system::limits (
-  $limits = undef
+  $config = undef
 ) {
-  if $limits {
+  if $config {
     include limits
     class { '::limits':
-      config    => $limits,
+      config    => $config,
       use_hiera => false,
     }
   }

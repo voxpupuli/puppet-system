@@ -1,9 +1,9 @@
 class system::syslog (
-  $syslog = undef
+  $config = undef
 ) {
-  if $syslog {
+  if $config {
     include augeasproviders
     $defaults = { }
-    create_resources(syslog, $syslog, $defaults)
+    create_resources(syslog, $config, $defaults)
   }
 }
