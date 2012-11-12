@@ -107,6 +107,7 @@ class system (
   $yumrepos = hiera_hash('system::yumrepos', $config['yumrepos'])
   class { '::system::yumrepos':
     config => $yumrepos,
+    stage  => first,
   }
 
   $providers = hiera_hash('system::providers', $config['providers'])
