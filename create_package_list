@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
+use YAML;
 
 open(FACTER, "facter operatingsystem |") or die "$!\n";
 my $operatingsystem = <FACTER>;
@@ -20,21 +21,14 @@ while(<RPM>) {
   chomp;
   my ($name, $version, $release) = split(/\s+/, $_, 3);
   if ($name eq 'gpg-pubkey') {
-    $packages{"${name}-${version}-${release}"} = 'installed';
+    $packages{'system::packages'}{"${name}-${version}-${release}"}{'ensure'}
+      = 'installed';
   }
   else {
-    $packages{$name} = "${version}-${release}";
+    $packages{'system::packages'}{$name}{'ensure'}
+      = "${version}-${release}";
   }
 }
 close(RPM);
 
-open(OUTPUT,">$output_file") or die "$!\n";
-print OUTPUT "system:\n";
-print OUTPUT "  packages:\n";
-foreach my $name (sort keys %packages) {
-  my $ensure = $packages{$name};
-  #my $ensure = 'installed';
-  printf OUTPUT "    %s:\n", $name;
-  printf OUTPUT "      ensure: '%s'\n", $ensure;
-}
-close(OUTPUT);
+YAML::DumpFile($output_file, \%packages);
