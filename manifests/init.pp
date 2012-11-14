@@ -104,6 +104,12 @@ class system (
     stage  => second,
   }
 
+  $yumgroups = hiera_hash('system::yumgroups', $config['yumgroups'])
+  class { '::system::yumgroups':
+    config => $yumgroups,
+    stage  => second,
+  }
+
   $yumrepos = hiera_hash('system::yumrepos', $config['yumrepos'])
   class { '::system::yumrepos':
     config => $yumrepos,
