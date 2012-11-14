@@ -48,6 +48,8 @@ system::sshd:
     value:     'without-password'
     condition: 'Host example.net'
 
+system::sshd::sync_host_keys: true
+
 system::sshd::subsystem:
   sftp:
     command:   '/usr/libexec/openssh/sftp-server -u 0002'

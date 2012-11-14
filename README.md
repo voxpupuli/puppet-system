@@ -170,6 +170,8 @@ Note:
 
 Manage settings in /etc/ssh/sshd.conf
 
+Synchronize host keys file entries across all puppet-managed hosts.
+
 Example configuration:
 
     system::sshd:
@@ -182,6 +184,8 @@ Example configuration:
     system::sshd::subsystem:
       sftp:
         command: '/usr/libexec/openssh/sftp-server -u 0002'
+
+    system::sshd::sync_host_keys: 'true'
 
 No defaults.
 
@@ -226,7 +230,7 @@ Example configuration:
     system::sysctl:
       kernel.msgmnb:
         value: '131072'
-        comment: 'Controls the default maxmimum size of a message queue'
+        comment: 'Controls the default maximum size of a message queue'
       kernel.msgmax:
         value: '131072'
         comment: ' Controls the maximum size of a message, in bytes'
