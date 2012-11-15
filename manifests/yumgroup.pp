@@ -14,6 +14,7 @@ define system::yumgroup(
         unless  => "/root/yum-installed-groups is_installed '${name}'",
         timeout => 600,
         require => File['/root/yum-installed-groups'],
+        notify  => Exec['clear-yum-installed-groups-cache'],
       }
     }
     absent: {
@@ -22,6 +23,7 @@ define system::yumgroup(
         unless  => "/root/yum-installed-groups is_not_installed '${name}'",
         timeout => 600,
         require => File['/root/yum-installed-groups'],
+        notify  => Exec['clear-yum-installed-groups-cache'],
       }
     }
     default: {
