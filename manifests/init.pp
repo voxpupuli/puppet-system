@@ -39,8 +39,8 @@ class system (
 
   $packages = hiera_hash('system::packages', $config['packages'])
   class { '::system::packages':
-    config => $packages,
-    stage  => second,
+    config  => $packages,
+    stage   => second,
     require => Class['::system::yumgroups'],
   }
 
@@ -101,8 +101,9 @@ class system (
 
   $users = hiera_hash('system::users', $config['users'])
   class { '::system::users':
-    config => $users,
-    stage  => second,
+    config  => $users,
+    stage   => second,
+    require => Class['::system::groups'],
   }
 
   $yumgroups = hiera_hash('system::yumgroups', $config['yumgroups'])
