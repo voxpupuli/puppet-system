@@ -1,0 +1,48 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+
+my $action = $ARGV[0] || '';
+my $wanted = $ARGV[1] || '';
+
+my $cache_file = '/root/.yum-group-installed.cache';
+my $mtime = 65535;
+if (-r $cache_file) {
+  $mtime = (stat($cache_file))[9];
+}
+if ($mtime > 3600) {
+  my %groups;
+  open(YUM, "/usr/bin/yum grouplist 2>/dev/null |") or die "$!\n";
+  while(<YUM>) {
+    last if /^Available/o;
+    next if /^\w/o;
+    next if /:/o;
+    next if /^\s+\*/;
+    s/^\s+//g;
+    s/\s+$//g;
+    $groups{$_}++;
+  }
+  close(YUM);
+  open(CACHE,">$cache_file") or die "$!\n";
+  foreach my $group (sort keys %groups) {
+    print CACHE "$group\n";
+  }
+  close(CACHE);
+}
+
+my %yum_groups;
+open(CACHE,"<$cache_file") or die "$!\n";
+while(<CACHE>) {
+  print unless $action;
+  chomp;
+  $yum_groups{$_}++;
+}
+close(CACHE);
+
+if ($action eq 'is_installed') {
+  exists $yum_groups{$wanted} ? exit(0) : exit(1);
+}
+if ($action eq 'is_not_installed') {
+  exists $yum_groups{$wanted} ? exit(1) : exit(0);
+}
+exit(0);

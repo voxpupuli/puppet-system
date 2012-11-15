@@ -41,6 +41,7 @@ class system (
   class { '::system::packages':
     config => $packages,
     stage  => second,
+    require => Class['::system::yumgroups'],
   }
 
   $services = hiera_hash('system::services', $config['services'])
