@@ -1,8 +1,5 @@
 define sysconfig::header {
   $file = $title
-  file { "/etc/sysconfig/${file}":
-    ensure => present,
-  }
   exec { "sysconfig-${file}-empty":
     command => "/bin/echo > /etc/sysconfig/${file}",
     unless  => "/usr/bin/test -s /etc/sysconfig/${file}",
