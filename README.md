@@ -2,6 +2,7 @@
 
 Manage Linux system resources and services from hiera configuration.
 
+* *facts*: set custom facts
 * *groups*: manage entries in /etc/group
 * *hosts*: manage entries in /etc/hosts
 * *limits*: manage entries in /etc/security/limits.conf
@@ -13,6 +14,7 @@ Manage Linux system resources and services from hiera configuration.
 * *sysconfig*: manage files under /etc/sysconfig: clock, i18n, keyboard, puppet-dashboard, puppet, puppetmaster, selinux
 * *sysctl*: manage entries in /etc/sysctl.conf
 * *users*: manage users in /etc/passwd and /etc/shadow
+* *yumgroups*: manage system package groups
 * *yumrepos*: manage yum repository files under /etc/yum.repos.d
 
 ## Documentation
@@ -33,6 +35,16 @@ Include the system module in your puppet configuration:
     include system
 
 and add required hiera configuration.
+
+## facts
+
+Set custom facts
+
+Example configuration:
+
+    system::facts:
+      location:
+        value: 'London'
 
 ## groups
 
@@ -267,6 +279,18 @@ Defaults:
 
 * ensure: present
 * shell:  /bin/bash
+
+## yumgroups
+
+Manage system package groups
+
+Example configuration:
+
+    system::yumgroups:
+      'Base':
+        ensure: 'present'
+      'Console internet tools':
+        ensure: 'present'
 
 ## yumrepos
 
