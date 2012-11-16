@@ -2,34 +2,36 @@ class system::sysconfig::puppetdashboard (
   $config = undef
 ) {
   if $config {
-    $home = $config['home'] ? {
-      undef   => '/usr/share/puppet-dashboard',
-      default => $config['home'],
+    sysconfig::header { 'puppet-dashboard': }
+    sysconfig::entry { 'puppet-dashboard-home':
+      file  => 'puppet-dashboard',
+      var   => 'DASHBOARD_HOME',
+      val   => $config['home'],
     }
-    $user  = $config['user'] ? {
-      undef   => 'puppet-dashboard',
-      default => $config['user'],
+    sysconfig::entry { 'puppet-dashboard-user':
+      file  => 'puppet-dashboard',
+      var   => 'DASHBOARD_USER',
+      val   => $config['user'],
     }
-    $ruby  = $config['ruby'] ? {
-      undef   => '/usr/bin/ruby',
-      default => $config['ruby'],
+    sysconfig::entry { 'puppet-dashboard-ruby':
+      file  => 'puppet-dashboard',
+      var   => 'DASHBOARD_RUBY',
+      val   => $config['ruby'],
     }
-    $environment  = $config['environment'] ? {
-      undef   => 'production',
-      default => $config['environment'],
+    sysconfig::entry { 'puppet-dashboard-environment':
+      file  => 'puppet-dashboard',
+      var   => 'DASHBOARD_ENVIRONMENT',
+      val   => $config['environment'],
     }
-    $ip = $config['ip'] ? {
-      undef   => '0.0.0.0',
-      default => $config['ip'],
+    sysconfig::entry { 'puppet-dashboard-iface':
+      file  => 'puppet-dashboard',
+      var   => 'DASHBOARD_IFACE',
+      val   => $config['iface'],
     }
-    $port = $config['port'] ? {
-      undef   => '3000',
-      default => $config['port'],
-    }
-    file { '/etc/sysconfig/puppet-dashboard':
-      ensure  => present,
-      #content => "# Managed by puppet\nDASHBOARD_HOME=\"${home}\"\nDASHBOARD_USER=\"${user}\"\nDASHBOARD_RUBY=\"${ruby}\"\nDASHBOARD_ENVIRONMENT=\"${environment}\"\nDASHBOARD_IFACE=\"${ip}\"\nDASHBOARD_PORT=\"${port}\"\n",
-      content => template('system/sysconfig/puppetdashboard.erb'),
+    sysconfig::entry { 'puppet-dashboard-port':
+      file  => 'puppet-dashboard',
+      var   => 'DASHBOARD_PORT',
+      val   => $config['port'],
     }
   }
 }

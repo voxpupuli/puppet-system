@@ -2,26 +2,26 @@ class system::sysconfig::puppetmaster (
   $config = undef
 ) {
   if $config {
-    $manifest = $config['manifest'] ? {
-      undef   => '/etc/puppet/manifests/site.pp',
-      default => $config['manifest'],
+    sysconfig::header { 'puppetmaster': }
+    sysconfig::entry { 'puppetmaster-manifest':
+      file  => 'puppetmaster',
+      var   => 'PUPPETMASTER_MANIFEST',
+      val   => $config['manifest'],
     }
-    $log = $config['log'] ? {
-      undef   => 'syslog',
-      default => $config['log'],
+    sysconfig::entry { 'puppetmaster-ports':
+      file  => 'puppetmaster',
+      var   => 'PUPPETMASTER_PORTS',
+      val   => $config['ports'],
     }
-    $ports = $config['ports'] ? {
-      undef   => '8140',
-      default => $config['ports'],
+    sysconfig::entry { 'puppetmaster-log':
+      file  => 'puppetmaster',
+      var   => 'PUPPETMASTER_LOG',
+      val   => $config['log'],
     }
-    $extra_opts = $config['extra_opts'] ? {
-      undef   => '',
-      default => $config['extra_opts'],
-    }
-    file { '/etc/sysconfig/puppetmaster':
-      ensure  => present,
-      #content => "# Managed by puppet\nPUPPETMASTER_MANIFEST=\"${manifest}\"\nPUPPETMASTER_PORTS=\"${ports}\"\nPUPPETMASTER_LOG=\"${log}\"\nPUPPETMASTER_EXTRA_OPTS=\"${extra_opts}\"\n",
-      content => template('system/sysconfig/puppetmaster.erb'),
+    sysconfig::entry { 'puppetmaster-extra_opts':
+      file  => 'puppetmaster',
+      var   => 'PUPPETMASTER_EXTRA_OPTS',
+      val   => $config['extra_opts'],
     }
   }
 }
