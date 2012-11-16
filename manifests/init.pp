@@ -11,6 +11,11 @@ class system (
     stage { 'first':  before => Stage['second'] }
   }
 
+  $facts = hiera_hash('system::facts', $config['facts'])
+  class { '::system::facts':
+    config => $facts,
+  }
+
   $groups = hiera_hash('system::groups', $config['groups'])
   class { '::system::groups':
     config => $groups,
