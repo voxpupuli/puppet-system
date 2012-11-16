@@ -25,7 +25,7 @@ define sysconfig::entry (
     else {
       # If there is an existing entry then replace the value
       exec { "sysconfig-replace-${file}-${var}":
-        command => "/usr/bin/perl -pi -e 's#^\s*\#\s*${var}=.*?$#${var}=\"${val}\"#' /etc/sysconfig/${file}",
+        command => "/usr/bin/perl -pi -e 's#^\s*\#?\s*${var}=.*?$#${var}=\"${val}\"#' /etc/sysconfig/${file}",
         unless  => "/bin/grep -w '^${var}=\"${val}\"' /etc/sysconfig/${file}",
         notify  => $nudge
       }
