@@ -11,19 +11,17 @@ define system::yumgroup(
     present,installed: {
       exec { "Installing ${name} yum group":
         command => "/usr/bin/yum -y groupinstall ${pkg_types_arg} '${name}'",
-        unless  => "/root/yum-installed-groups is_installed '${name}'",
+        unless  => "/usr/bin/yum -C grouplist 2>/dev/null | /usr/bin/perl -ne 'last if /^Available/o; next if /^\w/o;' | /bin/grep -qw '${name}'",
         timeout => 600,
         require => File['/root/yum-installed-groups'],
-        notify  => Exec['clear-yum-installed-groups-cache'],
       }
     }
     absent: {
       exec { "Removing ${name} yum group":
         command => "/usr/bin/yum -y groupremove ${pkg_types_arg} '${name}'",
-        unless  => "/root/yum-installed-groups is_not_installed '${name}'",
+        unless  => "/usr/bin/yum -C grouplist 2>/dev/null | /usr/bin/perl -ne 'last if /^Available/o; next if /^\w/o;' | /bin/grep -qw '${name}'",
         timeout => 600,
         require => File['/root/yum-installed-groups'],
-        notify  => Exec['clear-yum-installed-groups-cache'],
       }
     }
     default: {
