@@ -2,11 +2,12 @@ class system::sysconfig::clock (
   $config = undef
 ) {
   if $config {
+    $timezone = $config['timezone']
     sysconfig::header { 'clock': }
     sysconfig::entry { 'clock-zone':
       file  => 'clock',
       var   => 'ZONE',
-      val   => $config['timezone'],
+      val   => $timezone,
       nudge => Exec['/etc/localtime'],
     }
     exec { '/etc/localtime':
