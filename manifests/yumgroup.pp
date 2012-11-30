@@ -13,7 +13,6 @@ define system::yumgroup(
         command => "/usr/bin/yum -y groupinstall ${pkg_types_arg} '${name}'",
         unless  => "/usr/bin/yum -C grouplist 2>/dev/null | /usr/bin/perl -ne 'last if /^Available/o; next if /^\w/o; print' | /bin/grep -qw '${name}'",
         timeout => 600,
-        require => File['/root/yum-installed-groups'],
       }
     }
     absent: {
@@ -21,7 +20,6 @@ define system::yumgroup(
         command => "/usr/bin/yum -y groupremove ${pkg_types_arg} '${name}'",
         unless  => "/usr/bin/yum -C grouplist 2>/dev/null | /usr/bin/perl -ne 'last if /^Available/o; next if /^\w/o; print' | /bin/grep -qw '${name}'",
         timeout => 600,
-        require => File['/root/yum-installed-groups'],
       }
     }
     default: {
