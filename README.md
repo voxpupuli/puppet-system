@@ -324,6 +324,21 @@ Example configuration:
         ensure: 'present'
       'Console internet tools':
         ensure: 'present'
+      'Perl Support':
+        ensure: 'present'
+        usecache: false
+      'Ruby Support':
+        ensure: 'present'
+        optional: true
+        usecache: false
+
+Defaults:
+
+* optional: false
+* usecache: true
+
+Note: Set 'usecache: false' if 'yum -C grouplist' does not work on your system
+and you are getting System::Yumgroup resources created on every Puppet run
 
 ## yumrepos
 
