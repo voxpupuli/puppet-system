@@ -113,15 +113,18 @@ Manage entries in /etc/security/limits.conf
 
 Example configuration:
 
-     system::limits:
-       '*':
-         item: 'nofile'
-         soft: '2048'
-         hard: '8192'
-       '@mygroup':
-         item: 'nproc'
-         soft: '20'
-         hard: '50'
+    system::limits:
+      '*':
+        nofile:
+          soft: 1024
+          hard: 2048
+      '@weblogic':
+        nofile:
+          soft: 16384
+          hard: 16384
+        nproc:
+          soft: 2048
+          hard: 2048
 
 No defaults.
 

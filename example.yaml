@@ -2,6 +2,19 @@ system::facts:
   location:
     value: 'London'
 
+system::files:
+  /apps:
+    ensure:  'directory'
+    owner:   'root'
+    group:   'root'
+    mode:    '0755'
+  /etc/motd:
+    ensure:  'present'
+    owner:   'root'
+    group:   'root'
+    mode:    '0644'
+    content: "Authorised access only\nIf unauthorised log off now or face prosecution\n"
+
 system::groups:
   'keith':
     ensure: 'present'
@@ -17,13 +30,16 @@ system::hosts:
 
 system::limits:
   '*':
-    item: 'nofile'
-    soft: '2048'
-    hard: '8192'
-  '@mygroup':
-    item: 'nproc'
-    soft: '20'
-    hard: '50'
+    nofile:
+      soft: 1024
+      hard: 2048
+  '@weblogic':
+    nofile:
+      soft: 16384
+      hard: 16384
+    nproc:
+      soft: 2048
+      hard: 2048
 
 system::mailaliases:
   postmaster:
@@ -38,6 +54,10 @@ system::mounts:
     atboot:  'true'
     fstype:  'ext4'
     options: 'defaults'
+  '/apps/shared':
+    device:  'nfs.domain.com:/mnt/vg04/vg04v01/app/shared'
+    fstype:  'nfs'
+    options: 'rw,bg,hard,nointr,rsize=32768,wsize=32768,tcp,vers=3,timeo=600'
 
 system::packages:
   AdobeReader_enu:

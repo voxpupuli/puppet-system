@@ -1,3 +1,13 @@
+0.5.2:
+
+* Fixed limits examples to show changes due to multiple entry support
+
+* Actually fix the typo in mounts.pp preventing it from working!
+
+* Updated mounts example to show an NFS share
+
+* Added files examples to example.yaml
+
 0.5.1:
 
 * Added 'files' to create directories and populate the content of files.  The
