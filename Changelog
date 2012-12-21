@@ -8,6 +8,9 @@
 
 * Added files examples to example.yaml
 
+* Added a note to quote sysctl numeric values to avoid "can't convert Fixnum
+into String" errors
+
 0.5.1:
 
 * Added 'files' to create directories and populate the content of files.  The

@@ -283,6 +283,9 @@ See:
 
 * https://github.com/domcleal/augeasproviders/blob/master/lib/puppet/type/sysctl.rb
 
+
+Note: Quote numeric values to avoid "can't convert Fixnum into String" errors
+
 ## users
 
 Manage users entries in /etc/passwd and /etc/shadow
