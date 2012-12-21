@@ -3,6 +3,7 @@
 Manage Linux system resources and services from hiera configuration.
 
 * *facts*: set custom facts
+* *files*: create/update files or directories
 * *groups*: manage entries in /etc/group
 * *hosts*: manage entries in /etc/hosts
 * *limits*: manage entries in /etc/security/limits.conf
@@ -45,6 +46,32 @@ Example configuration:
     system::facts:
       location:
         value: 'London'
+
+## files
+
+Create or update files or directories
+
+Example 1 - create a mount point for an NFS mounted directory:
+
+    system::files:
+      /apps:
+        ensure:  'directory'
+        owner:   'root'
+        group:   'root'
+        mode:    '0755'
+
+Example 2 - create a file with the given content:
+
+    system::files:
+      /etc/motd:
+        ensure:  'present'
+        owner:   'root'
+        group:   'root'
+        mode:    '0644'
+        content: "Authorised access only\nIf unauthorised log off now or face prosecution\n"
+
+Note: Use double-quotes with content if it contains embedded newlines (\n) or
+tabs (\t).  Normaly you will also want a terminating newline.
 
 ## groups
 
@@ -118,9 +145,6 @@ See: http://docs.puppetlabs.com/references/latest/type.html#mailalias
 
 Manage entries in /etc/fstab
 
-*NOTE: The mounts configuration will change when support is added for the
-mountpoint and mounttab types.*
-
 Example configuration:
 
     system::mounts:
@@ -135,6 +159,9 @@ Defaults:
 
 * atboot: true
 * ensure: mounted
+
+Note: These resources are created last so any required users, groups or mount
+point directories have a chance to be created first.
 
 ## packages
 

@@ -1,19 +1,34 @@
 class system (
   $config = {},
 ){
+  # Ensure that files and directories are created before
+  # other resources (like mounts) that may depend on them
+  if ! defined(Stage['third']) {
+    stage { 'third': before => Stage['main'] }
+  }
   # Ensure packages, users and groups are created
   # before other resources that may depend on them
   if ! defined(Stage['second']) {
-    stage { 'second': before => Stage['main'] }
+    stage { 'second': before => Stage['third'] }
   }
   # Ensure providers are set before resources are created
   if ! defined(Stage['first']) {
     stage { 'first':  before => Stage['second'] }
   }
+  # Things to do last because the depend on lots of other resources
+  if ! defined(Stage['last']) {
+    stage { 'last': require => Stage['main'] }
+  }
 
   $facts = hiera_hash('system::facts', $config['facts'])
   class { '::system::facts':
     config => $facts,
+  }
+
+  $files = hiera_hash('system::files', $config['files'])
+  class { '::system::files':
+    config => $files,
+    stage  => third,
   }
 
   $groups = hiera_hash('system::groups', $config['groups'])
@@ -40,6 +55,7 @@ class system (
   $mounts = hiera_hash('system::mounts', $config['mounts'])
   class { '::system::mounts':
     config => $mounts,
+    stage  => last,
   }
 
   $packages = hiera_hash('system::packages', $config['packages'])

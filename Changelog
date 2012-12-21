@@ -1,0 +1,15 @@
+0.5.1:
+
+* Added 'files' to create directories and populate the content of files.  The
+initial reason was to create mount points for NFS shares.
+
+* Fixed typo in mounts.pp preventing it from working.
+
+* Run 'mounts' in the last stage so that any required users, groups and mount
+points can be created first.
+
+* Require augeasproviders > 0.5.1 to get bug fix for problems running under
+'puppet apply'.
+
+* Require limits > 0.3.1 as this allows more than one entry per user or group.
+
