@@ -6,6 +6,6 @@ class system::mounts (
       'atboot' => true,
       'ensure' => 'mounted',
     }
-    create_resources(package, $config, $defaults)
+    create_resources(mount, $config, $defaults)
   }
 }
