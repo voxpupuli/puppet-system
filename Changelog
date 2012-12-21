@@ -1,15 +1,17 @@
 0.5.2:
 
-* Fixed limits examples to show changes due to multiple entry support
+* limits: Fixed examples to show changes due to multiple entry support
 
 * Actually fix the typo in mounts.pp preventing it from working!
 
-* Updated mounts example to show an NFS share
+* mounts: Updated example to show an NFS share
 
-* Added files examples to example.yaml
+* example.yaml: Added files examples
 
-* Added a note to quote sysctl numeric values to avoid "can't convert Fixnum
+* sysctl: Added a note to quote numeric values to avoid "can't convert Fixnum
 into String" errors
+
+* yumgroups: added a usecache option for when 'yum -C grouplist' does not work
 
 0.5.1:
 
