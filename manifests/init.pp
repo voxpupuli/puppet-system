@@ -20,6 +20,17 @@ class system (
     stage { 'last': require => Stage['main'] }
   }
 
+  $crontabs = hiera_hash('system::cron', $config['crontabs'])
+  class { '::system::crontabs':
+    config => $crontabs,
+  }
+
+  $execs = hiera_hash('system::exec', $config['execs'])
+  class { '::system::execs':
+    config => $execs,
+    stage  => last,
+  }
+
   $facts = hiera_hash('system::facts', $config['facts'])
   class { '::system::facts':
     config => $facts,

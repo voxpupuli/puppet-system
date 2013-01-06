@@ -2,6 +2,8 @@
 
 Manage Linux system resources and services from hiera configuration.
 
+* *crontabs*: set user crontab entries
+* *execs*:  run idempotent external commands
 * *facts*: set custom facts
 * *files*: create/update files or directories
 * *groups*: manage entries in /etc/group
@@ -20,9 +22,9 @@ Manage Linux system resources and services from hiera configuration.
 
 ## Documentation
 
-For default types (users, groups, mounts, yumrepos, packages) see the
-documentation at http://docs.puppetlabs.com/references/latest/type.html for the
-parameters that can be passed to each of the resources.
+For default types (users, groups, mounts, yumrepos, packages, cron, exec) see
+the documentation at http://docs.puppetlabs.com/references/latest/type.html for
+the parameters that can be passed to each of the resources.
 
 For augeasproviders types (sysctl, sshd) see
 http://forge.puppetlabs.com/domcleal/augeasproviders.
@@ -36,6 +38,42 @@ Include the system module in your puppet configuration:
     include system
 
 and add required hiera configuration.
+
+## crontabs
+
+Set user crontab entries
+
+Example configuration:
+
+    system::crontabs:
+      'root-logrotate':
+        command: '/usr/sbin/logrotate'
+        user:    'root'
+        hour:    '2'
+        minute:  '0'
+
+Defaults:
+
+* ensure: present
+* user: root
+
+## execs
+
+Run idempotent external commands
+
+Example configuration:
+
+    system::execs:
+      'update-tomcat-deploy':
+        command: '/usr/bin/svn up'
+        cwd:     '/apps/tomcat1/deploy'
+        user:    'tomcat1'
+      'create-deploy-dir':
+        command: '/bin/mkdir -p /apps/tomcat1/deploy'
+        unless:  '/usr/bin/test -d /apps/tomcat1/deploy'
+
+Note: The commands will be run on every Puppet run unless you specify 'onlyif',
+'unless' or 'refreshonly' parameters.
 
 ## facts
 

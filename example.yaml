@@ -1,3 +1,19 @@
+system::crontabs:
+  'logrotate':
+    command: '/usr/sbin/logrotate'
+    user:    'root'
+    hour:    '2'
+    minute:  '0'
+
+system::execs:
+  'update-tomcat-deploy':
+    command: '/usr/bin/svn up'
+    cwd:     '/apps/tomcat1/deploy'
+    user:    'tomcat1'
+  'create-deploy-dir':
+    command: '/bin/mkdir -p /apps/tomcat1/deploy'
+    unless:  '/usr/bin/test -d /apps/tomcat1/deploy'
+
 system::facts:
   location:
     value: 'London'
