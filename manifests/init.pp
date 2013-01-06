@@ -37,6 +37,19 @@ class system (
     stage  => second,
   }
 
+  $virtual_groups = hiera_hash('system::groups::virtual', $config['virtual_groups'])
+  class { '::system::groups::virtual':
+    config => $virtual_groups,
+    stage  => first,
+  }
+
+  $realize_groups = hiera_array('system::groups::realize', $config['realize_groups'])
+  class { '::system::groups::realize':
+    groups  => $realize_groups,
+    stage   => second,
+    require => Class['::system::groups::virtual'],
+  }
+
   $hosts = hiera_hash('system::hosts', $config['hosts'])
   class { '::system::hosts':
     config => $hosts,
@@ -125,6 +138,19 @@ class system (
     config  => $users,
     stage   => second,
     require => Class['::system::groups'],
+  }
+
+  $virtual_users = hiera_hash('system::users::virtual', $config['virtual_users'])
+  class { '::system::users::virtual':
+    config  => $virtual_users,
+    stage   => first,
+  }
+
+  $realize_users = hiera_array('system::users::realize', $config['realize_users'])
+  class { '::system::users::realize':
+    users   => $realize_users,
+    stage   => second,
+    require => Class['::system::users::virtual'],
   }
 
   $yumgroups = hiera_hash('system::yumgroups', $config['yumgroups'])
