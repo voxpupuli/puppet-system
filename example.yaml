@@ -66,11 +66,13 @@ system::packages:
     ensure: '0.4.5-2.fc17'
 
 system::sshd:
-  AllowGroups:
-    value:     [ 'sshusers', 'admin' ]
+  PasswordAuthentication:
+    value:     'no'
+  Protocol:
+    value:     '2'
   PermitRootLogin:
     value:     'without-password'
-    condition: 'Host example.net'
+    condition: 'Host supersecure.example.net'
 
 system::sshd::sync_host_keys: true
 
