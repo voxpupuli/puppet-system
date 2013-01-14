@@ -2,7 +2,13 @@ class system::sysconfig::clock (
   $config = undef
 ) {
   if $config {
-    $timezone = $config['timezone']
+    $clock = $config
+  }
+  else {
+    $clock = hiera_hash('system::sysconfig::clock')
+  }
+  if $clock {
+    $timezone = $clock['timezone']
     sysconfig::header { 'clock': }
     sysconfig::entry { 'clock-zone':
       file  => 'clock',

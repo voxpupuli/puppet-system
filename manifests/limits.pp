@@ -8,4 +8,14 @@ class system::limits (
       use_hiera => false,
     }
   }
+  else {
+    $hiera_config = hiera_hash('system::limits')
+    if $hiera_config {
+      include limits
+      class { '::limits':
+        config    => $hiera_config,
+        use_hiera => false,
+      }
+    }
+  }
 }

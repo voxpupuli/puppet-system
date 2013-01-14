@@ -1,9 +1,16 @@
 class system::sysctl (
   $config = undef
 ) {
+  $defaults = {}
   if $config {
     include augeasproviders
-    $defaults = { }
     create_resources(sysctl, $config, $defaults)
+  }
+  else {
+    $hiera_config = hiera_hash('system::sysctl')
+    if $hiera_config {
+      include augeasproviders
+      create_resources(sysctl, $hiera_config, $defaults)
+    }
   }
 }

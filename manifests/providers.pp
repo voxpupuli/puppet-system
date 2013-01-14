@@ -2,8 +2,13 @@ class system::providers (
   $config = undef
 ) {
   if $config {
+    $_config = $config
+  }
+  else {
+    $_config = hiera_hash('system::providers')
+  }
+  if $_config {
     if $config['host'] == 'augeas' {
-      include augeasproviders
       Host { provider => 'augeas' }
     }
     if $config['mailalias'] == 'augeas' {

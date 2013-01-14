@@ -1,12 +1,18 @@
 class system::services (
   $config = undef
 ) {
+  $defaults = {
+    ensure     => 'running',
+    hasrestart => true,
+    hasstatus  => true,
+  }
   if $config {
-    $defaults = {
-      ensure     => 'running',
-      hasrestart => true,
-      hasstatus  => true,
-    }
     create_resources(service, $config, $defaults)
+  }
+  else {
+    $hiera_config = hiera_hash('system::services')
+    if $hiera_config {
+      create_resources(service, $hiera_config, $defaults)
+    }
   }
 }

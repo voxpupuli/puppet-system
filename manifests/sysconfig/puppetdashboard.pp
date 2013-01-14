@@ -2,36 +2,42 @@ class system::sysconfig::puppetdashboard (
   $config = undef
 ) {
   if $config {
-    sysconfig::header { 'puppet-dashboard': }
-    sysconfig::entry { 'puppet-dashboard-home':
+    $puppetdashboard = $config
+  }
+  else {
+    $puppetdashboard = hiera_hash('system::sysconfig::puppetdashboard')
+  }
+  if $puppetdashboard {
+    syspuppetdashboard::header { 'puppet-dashboard': }
+    syspuppetdashboard::entry { 'puppet-dashboard-home':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_HOME',
-      val   => $config['home'],
+      val   => $puppetdashboard['home'],
     }
-    sysconfig::entry { 'puppet-dashboard-user':
+    syspuppetdashboard::entry { 'puppet-dashboard-user':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_USER',
-      val   => $config['user'],
+      val   => $puppetdashboard['user'],
     }
-    sysconfig::entry { 'puppet-dashboard-ruby':
+    syspuppetdashboard::entry { 'puppet-dashboard-ruby':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_RUBY',
-      val   => $config['ruby'],
+      val   => $puppetdashboard['ruby'],
     }
-    sysconfig::entry { 'puppet-dashboard-environment':
+    syspuppetdashboard::entry { 'puppet-dashboard-environment':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_ENVIRONMENT',
-      val   => $config['environment'],
+      val   => $puppetdashboard['environment'],
     }
-    sysconfig::entry { 'puppet-dashboard-iface':
+    syspuppetdashboard::entry { 'puppet-dashboard-iface':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_IFACE',
-      val   => $config['iface'],
+      val   => $puppetdashboard['iface'],
     }
-    sysconfig::entry { 'puppet-dashboard-port':
+    syspuppetdashboard::entry { 'puppet-dashboard-port':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_PORT',
-      val   => $config['port'],
+      val   => $puppetdashboard['port'],
     }
   }
 }

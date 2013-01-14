@@ -2,26 +2,32 @@ class system::sysconfig::puppetmaster (
   $config = undef
 ) {
   if $config {
-    sysconfig::header { 'puppetmaster': }
-    sysconfig::entry { 'puppetmaster-manifest':
+    $puppetmaster = $config
+  }
+  else {
+    $puppetmaster = hiera_hash('system::sysconfig::puppetmaster')
+  }
+  if $puppetmaster {
+    syspuppetmaster::header { 'puppetmaster': }
+    syspuppetmaster::entry { 'puppetmaster-manifest':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_MANIFEST',
-      val   => $config['manifest'],
+      val   => $puppetmaster['manifest'],
     }
-    sysconfig::entry { 'puppetmaster-ports':
+    syspuppetmaster::entry { 'puppetmaster-ports':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_PORTS',
-      val   => $config['ports'],
+      val   => $puppetmaster['ports'],
     }
-    sysconfig::entry { 'puppetmaster-log':
+    syspuppetmaster::entry { 'puppetmaster-log':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_LOG',
-      val   => $config['log'],
+      val   => $puppetmaster['log'],
     }
-    sysconfig::entry { 'puppetmaster-extra_opts':
+    syspuppetmaster::entry { 'puppetmaster-extra_opts':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_EXTRA_OPTS',
-      val   => $config['extra_opts'],
+      val   => $puppetmaster['extra_opts'],
     }
   }
 }
