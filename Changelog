@@ -14,6 +14,9 @@ applied with every Puppet run
 time Puppet runs take - package group changes are usually rare after the host
 is first set up.  Users can override this by supplying their own schedule.
 
+* Added support for the augeas type to enable simple configuration file
+changes to be made without writing new classes
+
 0.5.3:
 
 * Added 'crontabs' to create user crontab entries

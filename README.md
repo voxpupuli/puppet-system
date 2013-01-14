@@ -2,6 +2,7 @@
 
 Manage Linux system resources and services from hiera configuration.
 
+* *augeas*: apply file changes using the augeas tool
 * *crontabs*: set user crontab entries
 * *execs*:  run idempotent external commands
 * *facts*: set custom facts
@@ -12,6 +13,7 @@ Manage Linux system resources and services from hiera configuration.
 * *mailaliases* manage entries in /etc/aliases
 * *mounts*: manage entries in /etc/fstab
 * *packages*: manage system packages
+* *schedules*: determine when resource config should not be applied and how often
 * *services*: manage system services
 * *sshd*: manage configuration in /etc/ssh/sshd_config including subsystems like sftp
 * *sysconfig*: manage files under /etc/sysconfig: clock, i18n, keyboard, puppet-dashboard, puppet, puppetmaster, selinux
@@ -38,6 +40,35 @@ Include the system module in your puppet configuration:
     include system
 
 and add required hiera configuration.
+
+## augeas
+
+Apply changes to files using the augeas tool.  This enables configuration file
+changes to be made without writing new classes.
+
+Example 1:
+
+    system::augeas:
+      'test1':
+        context: '/files/etc/sysconfig/firstboot'
+        changes:
+          - 'set RUN_FIRSTBOOT YES'
+        onlyif:  'match other_value size > 0'
+
+Example 2:
+
+    system::augeas:
+      'jboss_conf':
+        content: '/files'
+        changes:
+          - 'set etc/jbossas/jbossas.conf/JBOSS_IP $ipaddress'
+          - 'set etc/jbossas/jbossas.conf/JAVA_HOME /usr'
+        load_path: '/usr/share/jbossas/lenses'
+
+Defaults:
+
+* ensure: present
+* user: root
 
 ## crontabs
 
@@ -219,6 +250,25 @@ Example configuration:
 Defaults:
 
 * ensure: installed
+
+## schedules
+
+Create schedules that determine when a resource should not be applied and the
+number times it should be appplied within a specified time period.
+
+Example configuration:
+
+    system::schedules:
+      'maintenance':
+        range:  '2 - 4'
+        period: 'daily'
+        repeat: 1
+      'half-hourly':
+        period: 'hourly'
+        repeat: 2
+
+The defined schedules can then we passed using the 'schedule' parameter to
+other types.
 
 ## services
 

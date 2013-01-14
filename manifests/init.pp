@@ -21,6 +21,12 @@ class system (
     stage { 'last': require => Stage['main'] }
   }
 
+  if ! member(exclude, 'augeas') {
+    class { '::system::augeas':
+      config => $config['augeas'],
+    }
+  }
+
   if ! member(exclude, 'crontabs') {
     class { '::system::crontabs':
       config => $config['crontabs'],
