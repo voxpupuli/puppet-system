@@ -87,6 +87,12 @@ class system (
     }
   }
 
+  if ! member(exclude, 'schedules') {
+    class { '::system::schedules':
+      config => $config['schedules'],
+    }
+  }
+
   if ! member(exclude, 'services') {
     class { '::system::services':
       config => $config['services'],
