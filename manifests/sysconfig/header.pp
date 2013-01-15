@@ -1,4 +1,4 @@
-define sysconfig::header {
+define system::sysconfig::header {
   $file = $title
   exec { "sysconfig-${file}-empty":
     command => "/bin/echo > /etc/sysconfig/${file}",

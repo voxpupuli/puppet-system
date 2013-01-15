@@ -8,23 +8,23 @@ class system::sysconfig::puppetmaster (
     $puppetmaster = hiera_hash('system::sysconfig::puppetmaster')
   }
   if $puppetmaster {
-    syspuppetmaster::header { 'puppetmaster': }
-    syspuppetmaster::entry { 'puppetmaster-manifest':
+    system::sysconfig::header { 'puppetmaster': }
+    system::sysconfig::entry { 'puppetmaster-manifest':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_MANIFEST',
       val   => $puppetmaster['manifest'],
     }
-    syspuppetmaster::entry { 'puppetmaster-ports':
+    system::sysconfig::entry { 'puppetmaster-ports':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_PORTS',
       val   => $puppetmaster['ports'],
     }
-    syspuppetmaster::entry { 'puppetmaster-log':
+    system::sysconfig::entry { 'puppetmaster-log':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_LOG',
       val   => $puppetmaster['log'],
     }
-    syspuppetmaster::entry { 'puppetmaster-extra_opts':
+    system::sysconfig::entry { 'puppetmaster-extra_opts':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_EXTRA_OPTS',
       val   => $puppetmaster['extra_opts'],

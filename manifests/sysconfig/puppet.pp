@@ -8,23 +8,23 @@ class system::sysconfig::puppet (
     $puppet = hiera_hash('system::sysconfig::puppet')
   }
   if $puppet {
-    syspuppet::header { 'puppet': }
-    syspuppet::entry { 'puppet-server':
+    system::sysconfig::header { 'puppet': }
+    system::sysconfig::entry { 'puppet-server':
       file  => 'puppet',
       var   => 'PUPPET_SERVER',
       val   => $puppet['server'],
     }
-    syspuppet::entry { 'puppet-port':
+    system::sysconfig::entry { 'puppet-port':
       file  => 'puppet',
       var   => 'PUPPET_PORT',
       val   => $puppet['port'],
     }
-    syspuppet::entry { 'puppet-log':
+    system::sysconfig::entry { 'puppet-log':
       file  => 'puppet',
       var   => 'PUPPET_LOG',
       val   => $puppet['log'],
     }
-    syspuppet::entry { 'puppet-extra_opts':
+    system::sysconfig::entry { 'puppet-extra_opts':
       file  => 'puppet',
       var   => 'PUPPET_EXTRA_OPTS',
       val   => $puppet['extra_opts'],

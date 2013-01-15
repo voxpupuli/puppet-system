@@ -9,8 +9,8 @@ class system::sysconfig::clock (
   }
   if $clock {
     $timezone = $clock['timezone']
-    sysconfig::header { 'clock': }
-    sysconfig::entry { 'clock-zone':
+    system::sysconfig::header { 'clock': }
+    system::sysconfig::entry { 'clock-zone':
       file  => 'clock',
       var   => 'ZONE',
       val   => $timezone,

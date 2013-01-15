@@ -8,14 +8,14 @@ class system::sysconfig::selinux (
     $selinux = hiera_hash('system::sysconfig::selinux')
   }
   if $selinux {
-    sysselinux::header { 'selinux': }
-    sysselinux::entry { 'selinux-state':
+    system::sysconfig::header { 'selinux': }
+    system::sysconfig::entry { 'selinux-state':
       file     => 'selinux',
       var      => 'SELINUX',
       val      => $selinux['state'],
       noquotes => true,
     }
-    sysselinux::entry { 'selinux-type':
+    system::sysconfig::entry { 'selinux-type':
       file     => 'selinux',
       var      => 'SELINUXTYPE',
       val      => $selinux['type'],

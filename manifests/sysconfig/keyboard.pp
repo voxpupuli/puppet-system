@@ -8,23 +8,23 @@ class system::sysconfig::keyboard (
     $keyboard = hiera_hash('system::sysconfig::keyboard')
   }
   if $keyboard {
-    syskeyboard::header { 'keyboard': }
-    syskeyboard::entry { 'keyboard-keytable':
+    system::sysconfig::header { 'keyboard': }
+    system::sysconfig::entry { 'keyboard-keytable':
       file  => 'keyboard',
       var   => 'KEYTABLE',
       val   => $keyboard['keytable'],
     }
-    syskeyboard::entry { 'keyboard-model':
+    system::sysconfig::entry { 'keyboard-model':
       file  => 'keyboard',
       var   => 'MODEL',
       val   => $keyboard['model'],
     }
-    syskeyboard::entry { 'keyboard-layout':
+    system::sysconfig::entry { 'keyboard-layout':
       file  => 'keyboard',
       var   => 'LAYOUT',
       val   => $keyboard['layout'],
     }
-    syskeyboard::entry { 'keyboard-keyboardtype':
+    system::sysconfig::entry { 'keyboard-keyboardtype':
       file  => 'keyboard',
       var   => 'KEYBOARDTYPE',
       val   => $keyboard['keyboardtype'],

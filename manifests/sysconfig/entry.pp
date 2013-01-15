@@ -1,4 +1,4 @@
-define sysconfig::entry (
+define system::sysconfig::entry (
   $file,
   $var,
   $val,
