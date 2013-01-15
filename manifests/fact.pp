@@ -4,7 +4,7 @@ define system::fact (
   $var = "FACTER_${title}"
 
   # Add to /etc/sysconfig/puppet so the puppet agent picks it up
-  sysconfig::entry { "system-fact-${title}":
+  system::sysconfig::entry { "system-fact-${title}":
     file  => 'puppet',
     var   => "export ${var}",
     val   => $value,
