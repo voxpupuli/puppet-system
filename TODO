@@ -1,0 +1,21 @@
+0.6.1:
+
+* TODO: system::files: Added support for processing templates under
+templatedir
+
+0.6.x:
+
+* TODO: Added rspec-puppet tests for all classes and defines
+
+0.7:
+
+* TODO: Add sudoers support
+
+* TODO: Change users and groups to be virtual that need to be realized on each
+  host. Copy create_resources from Puppet 3.1 (as this can create virtual
+  resources) and rename as system_create_resources.  Only use this where virtual
+  resources are required.
+
+Future:
+
+* TODO: Changes to work on other Linux distributions like Ubuntu, Debian and SuSE
