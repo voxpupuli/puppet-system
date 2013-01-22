@@ -43,10 +43,20 @@ and add required hiera configuration.
 
 ## augeas
 
-Apply changes to files using the augeas tool.  This enables configuration file
-changes to be made without writing new classes.
+Apply changes to files using the augeas tool.  This enables simple
+configuration file changes to be made without writing new classes.
 
 Example 1:
+
+    system::augeas:
+      'ntp':
+        context: '/files/etc/ntp.conf'
+        changes:
+          - 'set server[1] 0.uk.pool.ntp.org'
+          - 'set server[2] 1.uk.pool.ntp.org'
+          - 'set server[3] 2.uk.pool.ntp.org'
+
+Example 2:
 
     system::augeas:
       'test1':
@@ -55,11 +65,11 @@ Example 1:
           - 'set RUN_FIRSTBOOT YES'
         onlyif:  'match other_value size > 0'
 
-Example 2:
+Example 3:
 
     system::augeas:
       'jboss_conf':
-        content: '/files'
+        context: '/files'
         changes:
           - 'set etc/jbossas/jbossas.conf/JBOSS_IP $ipaddress'
           - 'set etc/jbossas/jbossas.conf/JAVA_HOME /usr'

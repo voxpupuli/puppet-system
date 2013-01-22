@@ -1,3 +1,11 @@
+system::augeas:
+  'ntp':
+    context: '/files/etc/ntp.conf'
+    changes:
+      - 'set server[1] 0.uk.pool.ntp.org'
+      - 'set server[2] 1.uk.pool.ntp.org'
+      - 'set server[3] 2.uk.pool.ntp.org'
+
 system::crontabs:
   'logrotate':
     command: '/usr/sbin/logrotate'
