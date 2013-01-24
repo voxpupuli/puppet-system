@@ -13,13 +13,11 @@ class system::sysconfig::selinux (
       file     => 'selinux',
       var      => 'SELINUX',
       val      => $selinux['state'],
-      noquotes => true,
     }
     system::sysconfig::entry { 'selinux-type':
       file     => 'selinux',
       var      => 'SELINUXTYPE',
       val      => $selinux['type'],
-      noquotes => true,
     }
   }
 }

@@ -6,7 +6,7 @@ define system::fact (
   # Add to /etc/sysconfig/puppet so the puppet agent picks it up
   system::sysconfig::entry { "system-fact-${title}":
     file  => 'puppet',
-    var   => "export ${var}",
+    var   => $var,
     val   => $value,
   }
 
