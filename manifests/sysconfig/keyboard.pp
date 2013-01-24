@@ -5,7 +5,7 @@ class system::sysconfig::keyboard (
     $keyboard = $config
   }
   else {
-    $keyboard = hiera_hash('system::sysconfig::keyboard')
+    $keyboard = hiera_hash('system::sysconfig::keyboard', undef)
   }
   if $keyboard {
     system::sysconfig::header { 'keyboard': }

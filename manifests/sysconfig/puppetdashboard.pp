@@ -5,7 +5,7 @@ class system::sysconfig::puppetdashboard (
     $puppetdashboard = $config
   }
   else {
-    $puppetdashboard = hiera_hash('system::sysconfig::puppetdashboard')
+    $puppetdashboard = hiera_hash('system::sysconfig::puppetdashboard', undef)
   }
   if $puppetdashboard {
     system::sysconfig::header { 'puppet-dashboard': }

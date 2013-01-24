@@ -5,7 +5,7 @@ class system::sysconfig::i18n (
     $i18n = $config
   }
   else {
-    $i18n = hiera_hash('system::sysconfig::i18n')
+    $i18n = hiera_hash('system::sysconfig::i18n', undef)
   }
   if $i18n {
     system::sysconfig::header { 'i18n': }

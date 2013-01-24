@@ -5,7 +5,7 @@ class system::sysconfig::puppetmaster (
     $puppetmaster = $config
   }
   else {
-    $puppetmaster = hiera_hash('system::sysconfig::puppetmaster')
+    $puppetmaster = hiera_hash('system::sysconfig::puppetmaster', undef)
   }
   if $puppetmaster {
     system::sysconfig::header { 'puppetmaster': }

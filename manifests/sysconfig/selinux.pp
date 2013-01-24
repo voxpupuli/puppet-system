@@ -5,7 +5,7 @@ class system::sysconfig::selinux (
     $selinux = $config
   }
   else {
-    $selinux = hiera_hash('system::sysconfig::selinux')
+    $selinux = hiera_hash('system::sysconfig::selinux', undef)
   }
   if $selinux {
     system::sysconfig::header { 'selinux': }

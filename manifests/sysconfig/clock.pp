@@ -5,7 +5,7 @@ class system::sysconfig::clock (
     $clock = $config
   }
   else {
-    $clock = hiera_hash('system::sysconfig::clock')
+    $clock = hiera_hash('system::sysconfig::clock', undef)
   }
   if $clock {
     $timezone = $clock['timezone']
