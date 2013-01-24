@@ -123,11 +123,6 @@ class system (
     }
   }
 
-  #$syslog = hiera_hash('system::syslog', $config['syslog'])
-  #class { '::system::syslog':
-  #  config => $syslog,
-  #}
-
   if ! member(exclude, 'users') {
     class { '::system::users':
       config  => $config['users'],
