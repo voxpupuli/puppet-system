@@ -41,6 +41,16 @@ Include the system module in your puppet configuration:
 
 and add required hiera configuration.
 
+The system::exclude parameter can be set to a list of system classes to exclude
+when doing 'include system', which is useful when testing or debugging issues
+or just to prevent config lower in the hierarchy being applied.
+
+For example:
+
+    system::exclude: [ 'packages', 'yumgroups' ]
+
+will ignore any configuration for system::packages and system::yumgroups.
+
 ## augeas
 
 Apply changes to files using the augeas tool.  This enables configuration file
@@ -351,6 +361,8 @@ Example configuration:
 
 No defaults.
 
+Note: Values must not contain whitespace
+
 ## sysctl
 
 Manage settings in /etc/sysctl.conf
@@ -424,9 +436,16 @@ Defaults:
 
 * optional: false
 * usecache: true
+* schedule: daily
 
 Note: Set 'usecache: false' if 'yum -C grouplist' does not work on your system
 and you are getting System::Yumgroup resources created on every Puppet run
+
+Note: By default the yumgroup type has a 'daily' schedule to reduce the time
+Puppet runs take - package group changes are usually rare after the host is
+first set up. This means that it will run once every 24 hours. You override
+this by supplying your own schedule parameter - see system::schedules to create
+your own custom schedules.
 
 ## yumrepos
 
