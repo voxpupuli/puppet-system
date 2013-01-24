@@ -9,7 +9,7 @@ class system::limits (
     }
   }
   else {
-    $hiera_config = hiera_hash('system::limits')
+    $hiera_config = hiera_hash('system::limits', undef)
     if $hiera_config {
       include limits
       class { '::limits':

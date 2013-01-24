@@ -5,7 +5,7 @@ class system::providers (
     $_config = $config
   }
   else {
-    $_config = hiera_hash('system::providers')
+    $_config = hiera_hash('system::providers', undef)
   }
   if $_config {
     if $config['host'] == 'augeas' {

@@ -9,7 +9,7 @@ class system::crontabs (
     create_resources(cron, $config, $defaults)
   }
   else {
-    $hiera_config = hiera_hash('system::crontabs')
+    $hiera_config = hiera_hash('system::crontabs', undef)
     if $hiera_config {
       create_resources(cron, $hiera_config, $defaults)
     }

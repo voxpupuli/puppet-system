@@ -6,7 +6,7 @@ class system::augeas (
     create_resources(augeas, $config, $defaults)
   }
   else {
-    $hiera_config = hiera_hash('system::augeas')
+    $hiera_config = hiera_hash('system::augeas', undef)
     if $hiera_config {
       create_resources(augeas, $hiera_config, $defaults)
     }

@@ -10,7 +10,7 @@ class system::services (
     create_resources(service, $config, $defaults)
   }
   else {
-    $hiera_config = hiera_hash('system::services')
+    $hiera_config = hiera_hash('system::services', undef)
     if $hiera_config {
       create_resources(service, $hiera_config, $defaults)
     }

@@ -8,7 +8,7 @@ class system::groups (
     create_resources(group, $config, $defaults)
   }
   else {
-    $hiera_config = hiera_hash('system::groups')
+    $hiera_config = hiera_hash('system::groups', undef)
     if $hiera_config {
       create_resources(group, $hiera_config, $defaults)
     }
