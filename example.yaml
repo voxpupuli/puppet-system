@@ -5,6 +5,8 @@ system::crontabs:
     hour:    '2'
     minute:  '0'
 
+system::exclude: [ 'yumgroups', 'yumrepos', 'packages']
+
 system::execs:
   'update-tomcat-deploy':
     command: '/usr/bin/svn up'
