@@ -41,13 +41,15 @@ Include the system module in your puppet configuration:
 
 and add required hiera configuration.
 
-The system::exclude parameter can be set to a list of system classes to exclude
-when doing 'include system', which is useful when testing or debugging issues
-or just to prevent config lower in the hierarchy being applied.
+Note: To exclude certain system classes when doing 'include system' you can set
+their schedule parameter to 'never'.  This may be useful when testing or
+debugging issues or just to prevent config lower in the hierarchy being
+applied.
 
 For example:
 
-    system::exclude: [ 'packages', 'yumgroups' ]
+    system::packages::schedule:  'never'
+    system::yumgroups::schedule: 'never'
 
 will ignore any configuration for system::packages and system::yumgroups.
 
@@ -264,7 +266,7 @@ Defaults:
 ## schedules
 
 Create schedules that determine when a resource should not be applied and the
-number times it should be appplied within a specified time period.
+number times it should be applied within a specified time period.
 
 Example configuration:
 
@@ -277,8 +279,43 @@ Example configuration:
         period: 'hourly'
         repeat: 2
 
-The defined schedules can then we passed using the 'schedule' parameter to
+The defined schedules can then be passed using the 'schedule' parameter to
 other types.
+
+Example 1:
+
+    system::schedule: 'maintenance'
+
+sets the default schedule for all system resources so that they are only
+run during the maintenance window of 2:00 to 04:59.
+
+Example 2:
+
+    system::services::schedule: 'daily'
+
+sets the default schedule for all system::services resources to be once a day.
+
+Example 3:
+
+    system::services:
+      httpd:
+        ensure: 'running'
+        enable: 'true'
+        schedule: 'half-hourly'
+
+overrides the services schedule for the httpd resource using a custom schedule
+we defined above.
+
+The default Puppet schedules are:
+
+* daily
+* hourly
+* monthly
+* never
+* weekly
+
+and the system::schedule class defines another called *always* that schedules
+the resource on every Puppet run.
 
 ## services
 

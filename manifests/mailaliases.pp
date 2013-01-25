@@ -1,7 +1,10 @@
 class system::mailaliases (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
-  $defaults = {}
+  $defaults = {
+    schedule => $schedule,
+  }
   if $config {
     create_resources(mailalias, $config, $defaults)
   }

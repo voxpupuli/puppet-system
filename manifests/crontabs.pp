@@ -1,9 +1,11 @@
 class system::crontabs (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
   $defaults = {
-    ensure => 'present',
-    user   => 'root',
+    ensure   => 'present',
+    schedule => $schedule,
+    user     => 'root',
   }
   if $config {
     create_resources(cron, $config, $defaults)

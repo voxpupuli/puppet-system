@@ -1,8 +1,10 @@
 class system::hosts (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
   $defaults = {
-    ensure => 'present',
+    ensure   => 'present',
+    schedule => $schedule,
   }
   if $config {
     create_resources(host, $config, $defaults)

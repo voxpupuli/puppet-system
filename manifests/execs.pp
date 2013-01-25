@@ -1,7 +1,10 @@
 class system::execs (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
-  $defaults = {}
+  $defaults = {
+    schedule => $schedule,
+  }
   if $config {
     create_resources(exec, $config, $defaults)
   }

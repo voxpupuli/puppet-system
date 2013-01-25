@@ -1,7 +1,10 @@
 class system::sysctl (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
-  $defaults = {}
+  $defaults = {
+    schedule => $schedule,
+  }
   if $config {
     include augeasproviders
     create_resources(sysctl, $config, $defaults)

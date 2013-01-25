@@ -1,9 +1,11 @@
 class system::users (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
   $defaults = {
-    ensure => 'present',
-    shell  => '/bin/bash'
+    ensure   => 'present',
+    schedule => $schedule,
+    shell    => '/bin/bash'
   }
   if $config {
     include augeasproviders

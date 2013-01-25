@@ -1,10 +1,12 @@
 class system::services (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
   $defaults = {
     ensure     => 'running',
     hasrestart => true,
     hasstatus  => true,
+    schedule   => $schedule,
   }
   if $config {
     create_resources(service, $config, $defaults)

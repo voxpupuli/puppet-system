@@ -1,8 +1,10 @@
 class system::groups (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
   $defaults = {
-    ensure => 'present',
+    ensure   => 'present',
+    schedule => $schedule,
   }
   if $config {
     create_resources(group, $config, $defaults)

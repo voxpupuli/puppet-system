@@ -1,7 +1,10 @@
 class system::facts (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
-  $defaults = {}
+  $defaults = {
+    schedule => $schedule,
+  }
   if $config {
     create_resources('system::fact', $config, $defaults)
   }

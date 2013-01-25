@@ -1,5 +1,5 @@
 class system::providers (
-  $config = undef
+  $config   = undef,
 ) {
   if $config {
     $_config = $config

@@ -1,7 +1,7 @@
 class system (
-  $config  = {},
-  $exclude = []
-){
+  $config   = {},
+  $schedule = undef,
+) {
   # Ensure that files and directories are created before
   # other resources (like mounts) that may depend on them
   if ! defined(Stage['third']) {
@@ -21,134 +21,96 @@ class system (
     stage { 'last': require => Stage['main'] }
   }
 
-  if ! member($exclude, 'augeas') {
-    class { '::system::augeas':
-      config => $config['augeas'],
-    }
+  class { '::system::augeas':
+    config => $config['augeas'],
   }
 
-  if ! member($exclude, 'crontabs') {
-    class { '::system::crontabs':
-      config => $config['crontabs'],
-    }
+  class { '::system::crontabs':
+    config => $config['crontabs'],
   }
 
-  if ! member($exclude, 'execs') {
-    class { '::system::execs':
-      config => $config['execs'],
-      stage  => last,
-    }
+  class { '::system::execs':
+    config => $config['execs'],
+    stage  => last,
   }
 
-  if ! member($exclude, 'facts') {
-    class { '::system::facts':
-      config => $config['facts'],
-    }
+  class { '::system::facts':
+    config => $config['facts'],
   }
 
-  if ! member($exclude, 'files') {
-    class { '::system::files':
-      config => $config['files'],
-      stage  => third,
-    }
+  class { '::system::files':
+    config => $config['files'],
+    stage  => third,
   }
 
-  if ! member($exclude, 'groups') {
-    class { '::system::groups':
-      config => $config['groups'],
-      stage  => second
-    }
+  class { '::system::groups':
+    config => $config['groups'],
+    stage  => second
   }
 
-  if ! member($exclude, 'hosts') {
-    class { '::system::hosts':
-      config => $config['hosts'],
-    }
+  class { '::system::hosts':
+    config => $config['hosts'],
   }
 
-  if ! member($exclude, 'limits') {
-    class { '::system::limits':
-      config => $config['limits'],
-    }
+  class { '::system::limits':
+    config => $config['limits'],
   }
 
-  if ! member($exclude, 'mailaliases') {
-    class { '::system::mailaliases':
-      config => $config['mailaliases'],
-    }
+  class { '::system::mailaliases':
+    config => $config['mailaliases'],
   }
 
-  if ! member($exclude, 'mounts') {
-    class { '::system::mounts':
-      config => $config['mounts'],
-      stage  => last,
-    }
+  class { '::system::mounts':
+    config => $config['mounts'],
+    stage  => last,
   }
 
-  if ! member($exclude, 'packages') {
-    class { '::system::packages':
-      config  => $config['packages'],
-      stage   => second,
-      require => Class['::system::yumgroups'],
-    }
+  class { '::system::packages':
+    config  => $config['packages'],
+    stage   => second,
+    require => Class['::system::yumgroups'],
   }
 
-  if ! member($exclude, 'schedules') {
-    class { '::system::schedules':
-      config => $config['schedules'],
-    }
+  class { '::system::schedules':
+    config => $config['schedules'],
+    stage  => first,
   }
 
-  if ! member($exclude, 'services') {
-    class { '::system::services':
-      config => $config['services'],
-    }
+  class { '::system::services':
+    config => $config['services'],
   }
 
-  if ! member($exclude, 'sshd') {
-    class { '::system::sshd':
-      config => $config['sshd'],
-    }
+  class { '::system::sshd':
+    config => $config['sshd'],
   }
 
-  if ! member($exclude, 'sysconfig') {
-    class { '::system::sysconfig':
-      config => $config['sysconfig'],
-    }
+  class { '::system::sysconfig':
+    config => $config['sysconfig'],
   }
 
-  if ! member($exclude, 'sysctl') {
-    class { '::system::sysctl':
-      config => $config['sysctl'],
-    }
+  class { '::system::sysctl':
+    config => $config['sysctl'],
   }
 
-  if ! member($exclude, 'users') {
-    class { '::system::users':
-      config  => $config['users'],
-      stage   => second,
-      require => Class['::system::groups'],
-    }
+  class { '::system::users':
+    config  => $config['users'],
+    stage   => second,
+    require => Class['::system::groups'],
   }
 
-  if ! member($exclude, 'yumgroups') {
-    class { '::system::yumgroups':
-      config => $config['yumgroups'],
-      stage  => second,
-    }
+  class { '::system::yumgroups':
+    config => $config['yumgroups'],
+    stage  => second,
   }
 
-  if ! member($exclude, 'yumrepos') {
-    class { '::system::yumrepos':
-      config => $config['yumrepos'],
-      stage  => first,
-    }
+  class { '::system::yumrepos':
+    config  => $config['yumrepos'],
+    stage   => first,
+    require => Class['::system::schedules'],
   }
 
-  if ! member($exclude, 'providers') {
-    class { '::system::providers':
-      config => $config['providers'],
-      stage  => first
-    }
+  class { '::system::providers':
+    config => $config['providers'],
+    stage  => first
   }
 }

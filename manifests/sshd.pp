@@ -1,8 +1,11 @@
 class system::sshd (
-  $config         = undef,
+  $config   = undef,
+  $schedule = $::system::schedule,
   $sync_host_keys = true
 ) {
-  $defaults = {}
+  $defaults = {
+    schedule => $schedule,
+  }
   if $config {
     include augeasproviders
     create_resources(sshd_config, $config, $defaults)

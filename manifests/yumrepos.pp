@@ -1,9 +1,11 @@
 class system::yumrepos (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
   $defaults = {
-    'enabled'  => '1',
-    'gpgcheck' => '1',
+    enabled  => '1',
+    gpgcheck => '1',
+    schedule => $schedule,
   }
   if $config {
     create_resources(yumrepo, $config, $defaults)
