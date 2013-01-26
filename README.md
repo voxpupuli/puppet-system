@@ -120,13 +120,32 @@ Note: The commands will be run on every Puppet run unless you specify 'onlyif',
 
 ## facts
 
-Set custom facts
+Set custom facts using the facter_dot_d Facter plugin that loads facts from
+/etc/facter/facts.d
+(https://github.com/ripienaar/facter-facts/tree/master/facts-dot-d)
 
 Example configuration:
 
     system::facts:
       location:
         value: 'London'
+      ntpq:
+        type:  'script'
+        value: "#!/bin/bash\nprintf ntpq=\n/usr/sbin/ntpq -p | /usr/bin/tail -1\n"
+
+These facts can be queried on a host using 'facter -p':
+
+    $ facter -p location
+    London
+    $ facter -p ntpq
+    *10.43.4.8       158.43.128.33    2 u  820 1024  377    0.538    0.155   0.048
+
+Set:
+
+    system::facts::cleanold: true
+
+to remove facts from the old locations under /etc/profile.d and in
+/etc/sysconfig/puppet.
 
 ## files
 

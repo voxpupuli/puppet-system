@@ -17,6 +17,9 @@ system::execs:
 system::facts:
   location:
     value: 'London'
+  ntpq:
+    type:  'script'
+    value: "#!/bin/bash\nprintf ntpq=\n/usr/sbin/ntpq -p | /usr/bin/tail -1\n"
 
 system::files:
   /apps:

@@ -1,3 +1,9 @@
+0.6.1:
+
+* Set custom facts using the facter_dot_d Facter plugin that loads facts from
+/etc/facter/facts.d.  Set 'system::facts::cleanold: true' to remove facts from
+the old locations under /etc/profile.d and in /etc/sysconfig/puppet.  
+
 0.6.0:
 
 * Refactoring to make it easier to use without hiera (ie. just as
