@@ -1,15 +1,17 @@
 class system::mounts (
-  $config = undef
+  $config   = undef,
+  $schedule = $::system::schedule,
 ) {
   $defaults = {
-    'atboot' => true,
-    'ensure' => 'mounted',
+    atboot   => true,
+    ensure   => 'mounted',
+    schedule => $schedule,
   }
   if $config {
     create_resources(mount, $config, $defaults)
   }
   else {
-    $hiera_config = hiera_hash('system::mounts')
+    $hiera_config = hiera_hash('system::mounts', undef)
     if $hiera_config {
       create_resources(mount, $hiera_config, $defaults)
     }

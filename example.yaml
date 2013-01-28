@@ -25,6 +25,9 @@ system::execs:
 system::facts:
   location:
     value: 'London'
+  ntpq:
+    type:  'script'
+    value: "#!/bin/bash\nprintf ntpq=\n/usr/sbin/ntpq -p | /usr/bin/tail -1\n"
 
 system::files:
   /apps:
@@ -88,6 +91,15 @@ system::packages:
     ensure: '9.5.1-1'
   ConsoleKit:
     ensure: '0.4.5-2.fc17'
+
+system::schedules:
+  'always':
+    range:  '0 - 23'
+  'maintenance':
+    range:  '0 - 4'
+  'half-hourly':
+    period: 'hourly'
+    repeat: 2
 
 system::sshd:
   PasswordAuthentication:

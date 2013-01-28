@@ -41,6 +41,18 @@ Include the system module in your puppet configuration:
 
 and add required hiera configuration.
 
+Note: To exclude certain system classes when doing 'include system' you can set
+their schedule parameter to 'never'.  This may be useful when testing or
+debugging issues or just to prevent config lower in the hierarchy being
+applied.
+
+For example:
+
+    system::packages::schedule:  'never'
+    system::yumgroups::schedule: 'never'
+
+will ignore any configuration for system::packages and system::yumgroups.
+
 ## augeas
 
 Apply changes to files using the augeas tool.  This enables simple
@@ -118,13 +130,32 @@ Note: The commands will be run on every Puppet run unless you specify 'onlyif',
 
 ## facts
 
-Set custom facts
+Set custom facts using the facter_dot_d Facter plugin that loads facts from
+/etc/facter/facts.d
+(https://github.com/ripienaar/facter-facts/tree/master/facts-dot-d)
 
 Example configuration:
 
     system::facts:
       location:
         value: 'London'
+      ntpq:
+        type:  'script'
+        value: "#!/bin/bash\nprintf ntpq=\n/usr/sbin/ntpq -p | /usr/bin/tail -1\n"
+
+These facts can be queried on a host using 'facter -p':
+
+    $ facter -p location
+    London
+    $ facter -p ntpq
+    *10.43.4.8       158.43.128.33    2 u  820 1024  377    0.538    0.155   0.048
+
+Set:
+
+    system::facts::cleanold: true
+
+to remove facts from the old locations under /etc/profile.d and in
+/etc/sysconfig/puppet.
 
 ## files
 
@@ -264,7 +295,7 @@ Defaults:
 ## schedules
 
 Create schedules that determine when a resource should not be applied and the
-number times it should be appplied within a specified time period.
+number times it should be applied within a specified time period.
 
 Example configuration:
 
@@ -277,8 +308,43 @@ Example configuration:
         period: 'hourly'
         repeat: 2
 
-The defined schedules can then we passed using the 'schedule' parameter to
+The defined schedules can then be passed using the 'schedule' parameter to
 other types.
+
+Example 1:
+
+    system::schedule: 'maintenance'
+
+sets the default schedule for all system resources so that they are only
+run during the maintenance window of 2:00 to 04:59.
+
+Example 2:
+
+    system::services::schedule: 'daily'
+
+sets the default schedule for all system::services resources to be once a day.
+
+Example 3:
+
+    system::services:
+      httpd:
+        ensure: 'running'
+        enable: 'true'
+        schedule: 'half-hourly'
+
+overrides the services schedule for the httpd resource using a custom schedule
+we defined above.
+
+The default Puppet schedules are:
+
+* daily
+* hourly
+* monthly
+* never
+* weekly
+
+and the system::schedule class defines another called *always* that schedules
+the resource on every Puppet run.
 
 ## services
 
@@ -361,6 +427,8 @@ Example configuration:
 
 No defaults.
 
+Note: Values must not contain whitespace
+
 ## sysctl
 
 Manage settings in /etc/sysctl.conf
@@ -434,9 +502,16 @@ Defaults:
 
 * optional: false
 * usecache: true
+* schedule: daily
 
 Note: Set 'usecache: false' if 'yum -C grouplist' does not work on your system
 and you are getting System::Yumgroup resources created on every Puppet run
+
+Note: By default the yumgroup type has a 'daily' schedule to reduce the time
+Puppet runs take - package group changes are usually rare after the host is
+first set up. This means that it will run once every 24 hours. You override
+this by supplying your own schedule parameter - see system::schedules to create
+your own custom schedules.
 
 ## yumrepos
 
