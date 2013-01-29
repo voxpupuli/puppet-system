@@ -1,3 +1,15 @@
+0.6.2:
+
+* Facts that have array values now create multiple facts with the array index
+as a suffix.  For example:
+
+    software: [ 'jboss', 'httpd' ]
+    
+creates the facts:
+
+    software0: 'jboss'
+    software1: 'httpd'
+
 0.6.1:
 
 * Set custom facts using the facter_dot_d Facter plugin that loads facts from
