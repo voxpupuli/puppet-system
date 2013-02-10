@@ -1,40 +1,51 @@
 define system::fact (
-  $value = undef
+  $value    = undef,
+  $schedule = $::system::schedule,
+  $type     = 'yaml',
+  $ttl      = undef,
 ) {
-  $var = "FACTER_${title}"
-
-  # Add to /etc/sysconfig/puppet so the puppet agent picks it up
-  sysconfig::entry { "system-fact-${title}":
-    file  => 'puppet',
-    var   => "export ${var}",
-    val   => $value,
+  # This uses facter_dot_d which is a Facter plugin that loads facts from
+  # /etc/facter/facts.d
+  $var = $title
+  if is_array($value) {
+    $resource_name = "${var}%index%"
+    $parameters = {
+      schedule => $schedule,
+      type     => $type,
+      ttl      => $ttl,
+    }
+    $dynamic_parameters = {
+      'value' => '%s'
+    }
+    $created_resource_hash =
+      create_resources_hash_from($resource_name, $value, $parameters, $dynamic_parameters)
+    create_resources('system::fact', $created_resource_hash)
   }
-
-  $sh_filename  = '/etc/profile.d/custom_facts.sh'
-
-  # If there is an existing entry then replace the value
-  exec { "fact-replace-${title}-sh":
-    command => "/usr/bin/perl -pi -e 's#^\s*\#?\s*(export )?${var}=.*?$#export ${var}=\"${value}\"#' ${sh_filename}",
-    unless  => "/bin/grep -w '^export ${var}=\"${value}\"' ${sh_filename}",
-  }
-  # Otherwise add a new entry
-  exec { "fact-add-${title}-sh":
-    command => "/bin/echo 'export ${var}=\"${value}\"' >> ${sh_filename}",
-    unless  => "/bin/grep -w '^export ${var}=\"${value}\"' ${sh_filename}",
-    require => Exec["fact-replace-${title}-sh"],
-  }
-
-  $csh_filename = '/etc/profile.d/custom_facts.csh'
-
-  # If there is an existing entry then replace the value
-  exec { "fact-replace-${title}-csh":
-    command => "/usr/bin/perl -pi -e 's#^\s*\#?\s*(setenv )${var}\s+.*?$#setenv ${var} \"${value}\"#' ${sh_filename}",
-    unless  => "/bin/grep -w '^setenv ${var} \"${value}\"' ${csh_filename}",
-  }
-  # Otherwise add a new entry
-  exec { "fact-add-${title}-csh":
-    command => "/bin/echo 'setenv ${var} \"${value}\"' >> ${csh_filename}",
-    unless  => "/bin/grep -w '^setenv ${var} \"${value}\"' ${csh_filename}",
-    require => Exec["fact-replace-${title}-csh"],
+  else {
+    case $type {
+      'script': {
+        file { "/etc/facter/facts.d/system_facts_${var}.sh":
+          owner    => 'root',
+          group    => 'root',
+          mode     => '0744',
+          content  => $value,
+        }
+        if $ttl {
+          file { "/etc/facter/facts.d/system_facts_${var}.sh.ttl":
+            owner    => 'root',
+            group    => 'root',
+            mode     => '0744',
+            content  => "${ttl}\n",
+          }
+        }
+      }
+      default: {
+        concat::fragment { "system_facts_${var}":
+          target   => '/etc/facter/facts.d/system_facts.yaml',
+          content  => "${var}: ${value}\n",
+          order    => '02',
+        }
+      }
+    }
   }
 }

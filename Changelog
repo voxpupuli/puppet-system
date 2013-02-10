@@ -1,3 +1,57 @@
+0.6.2:
+
+* Facts that have array values now create multiple facts with the array index
+as a suffix.  For example:
+
+    software: [ 'jboss', 'httpd' ]
+    
+creates the facts:
+
+    software0: 'jboss'
+    software1: 'httpd'
+
+0.6.1:
+
+* Set custom facts using the facter_dot_d Facter plugin that loads facts from
+/etc/facter/facts.d.  Set 'system::facts::cleanold: true' to remove facts from
+the old locations under /etc/profile.d and in /etc/sysconfig/puppet.  
+
+* Facts can now be set by running scripts - see example.yaml.
+
+0.6.0:
+
+* Refactoring to make it easier to use without hiera (ie. just as
+parameterised classes).  
+
+* Added support for schedules so that configuration does not need to be
+applied with every Puppet run.  All classes other than system::providers and
+system::schedules can be configured with a default schedule, including the
+system class itself.  An 'always' schedule is provided in addition to the
+default schedules available (eg. hourly, daily, weekly).
+
+* Changed the yumgroup type to have a default 'daily' schedule to reduce the
+time Puppet runs take - package group changes are usually rare after the host
+is first set up.  Users can override this by supplying their own schedule.
+
+* Documented that particular system classes can be excluded when doing
+'include system' by setting their default schedule to 'never' which is useful
+when testing or debugging issues or just to prevent config lower in the
+hierarchy from being applied.
+
+* Added support for the augeas type to enable simple configuration file
+changes to be made without writing new classes
+
+* Use augeas to make sysconfig file changes as it is more reliable.  One
+limitation is that all values are now unquoted so they can't have any
+whitespace. This only appears to potentially affect system::sysconfig::puppet
+puppet-extra_opts.
+
+0.5.3:
+
+* Added 'crontabs' to create user crontab entries
+
+* Added 'execs' to run idempotent external commands
+
 0.5.2:
 
 * limits: Fixed examples to show changes due to multiple entry support

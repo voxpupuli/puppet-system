@@ -1,27 +1,40 @@
 class system::sysconfig::keyboard (
-  $config = undef
+  $config   = undef,
+  $schedule = undef,
 ) {
   if $config {
-    sysconfig::header { 'keyboard': }
-    sysconfig::entry { 'keyboard-keytable':
+    $keyboard = $config
+  }
+  else {
+    $keyboard = hiera_hash('system::sysconfig::keyboard', undef)
+  }
+  if $keyboard {
+    system::sysconfig::header { 'keyboard':
+      schedule => $schedule,
+    }
+    system::sysconfig::entry { 'keyboard-keytable':
       file  => 'keyboard',
       var   => 'KEYTABLE',
-      val   => $config['keytable'],
+      val   => $keyboard['keytable'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'keyboard-model':
+    system::sysconfig::entry { 'keyboard-model':
       file  => 'keyboard',
       var   => 'MODEL',
-      val   => $config['model'],
+      val   => $keyboard['model'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'keyboard-layout':
+    system::sysconfig::entry { 'keyboard-layout':
       file  => 'keyboard',
       var   => 'LAYOUT',
-      val   => $config['layout'],
+      val   => $keyboard['layout'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'keyboard-keyboardtype':
+    system::sysconfig::entry { 'keyboard-keyboardtype':
       file  => 'keyboard',
       var   => 'KEYBOARDTYPE',
-      val   => $config['keyboardtype'],
+      val   => $keyboard['keyboardtype'],
+      schedule => $schedule,
     }
   }
 }

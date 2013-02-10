@@ -1,37 +1,52 @@
 class system::sysconfig::puppetdashboard (
-  $config = undef
+  $config   = undef,
+  $schedule = undef,
 ) {
   if $config {
-    sysconfig::header { 'puppet-dashboard': }
-    sysconfig::entry { 'puppet-dashboard-home':
+    $puppetdashboard = $config
+  }
+  else {
+    $puppetdashboard = hiera_hash('system::sysconfig::puppetdashboard', undef)
+  }
+  if $puppetdashboard {
+    system::sysconfig::header { 'puppet-dashboard':
+      schedule => $schedule,
+    }
+    system::sysconfig::entry { 'puppet-dashboard-home':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_HOME',
-      val   => $config['home'],
+      val   => $puppetdashboard['home'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppet-dashboard-user':
+    system::sysconfig::entry { 'puppet-dashboard-user':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_USER',
-      val   => $config['user'],
+      val   => $puppetdashboard['user'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppet-dashboard-ruby':
+    system::sysconfig::entry { 'puppet-dashboard-ruby':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_RUBY',
-      val   => $config['ruby'],
+      val   => $puppetdashboard['ruby'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppet-dashboard-environment':
+    system::sysconfig::entry { 'puppet-dashboard-environment':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_ENVIRONMENT',
-      val   => $config['environment'],
+      val   => $puppetdashboard['environment'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppet-dashboard-iface':
+    system::sysconfig::entry { 'puppet-dashboard-iface':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_IFACE',
-      val   => $config['iface'],
+      val   => $puppetdashboard['iface'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppet-dashboard-port':
+    system::sysconfig::entry { 'puppet-dashboard-port':
       file  => 'puppet-dashboard',
       var   => 'DASHBOARD_PORT',
-      val   => $config['port'],
+      val   => $puppetdashboard['port'],
+      schedule => $schedule,
     }
   }
 }

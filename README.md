@@ -2,6 +2,9 @@
 
 Manage Linux system resources and services from hiera configuration.
 
+* *augeas*: apply file changes using the augeas tool
+* *crontabs*: set user crontab entries
+* *execs*:  run idempotent external commands
 * *facts*: set custom facts
 * *files*: create/update files or directories
 * *groups*: manage entries in /etc/group
@@ -10,6 +13,7 @@ Manage Linux system resources and services from hiera configuration.
 * *mailaliases* manage entries in /etc/aliases
 * *mounts*: manage entries in /etc/fstab
 * *packages*: manage system packages
+* *schedules*: determine when resource config should not be applied and how often
 * *services*: manage system services
 * *sshd*: manage configuration in /etc/ssh/sshd_config including subsystems like sftp
 * *sysconfig*: manage files under /etc/sysconfig: clock, i18n, keyboard, puppet-dashboard, puppet, puppetmaster, selinux
@@ -20,9 +24,9 @@ Manage Linux system resources and services from hiera configuration.
 
 ## Documentation
 
-For default types (users, groups, mounts, yumrepos, packages) see the
-documentation at http://docs.puppetlabs.com/references/latest/type.html for the
-parameters that can be passed to each of the resources.
+For default types (users, groups, mounts, yumrepos, packages, cron, exec) see
+the documentation at http://docs.puppetlabs.com/references/latest/type.html for
+the parameters that can be passed to each of the resources.
 
 For augeasproviders types (sysctl, sshd) see
 http://forge.puppetlabs.com/domcleal/augeasproviders.
@@ -37,15 +41,121 @@ Include the system module in your puppet configuration:
 
 and add required hiera configuration.
 
+Note: To exclude certain system classes when doing 'include system' you can set
+their schedule parameter to 'never'.  This may be useful when testing or
+debugging issues or just to prevent config lower in the hierarchy being
+applied.
+
+For example:
+
+    system::packages::schedule:  'never'
+    system::yumgroups::schedule: 'never'
+
+will ignore any configuration for system::packages and system::yumgroups.
+
+## augeas
+
+Apply changes to files using the augeas tool.  This enables simple
+configuration file changes to be made without writing new classes.
+
+Example 1:
+
+    system::augeas:
+      'ntp':
+        context: '/files/etc/ntp.conf'
+        changes:
+          - 'set server[1] 0.uk.pool.ntp.org'
+          - 'set server[2] 1.uk.pool.ntp.org'
+          - 'set server[3] 2.uk.pool.ntp.org'
+
+Example 2:
+
+    system::augeas:
+      'test1':
+        context: '/files/etc/sysconfig/firstboot'
+        changes:
+          - 'set RUN_FIRSTBOOT YES'
+        onlyif:  'match other_value size > 0'
+
+Example 3:
+
+    system::augeas:
+      'jboss_conf':
+        context: '/files'
+        changes:
+          - 'set etc/jbossas/jbossas.conf/JBOSS_IP $ipaddress'
+          - 'set etc/jbossas/jbossas.conf/JAVA_HOME /usr'
+        load_path: '/usr/share/jbossas/lenses'
+
+Defaults:
+
+* ensure: present
+* user: root
+
+## crontabs
+
+Set user crontab entries
+
+Example configuration:
+
+    system::crontabs:
+      'root-logrotate':
+        command: '/usr/sbin/logrotate'
+        user:    'root'
+        hour:    '2'
+        minute:  '0'
+
+Defaults:
+
+* ensure: present
+* user: root
+
+## execs
+
+Run idempotent external commands
+
+Example configuration:
+
+    system::execs:
+      'update-tomcat-deploy':
+        command: '/usr/bin/svn up'
+        cwd:     '/apps/tomcat1/deploy'
+        user:    'tomcat1'
+      'create-deploy-dir':
+        command: '/bin/mkdir -p /apps/tomcat1/deploy'
+        unless:  '/usr/bin/test -d /apps/tomcat1/deploy'
+
+Note: The commands will be run on every Puppet run unless you specify 'onlyif',
+'unless' or 'refreshonly' parameters.
+
 ## facts
 
-Set custom facts
+Set custom facts using the facter_dot_d Facter plugin that loads facts from
+/etc/facter/facts.d
+(https://github.com/ripienaar/facter-facts/tree/master/facts-dot-d)
 
 Example configuration:
 
     system::facts:
       location:
         value: 'London'
+      ntpq:
+        type:  'script'
+        value: "#!/bin/bash\nprintf ntpq=\n/usr/sbin/ntpq -p | /usr/bin/tail -1\n"
+
+These facts can be queried on a host using 'facter -p':
+
+    $ facter -p location
+    London
+    $ facter -p ntpq
+    *10.43.4.8       158.43.128.33    2 u  820 1024  377    0.538    0.155   0.048
+
+Set:
+
+    system::facts::cleanold: true
+
+to remove facts from the old locations under /etc/profile.d and in
+/etc/sysconfig/puppet.
 
 ## files
 
@@ -182,6 +292,60 @@ Defaults:
 
 * ensure: installed
 
+## schedules
+
+Create schedules that determine when a resource should not be applied and the
+number times it should be applied within a specified time period.
+
+Example configuration:
+
+    system::schedules:
+      'maintenance':
+        range:  '2 - 4'
+        period: 'daily'
+        repeat: 1
+      'half-hourly':
+        period: 'hourly'
+        repeat: 2
+
+The defined schedules can then be passed using the 'schedule' parameter to
+other types.
+
+Example 1:
+
+    system::schedule: 'maintenance'
+
+sets the default schedule for all system resources so that they are only
+run during the maintenance window of 2:00 to 04:59.
+
+Example 2:
+
+    system::services::schedule: 'daily'
+
+sets the default schedule for all system::services resources to be once a day.
+
+Example 3:
+
+    system::services:
+      httpd:
+        ensure: 'running'
+        enable: 'true'
+        schedule: 'half-hourly'
+
+overrides the services schedule for the httpd resource using a custom schedule
+we defined above.
+
+The default Puppet schedules are:
+
+* daily
+* hourly
+* monthly
+* never
+* weekly
+
+and the system::schedule class defines another called *always* that schedules
+the resource on every Puppet run.
+
 ## services
 
 Manage system services
@@ -263,6 +427,8 @@ Example configuration:
 
 No defaults.
 
+Note: Values must not contain whitespace
+
 ## sysctl
 
 Manage settings in /etc/sysctl.conf
@@ -336,9 +502,16 @@ Defaults:
 
 * optional: false
 * usecache: true
+* schedule: daily
 
 Note: Set 'usecache: false' if 'yum -C grouplist' does not work on your system
 and you are getting System::Yumgroup resources created on every Puppet run
+
+Note: By default the yumgroup type has a 'daily' schedule to reduce the time
+Puppet runs take - package group changes are usually rare after the host is
+first set up. This means that it will run once every 24 hours. You override
+this by supplying your own schedule parameter - see system::schedules to create
+your own custom schedules.
 
 ## yumrepos
 

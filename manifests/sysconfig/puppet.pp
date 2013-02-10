@@ -1,27 +1,40 @@
 class system::sysconfig::puppet (
-  $config = undef
+  $config   = undef,
+  $schedule = undef,
 ) {
   if $config {
-    sysconfig::header { 'puppet': }
-    sysconfig::entry { 'puppet-server':
+    $puppet = $config
+  }
+  else {
+    $puppet = hiera_hash('system::sysconfig::puppet', undef)
+  }
+  if $puppet {
+    system::sysconfig::header { 'puppet':
+      schedule => $schedule,
+    }
+    system::sysconfig::entry { 'puppet-server':
       file  => 'puppet',
       var   => 'PUPPET_SERVER',
-      val   => $config['server'],
+      val   => $puppet['server'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppet-port':
+    system::sysconfig::entry { 'puppet-port':
       file  => 'puppet',
       var   => 'PUPPET_PORT',
-      val   => $config['port'],
+      val   => $puppet['port'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppet-log':
+    system::sysconfig::entry { 'puppet-log':
       file  => 'puppet',
       var   => 'PUPPET_LOG',
-      val   => $config['log'],
+      val   => $puppet['log'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppet-extra_opts':
+    system::sysconfig::entry { 'puppet-extra_opts':
       file  => 'puppet',
       var   => 'PUPPET_EXTRA_OPTS',
-      val   => $config['extra_opts'],
+      val   => $puppet['extra_opts'],
+      schedule => $schedule,
     }
   }
 }

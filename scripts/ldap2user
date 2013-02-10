@@ -1,0 +1,3 @@
+# Convert LDAP user and group entries into system::users and system::groups
+# entries
+# $ ldapsearch -x

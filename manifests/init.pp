@@ -1,6 +1,7 @@
 class system (
-  $config = {},
-){
+  $config   = {},
+  $schedule = undef,
+) {
   # Ensure that files and directories are created before
   # other resources (like mounts) that may depend on them
   if ! defined(Stage['third']) {
@@ -20,154 +21,108 @@ class system (
     stage { 'last': require => Stage['main'] }
   }
 
-  $facts = hiera_hash('system::facts', $config['facts'])
-  class { '::system::facts':
-    config => $facts,
+  class { '::system::augeas':
+    config => $config['augeas'],
   }
 
-  $files = hiera_hash('system::files', $config['files'])
-  class { '::system::files':
-    config => $files,
-    stage  => third,
+  class { '::system::crontabs':
+    config => $config['crontabs'],
   }
 
-  $groups = hiera_hash('system::groups', $config['groups'])
-  class { '::system::groups':
-    config => $groups,
-    stage  => second,
-  }
-
-  $virtual_groups = hiera_hash('system::groups::virtual', $config['virtual_groups'])
-  class { '::system::groups::virtual':
-    config => $virtual_groups,
-    stage  => first,
-  }
-
-  $realize_groups = hiera_array('system::groups::realize', $config['realize_groups'])
-  class { '::system::groups::realize':
-    groups  => $realize_groups,
-    stage   => second,
-    require => Class['::system::groups::virtual'],
-  }
-
-  $hosts = hiera_hash('system::hosts', $config['hosts'])
-  class { '::system::hosts':
-    config => $hosts,
-  }
-
-  $limits = hiera_hash('system::limits', $config['limits'])
-  class { '::system::limits':
-    config => $limits,
-  }
-
-  $mailaliases = hiera_hash('system::mailaliases', $config['mailaliases'])
-  class { '::system::mailaliases':
-    config => $mailaliases,
-  }
-
-  $mounts = hiera_hash('system::mounts', $config['mounts'])
-  class { '::system::mounts':
-    config => $mounts,
+  class { '::system::execs':
+    config => $config['execs'],
     stage  => last,
   }
 
-  $packages = hiera_hash('system::packages', $config['packages'])
-  class { '::system::packages':
-    config  => $packages,
-    stage   => second,
-    require => Class['::system::yumgroups'],
+  class { '::system::facts':
+    config => $config['facts'],
   }
 
-  $services = hiera_hash('system::services', $config['services'])
-  class { '::system::services':
-    config => $services,
+  class { '::system::files':
+    config => $config['files'],
+    stage  => third,
   }
 
-  $sshd = hiera_hash('system::sshd', $config['sshd'])
-  class { '::system::sshd':
-    config => $sshd,
+  class { '::system::groups':
+    config => $config['groups'],
+    stage  => second
   }
 
-  if $config['sysconfig'] {
-    $sysconfig = $config['sysconfig']
-  }
-  else {
-    $sysconfig = {}
-  }
-  $clock = hiera_hash('system::sysconfig::clock', $sysconfig['clock'])
-  class { '::system::sysconfig::clock':
-    config => $clock,
-  }
-  $i18n = hiera_hash('system::sysconfig::i18n', $sysconfig['i18n'])
-  class { '::system::sysconfig::i18n':
-    config => $i18n,
-  }
-  $keyboard = hiera_hash('system::sysconfig::keyboard', $sysconfig['keyboard'])
-  class { '::system::sysconfig::keyboard':
-    config => $keyboard,
-  }
-  $puppetdashboard = hiera_hash('system::sysconfig::puppetdashboard', $sysconfig['puppetdashboard'])
-  class { '::system::sysconfig::puppetdashboard':
-    config => $puppetdashboard,
-  }
-  $puppetmaster = hiera_hash('system::sysconfig::puppetmaster', $sysconfig['puppetmaster'])
-  class { '::system::sysconfig::puppetmaster':
-    config => $puppetmaster,
-  }
-  $puppet = hiera_hash('system::sysconfig::puppet', $sysconfig['puppet'])
-  class { '::system::sysconfig::puppet':
-    config => $puppet,
-  }
-  $selinux = hiera_hash('system::sysconfig::selinux', $sysconfig['selinux'])
-  class { '::system::sysconfig::selinux':
-    config => $selinux,
-  }
-
-  $sysctl = hiera_hash('system::sysctl', $config['sysctl'])
-  class { '::system::sysctl':
-    config => $sysctl,
-  }
-
-  #$syslog = hiera_hash('system::syslog', $config['syslog'])
-  #class { '::system::syslog':
-  #  config => $syslog,
-  #}
-
-  $users = hiera_hash('system::users', $config['users'])
-  class { '::system::users':
-    config  => $users,
+  class { '::system::groups::realize':
+    groups  => $config['realize_groups'],
     stage   => second,
     require => Class['::system::groups'],
   }
 
-  $virtual_users = hiera_hash('system::users::virtual', $config['virtual_users'])
-  class { '::system::users::virtual':
-    config  => $virtual_users,
-    stage   => first,
+  class { '::system::hosts':
+    config => $config['hosts'],
   }
 
-  $realize_users = hiera_array('system::users::realize', $config['realize_users'])
-  class { '::system::users::realize':
-    users   => $realize_users,
+  class { '::system::limits':
+    config => $config['limits'],
+  }
+
+  class { '::system::mailaliases':
+    config => $config['mailaliases'],
+  }
+
+  class { '::system::mounts':
+    config => $config['mounts'],
+    stage  => last,
+  }
+
+  class { '::system::packages':
+    config  => $config['packages'],
     stage   => second,
-    require => Class['::system::users::virtual'],
+    require => Class['::system::yumgroups'],
   }
 
-  $yumgroups = hiera_hash('system::yumgroups', $config['yumgroups'])
-  class { '::system::yumgroups':
-    config => $yumgroups,
-    stage  => second,
-  }
-
-  $yumrepos = hiera_hash('system::yumrepos', $config['yumrepos'])
-  class { '::system::yumrepos':
-    config => $yumrepos,
+  class { '::system::schedules':
+    config => $config['schedules'],
     stage  => first,
   }
 
-  $providers = hiera_hash('system::providers', $config['providers'])
+  class { '::system::services':
+    config => $config['services'],
+  }
+
+  class { '::system::sshd':
+    config => $config['sshd'],
+  }
+
+  class { '::system::sysconfig':
+    config => $config['sysconfig'],
+  }
+
+  class { '::system::sysctl':
+    config => $config['sysctl'],
+  }
+
+  class { '::system::users':
+    config  => $config['users'],
+    stage   => second,
+    require => Class['::system::groups'],
+  }
+
+  class { '::system::users::realize':
+    users   => $config['realize_users'],
+    stage   => second,
+    require => Class['::system::users'],
+  }
+
+  class { '::system::yumgroups':
+    config => $config['yumgroups'],
+    stage  => second,
+  }
+
+  class { '::system::yumrepos':
+    config  => $config['yumrepos'],
+    stage   => first,
+    require => Class['::system::schedules'],
+  }
+
   class { '::system::providers':
-    config => $providers,
+    config => $config['providers'],
     stage  => first
   }
 }

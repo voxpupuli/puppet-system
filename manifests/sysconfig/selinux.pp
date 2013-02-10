@@ -1,19 +1,28 @@
 class system::sysconfig::selinux (
-  $config = undef
+  $config   = undef,
+  $schedule = undef,
 ) {
   if $config {
-    sysconfig::header { 'selinux': }
-    sysconfig::entry { 'selinux-state':
+    $selinux = $config
+  }
+  else {
+    $selinux = hiera_hash('system::sysconfig::selinux', undef)
+  }
+  if $selinux {
+    system::sysconfig::header { 'selinux':
+      schedule => $schedule,
+    }
+    system::sysconfig::entry { 'selinux-state':
       file     => 'selinux',
       var      => 'SELINUX',
-      val      => $config['state'],
-      noquotes => true,
+      val      => $selinux['state'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'selinux-type':
+    system::sysconfig::entry { 'selinux-type':
       file     => 'selinux',
       var      => 'SELINUXTYPE',
-      val      => $config['type'],
-      noquotes => true,
+      val      => $selinux['type'],
+      schedule => $schedule,
     }
   }
 }

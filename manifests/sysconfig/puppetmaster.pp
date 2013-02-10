@@ -1,27 +1,40 @@
 class system::sysconfig::puppetmaster (
-  $config = undef
+  $config   = undef,
+  $schedule = undef,
 ) {
   if $config {
-    sysconfig::header { 'puppetmaster': }
-    sysconfig::entry { 'puppetmaster-manifest':
+    $puppetmaster = $config
+  }
+  else {
+    $puppetmaster = hiera_hash('system::sysconfig::puppetmaster', undef)
+  }
+  if $puppetmaster {
+    system::sysconfig::header { 'puppetmaster':
+      schedule => $schedule,
+    }
+    system::sysconfig::entry { 'puppetmaster-manifest':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_MANIFEST',
-      val   => $config['manifest'],
+      val   => $puppetmaster['manifest'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppetmaster-ports':
+    system::sysconfig::entry { 'puppetmaster-ports':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_PORTS',
-      val   => $config['ports'],
+      val   => $puppetmaster['ports'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppetmaster-log':
+    system::sysconfig::entry { 'puppetmaster-log':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_LOG',
-      val   => $config['log'],
+      val   => $puppetmaster['log'],
+      schedule => $schedule,
     }
-    sysconfig::entry { 'puppetmaster-extra_opts':
+    system::sysconfig::entry { 'puppetmaster-extra_opts':
       file  => 'puppetmaster',
       var   => 'PUPPETMASTER_EXTRA_OPTS',
-      val   => $config['extra_opts'],
+      val   => $puppetmaster['extra_opts'],
+      schedule => $schedule,
     }
   }
 }
