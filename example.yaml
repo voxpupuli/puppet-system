@@ -49,26 +49,14 @@ system::files:
     source:  'puppet:///files/default-sudoers' 
 
 system::groups:
-  'keith':
-    ensure: 'present'
-    gid:    '500'
-  'fred':
-    gid:    '503'
-
-system::groups::virtual:
-  'keith':
-    ensure: 'present'
-    gid:    '500'
-  'fred':
-    gid:    '503'
   'sysadmins':
-    gid:    '1001'
+    ensure: 'present'
+    gid:    '1500'
   'ops':
-    gid:    '1002'
+    gid:    '1503'
 
 system::groups::realize:
   - 'sysadmins'
-  - 'ops'
 
 system::hosts:
   puppet:
@@ -154,27 +142,6 @@ system::sysctl:
     comment: ' Controls the maximum size of a message, in bytes'
 
 system::users:
-  'keith':
-    ensure:    'present'
-    comment:   'Keith Burdis'
-    gid:       '500'
-    groups:    ['wheel']
-    home:      '/home/keith'
-    password:  '$6$...'
-    shell:     '/bin/bash'
-    uid:       '500'
-  'fred':
-    comment:   'Fred Bloggs'
-    uid:       '503'
-    gid:       '503'
-    home:      '/home/fred'
-    managehome: true
-
-system::users::groups:
-  'keith': [ 'sysadmins', 'ops' ]
-  'fred':  [ 'ops' ]
-
-system::users::virtual:
   'keith':
     ensure:    'present'
     comment:   'Keith Burdis'

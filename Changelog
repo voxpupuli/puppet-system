@@ -1,9 +1,23 @@
+0.7.0:
+
+* By default virtual user and group resources are now created that must then
+be realized rather than real resources as before.  This allows all of the user
+and group configuration to be added to a common part of the hiera hierarchy
+but only the relevent users and groups created on each host.
+
+To create real resources instead (and make things work as they did with
+earlier versions of this module) use:
+
+    system::users::virtual:  'false'
+    system::groups::virtual: 'false'
+
 0.6.2:
 
 * Facts that have array values now create multiple facts with the array index
 as a suffix.  For example:
 
-    software: [ 'jboss', 'httpd' ]
+    system::facts:
+      software: [ 'jboss', 'httpd' ]
     
 creates the facts:
 
