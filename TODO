@@ -1,13 +1,13 @@
-0.6.1:
+0.6.x:
 
 * TODO: system::files: Added support for processing templates under
 templatedir
 
-0.6.x:
-
 * TODO: Added rspec-puppet tests for all classes and defines
 
-0.7:
+* TODO: selboolean support
+
+0.7.x:
 
 * TODO: Add sudoers support
 
@@ -16,8 +16,9 @@ templatedir
   resources) and rename as system_create_resources.  Only use this where virtual
   resources are required.
 
+* TODO: Add basic networking support
+
 Future:
 
 * TODO: Changes to work on other Linux distributions like Ubuntu, Debian and SuSE
 
-* seboolean support
