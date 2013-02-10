@@ -19,3 +19,5 @@ templatedir
 Future:
 
 * TODO: Changes to work on other Linux distributions like Ubuntu, Debian and SuSE
+
+* seboolean support
