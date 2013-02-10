@@ -101,6 +101,11 @@ system::schedules:
     period: 'hourly'
     repeat: 2
 
+system::selbooleans:
+  'httpd_can_network_connect':
+    value: 'on'
+    persistent: 'true'
+
 system::sshd:
   PasswordAuthentication:
     value:     'no'

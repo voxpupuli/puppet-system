@@ -346,6 +346,21 @@ The default Puppet schedules are:
 and the system::schedule class defines another called *always* that schedules
 the resource on every Puppet run.
 
+## selbooleans
+
+Manages SELinux booleans
+
+Example configuration:
+
+    system::selbooleans:
+      'httpd_can_network_connect':
+        value: 'on'
+        persistent: 'true'
+
+Defaults:
+
+* persistent: false
+
 ## services
 
 Manage system services

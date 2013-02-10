@@ -76,6 +76,11 @@ class system (
     stage  => first,
   }
 
+  class { '::system::selbooleans':
+    config => $config['selbooleana'],
+    stage  => first,
+  }
+
   class { '::system::services':
     config => $config['services'],
   }
