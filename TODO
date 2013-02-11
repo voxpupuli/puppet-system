@@ -2,12 +2,10 @@
 
 * TODO: Add sudoers support
 
-* TODO: Add basic networking support
-
 * TODO: system::files: Added support for processing templates under
 templatedir
 
-* TODO: Added rspec-puppet tests for all classes and defines
+* TODO: Add rspec-puppet tests for all classes and defines
 
 Future:
 
