@@ -102,11 +102,9 @@ system::network::interfaces:
     type:    'Ethernet' # default
     ipaddr:  '10.7.96.21'
     netmask: '255.255.240.0'
-system::network::routes:
-  '10.0.0.0/8':
-    interface: 'eth0'
-    src:       '10.16.0.80'
-    via:       '10.16.0.250'
+    routes:
+      '10.0.0.0/8':
+        via: '10.16.0.250'
  
 system::packages:
   AdobeReader_enu:

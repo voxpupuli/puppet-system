@@ -1,0 +1,6 @@
+<% for @ip in @nameservers -%>
+nameserver <%= $ip %>
+<% end -%>
+<% for @domain in @domains -%>
+search <%= @domain %>
+<% end -%>

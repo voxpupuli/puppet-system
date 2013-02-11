@@ -1,19 +1,14 @@
 define system::network::interface (
   $dhcp    = undef,
   $hwaddr  = undef,
-  $ipaddr  = undef,
-  $inboot  = true,
   $hotplug = true,
-  $netmask = true,
+  $ipaddr  = undef,
+  $netmask = undef,
+  $onboot  = true,
+  $routes  = undef,
   $type    = 'Ethernet',
 ) {
-  file { "/etc/sysconfig/network-scripts/ifcfg-${interface}":
-    ensure => present,
-    owner  => 'root',
-    group  => 'root'
-    mode   => '0644',
-    content => template('system/network/interface.erb')
-  }
+  $_interface = $title
   if $dhcp == undef {
     if $ipaddress {
       $_dhcp = false
@@ -22,13 +17,30 @@ define system::network::interface (
       $_dhcp = true
     }
   }
+  if $hwaddr {
+    $_hwaddr = $hwaddr
+  }
+  else {
+    $_hwaddr = scope.lookupvar("macaddress_${interface}")
+  }
+  $_hotplug = $hotplug
+  $_ipaddr  = $ipaddr
+  $_netmask = $netmask
+  $_onboot  = $onboot
+  $_type    = $type
+  file { "/etc/sysconfig/network-scripts/ifcfg-${interface}":
+    ensure => present,
+    owner  => 'root',
+    group  => 'root'
+    mode   => '0644',
+    content => template('system/network/interface.erb')
+  }
+  if $routes {
+    concat { "/etc/sysconfig/network-scripts/route-${interface}":
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644',
+    }
+    create_resources('system::network::route', $routes, { interface => $_interface } )
+  }
 }
-#system::network::interfaces:
-#  eth0:
-#    dhcp:    'false' # default
-#    hwaddr:  '00:50:56:AF:01:1A' # defaults to: macaddress_eth0
-#    onboot:  'true' # default
-#    hotplug: 'true' # default
-#    type:    'Ethernet' # default
-#    ipaddr:  '10.7.96.21'
-#    netmask: '255.255.240.0'
