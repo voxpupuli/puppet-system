@@ -71,6 +71,8 @@ class system (
     stage  => last,
   }
 
+  include '::system::network'
+
   class { '::system::ntp':
     config => $config['ntp'],
   }
