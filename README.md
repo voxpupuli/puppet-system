@@ -13,6 +13,7 @@ Manage Linux system resources and services from hiera configuration.
 * *mailaliases* manage entries in /etc/aliases
 * *mounts*: manage entries in /etc/fstab
 * *network*: configure basic networking and dns
+* *ntp*: configure NTP servers in /etc/ntp.conf
 * *packages*: manage system packages
 * *schedules*: determine when resource config should not be applied and how often
 * *services*: manage system services
