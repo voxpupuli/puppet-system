@@ -205,7 +205,7 @@ Defaults:
 By default virtual group resources are created that must then be realized.  To
 create real resources instead (as with earlier versions of this module) use:
 
-    system::groups::virtual: 'false'
+    system::groups::true: 'true'
 
 ## hosts
 
@@ -524,7 +524,7 @@ Defaults:
 By default virtual user resources are created that must then be realized.  To
 create real resources instead (as with earlier versions of this module) use:
 
-    system::users::virtual: 'false'
+    system::users::real: 'true'
 
 ## yumgroups
 

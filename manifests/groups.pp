@@ -1,17 +1,17 @@
 class system::groups (
   $config   = undef,
   $schedule = $::system::schedule,
-  $virtual  = true,
+  $real     = false,
 ) {
   $defaults = {
     ensure   => 'present',
     schedule => $schedule,
   }
-  if $virtual {
-    $type = '@group'
+  if $real {
+    $type = 'group'
   }
   else {
-    $type = 'group'
+    $type = '@group'
   }
   if $config {
     system_create_resources($type, $config, $defaults)

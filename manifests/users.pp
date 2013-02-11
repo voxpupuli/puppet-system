@@ -1,18 +1,18 @@
 class system::users (
   $config   = undef,
   $schedule = $::system::schedule,
-  $virtual  = true,
+  $real     = false,
 ) {
   $defaults = {
     ensure   => 'present',
     schedule => $schedule,
     shell    => '/bin/bash'
   }
-  if $virtual {
-    $type = '@user'
+  if $real {
+    $type = 'user'
   }
   else {
-    $type = 'user'
+    $type = '@user'
   }
   if $config {
     system_create_resources($type, $config, $defaults)

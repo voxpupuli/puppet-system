@@ -8,8 +8,8 @@ but only the relevent users and groups created on each host.
 To create real resources instead (and make things work as they did with
 earlier versions of this module) use:
 
-    system::users::virtual:  'false'
-    system::groups::virtual: 'false'
+    system::users::real:  'true'
+    system::groups::real: 'true'
 
 0.6.4:
 
