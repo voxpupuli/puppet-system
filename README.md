@@ -12,6 +12,7 @@ Manage Linux system resources and services from hiera configuration.
 * *limits*: manage entries in /etc/security/limits.conf
 * *mailaliases* manage entries in /etc/aliases
 * *mounts*: manage entries in /etc/fstab
+* *network*: configure basic networking
 * *packages*: manage system packages
 * *schedules*: determine when resource config should not be applied and how often
 * *services*: manage system services
@@ -300,6 +301,27 @@ Example 2:
 See https://github.com/erwbgy/puppet-ntp for more details
 
 Note: The NTP algorithm does not work properly with two NTP servers.
+
+## network
+
+Configure basic networking
+
+Example configuration:
+
+    system::network::hostname: 'puppet.domain.com'
+    system::network::gateway:  '10.7.0.1'
+    system::network::ipv6:     'false'
+    system::network::zeroconf: 'false'
+    system::network::dns:
+      nameservers: [ '10.7.96.2', '10.7.96.2' ]
+      domains:     [ 'domain.com', 'sub.domain.com' ]
+    system::network::interfaces:
+      eth0:
+        ipaddr:  '10.7.96.21'
+        netmask: '255.255.240.0'
+        routes:
+          '10.0.0.0/8':
+            via: '10.16.0.250'
 
 ## packages
 

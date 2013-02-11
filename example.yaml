@@ -98,6 +98,26 @@ system::mounts:
 system::ntp::iburst:  'true'
 system::ntp::country: 'uk'
 
+system::network::hostname: 'puppet.domain.com'
+system::network::gateway:  '10.7.0.1'
+system::network::ipv6:     'false'
+system::network::zeroconf: 'false'
+system::network::dns:
+  nameservers: [ '10.7.96.2', '10.7.96.2' ]
+  domains:     [ 'domain.com', 'sub.domain.com' ]
+system::network::interfaces:
+  eth0:
+    dhcp:    'false' # default true unless ipaddress specified
+    hwaddr:  '00:50:56:AF:01:1A' # defaults to: macaddress_eth0
+    onboot:  'true' # default
+    hotplug: 'true' # default
+    type:    'Ethernet' # default
+    ipaddr:  '10.7.96.21'
+    netmask: '255.255.240.0'
+    routes:
+      '10.0.0.0/8':
+        via: '10.16.0.250'
+ 
 system::packages:
   AdobeReader_enu:
     ensure: '9.5.1-1'
@@ -118,6 +138,14 @@ system::selbooleans:
     value: 'on'
     persistent: 'true'
 
+system::services:
+  cups:
+    ensure: 'stopped'
+    enable: 'false'
+  sshd:
+    ensure: 'running'
+    enable: 'true'
+
 system::sshd:
   PasswordAuthentication:
     value:     'no'
@@ -132,14 +160,6 @@ system::sshd::sync_host_keys: true
 system::sshd::subsystem:
   sftp:
     command:   '/usr/libexec/openssh/sftp-server -u 0002'
-
-system::services:
-  cups:
-    ensure: 'stopped'
-    enable: 'false'
-  sshd:
-    ensure: 'running'
-    enable: 'true'
 
 system::sysctl:
   kernel.msgmnb:

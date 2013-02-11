@@ -1,0 +1,11 @@
+###
+### File managed by Puppet
+###
+DEVICE=<%= @_interface %>
+BOOTPROTO=<% if @_dhcp %>dhcp<% else %>none<% end %>
+HWADDR=<%= @_hwaddr %>
+ONBOOT=<% if @_onboot %>yes<% else %>no<% end %>
+HOTPLUG=<% if @_hotplug %>yes<% else %>no<% end %>
+TYPE=<%= @_type %>
+IPADDR=<%= @_ipaddr %>
+NETMASK=<%= @_netmask %>
