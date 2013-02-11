@@ -11,7 +11,9 @@ earlier versions of this module) use:
     system::users::real:  'true'
     system::groups::real: 'true'
 
-0.6.4:
+* Added support for basic networking: set hostname, enable/disable
+zeroconf/IPv6, set the default route, configure interfaces and their static
+routes, configure nameserver resolvers and domains
 
 * Manage NTP servers in /etc/ntp.conf
 
