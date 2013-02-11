@@ -1,0 +1,8 @@
+###
+### File managed by Puppet
+###
+NETWORKING=yes
+NETWORKING_IPV6=<% if @ipv6 %>yes<% else %>no<% end %>
+HOSTNAME=<%= @hostname %>
+GATEWAY=<%= @gateway %>
+NOZEROCONF=<% if @zeroconf %>no<% else %>yes<% end %>
