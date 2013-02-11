@@ -13,4 +13,5 @@ class system::network (
   }
   include system::network::dns
   include system::network::interfaces
+  include system::network::service
 }

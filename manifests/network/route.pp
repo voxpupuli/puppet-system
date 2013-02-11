@@ -6,5 +6,6 @@ define system::network::route (
   concat::fragment { "route-${interface}-${to}":
     target  => "/etc/sysconfig/network-scripts/route-${interface}",
     content => template('network/route.erb').
+    notify  => Class['system::network::service'],
   }
 }
