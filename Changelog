@@ -1,3 +1,7 @@
+0.7.1:
+
+* Fixed silly typo in routes.pp
+
 0.7.0:
 
 * By default virtual user and group resources are now created that must then
