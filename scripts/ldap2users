@@ -1,0 +1,63 @@
+#!/usr/bin/env perl
+use Net::LDAP;
+use warnings;
+use strict;
+
+my $base = 'dc=sportingbet,dc=com';
+my $filter;
+my $attributes;
+
+my $ldap = Net::LDAP->new('10.7.96.13') or die "$!\n";
+
+$filter = 'objectClass=posixGroup';
+$attributes = [ 'cn', 'gidNumber' ];
+my $group_search = $ldap->search(
+  base   => $base,
+  scope  => 'sub',
+  filter => $filter,
+  attrs  => $attributes,
+);
+my %groups;
+foreach my $entry ($group_search->entries) {
+  my $group = $entry->get_value('cn');
+  $groups{$group}{ensure}  = 'present';
+  $groups{$group}{gid}     = $entry->get_value('gidNumber');
+}
+print "system::groups:\n";
+foreach my $group (sort keys %groups) {
+  printf "  %s:\n", $group;
+  printf "    ensure: '%s'\n", $groups{$group}{ensure};
+  printf "    gid:    '%s'\n", $groups{$group}{gid};
+}
+print "\n";
+
+$filter = 'objectClass=shadowAccount';
+$attributes = [ 'uid', 'uidNumber', 'gidNumber', 'gecos', 'homeDirectory', 'loginShell' ];
+my $user_search = $ldap->search(
+  base   => $base,
+  scope  => 'sub',
+  filter => $filter,
+  attrs  => $attributes,
+);
+my %users;
+foreach my $entry ($user_search->entries) {
+  my $username = $entry->get_value('uid');
+  $users{$username}{ensure}  = 'present';
+  $users{$username}{comment} = $entry->get_value('gecos');
+  $users{$username}{gid}     = $entry->get_value('gidNumber');
+  $users{$username}{home}    = $entry->get_value('homeDirectory');
+  $users{$username}{shell}   = $entry->get_value('loginShell');
+  $users{$username}{uid}     = $entry->get_value('uidNumber');
+}
+print "system::users:\n";
+foreach my $user (sort keys %users) {
+  printf "  %s:\n", $user;
+  printf "    ensure:  '%s'\n", $users{$user}{ensure};
+  printf "    comment: '%s'\n", $users{$user}{comment};
+  printf "    gid:     '%s'\n", $users{$user}{gid};
+  printf "    home:    '%s'\n", $users{$user}{home};
+  printf "    shell:   '%s'\n", $users{$user}{shell};
+  printf "    uid:     '%s'\n", $users{$user}{uid};
+}
+print "\n";
+
