@@ -1,22 +1,13 @@
-0.6.x:
+0.7.x:
+
+* TODO: Add sudoers support
+
+* TODO: Add basic networking support
 
 * TODO: system::files: Added support for processing templates under
 templatedir
 
 * TODO: Added rspec-puppet tests for all classes and defines
-
-* TODO: selboolean support
-
-0.7.x:
-
-* TODO: Add sudoers support
-
-* TODO: Change users and groups to be virtual that need to be realized on each
-  host. Copy create_resources from Puppet 3.1 (as this can create virtual
-  resources) and rename as system_create_resources.  Only use this where virtual
-  resources are required.
-
-* TODO: Add basic networking support
 
 Future:
 
