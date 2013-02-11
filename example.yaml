@@ -103,17 +103,12 @@ system::network::gateway:  '10.7.0.1'
 system::network::ipv6:     'false'
 system::network::zeroconf: 'false'
 system::network::dns:
-  nameservers: [ '10.7.96.2', '10.7.96.2' ]
+  nameservers: [ '10.7.96.2', '10.7.96.3' ]
   domains:     [ 'domain.com', 'sub.domain.com' ]
 system::network::interfaces:
   eth0:
-    dhcp:    'false' # default true unless ipaddress specified
-    hwaddr:  '00:50:56:AF:01:1A' # defaults to: macaddress_eth0
-    onboot:  'true' # default
-    hotplug: 'true' # default
-    type:    'Ethernet' # default
-    ipaddr:  '10.7.96.21'
-    netmask: '255.255.240.0'
+    ipaddress: '10.7.0.21'
+    netmask:   '255.255.240.0'
     routes:
       '10.0.0.0/8':
         via: '10.16.0.250'
