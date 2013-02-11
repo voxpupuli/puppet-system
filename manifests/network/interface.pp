@@ -1,12 +1,12 @@
 define system::network::interface (
-  $dhcp    = undef,
-  $hwaddr  = undef,
-  $hotplug = true,
-  $ipaddr  = undef,
-  $netmask = undef,
-  $onboot  = true,
-  $routes  = undef,
-  $type    = 'Ethernet',
+  $dhcp      = undef,
+  $hwaddr    = undef,
+  $hotplug   = true,
+  $ipaddress = undef,
+  $netmask   = undef,
+  $onboot    = true,
+  $routes    = undef,
+  $type      = 'Ethernet',
 ) {
   $_interface = $title
   if $dhcp == undef {
@@ -21,22 +21,23 @@ define system::network::interface (
     $_hwaddr = $hwaddr
   }
   else {
-    $_hwaddr = scope.lookupvar("macaddress_${interface}")
+    $_hwaddr = inline_template("<%= scope.lookupvar('macaddress_${_interface}') %>")
   }
   $_hotplug = $hotplug
-  $_ipaddr  = $ipaddr
+  $_ipaddr  = $ipaddress
   $_netmask = $netmask
   $_onboot  = $onboot
   $_type    = $type
-  file { "/etc/sysconfig/network-scripts/ifcfg-${interface}":
-    ensure => present,
-    owner  => 'root',
-    group  => 'root'
-    mode   => '0644',
-    content => template('system/network/interface.erb')
+  file { "/etc/sysconfig/network-scripts/ifcfg-${_interface}":
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('system/network/interface.erb'),
+    notify  => Class['system::network::service'],
   }
   if $routes {
-    concat { "/etc/sysconfig/network-scripts/route-${interface}":
+    concat { "/etc/sysconfig/network-scripts/route-${_interface}":
       owner  => 'root',
       group  => 'root',
       mode   => '0644',
