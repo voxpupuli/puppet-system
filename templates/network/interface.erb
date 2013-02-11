@@ -1,6 +1,4 @@
-###
-### File managed by Puppet
-###
+# File managed by Puppet
 DEVICE=<%= @_interface %>
 BOOTPROTO=<% if @_dhcp %>dhcp<% else %>none<% end %>
 HWADDR=<%= @_hwaddr %>
