@@ -41,13 +41,22 @@ system::files:
     group:   'root'
     mode:    '0644'
     content: "Authorised access only\nIf unauthorised log off now or face prosecution\n"
+  /etc/sudoers:
+    ensure:  'present'
+    owner:   'root'
+    group:   'root'
+    mode:    '0440'
+    source:  'puppet:///files/default-sudoers' 
 
 system::groups:
-  'keith':
+  'sysadmins':
     ensure: 'present'
-    gid:    '500'
-  'fred':
-    gid:    '503'
+    gid:    '1500'
+  'ops':
+    gid:    '1503'
+
+system::groups::realize:
+  - 'sysadmins'
 
 system::hosts:
   puppet:
@@ -156,6 +165,10 @@ system::users:
     gid:       '503'
     home:      '/home/fred'
     managehome: true
+
+system::users::realize:
+  - 'keith'
+  - 'fred'
 
 system::yumgroups:
   'Base':

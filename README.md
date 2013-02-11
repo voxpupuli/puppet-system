@@ -180,8 +180,8 @@ Example 2 - create a file with the given content:
         mode:    '0644'
         content: "Authorised access only\nIf unauthorised log off now or face prosecution\n"
 
-Note: Use double-quotes with content if it contains embedded newlines (\n) or
-tabs (\t).  Normaly you will also want a terminating newline.
+Note: Use double-quotes if your content contains embedded newlines (\n) or tabs
+(\t).  Normaly you will also want a terminating newline.
 
 ## groups
 
@@ -190,15 +190,22 @@ Manage entries in /etc/group
 Example configuration:
 
     system::groups:
-      'keith':
+      'sysadmins':
         ensure: 'present'
-        gid:    '500'
-      'fred':
-        gid:    '503'
+        gid:    '1500'
+      'ops':
+        gid:    '1503'
+    system::groups::realize:
+      - 'keith'
  
 Defaults:
 
 * ensure: present
+
+By default virtual group resources are created that must then be realized.  To
+create real resources instead (as with earlier versions of this module) use:
+
+    system::groups::virtual: 'false'
 
 ## hosts
 
@@ -506,11 +513,18 @@ Example configuration:
         gid:       '503'
         home:      '/home/fred'
         managehome: true
+    system::users::realize:
+      - 'keith'
 
 Defaults:
 
 * ensure: present
 * shell:  /bin/bash
+
+By default virtual user resources are created that must then be realized.  To
+create real resources instead (as with earlier versions of this module) use:
+
+    system::users::virtual: 'false'
 
 ## yumgroups
 

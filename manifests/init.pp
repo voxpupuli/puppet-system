@@ -48,6 +48,12 @@ class system (
     stage  => second
   }
 
+  class { '::system::groups::realize':
+    groups  => $config['realize_groups'],
+    stage   => second,
+    require => Class['::system::groups'],
+  }
+
   class { '::system::hosts':
     config => $config['hosts'],
   }
@@ -105,6 +111,12 @@ class system (
     config  => $config['users'],
     stage   => second,
     require => Class['::system::groups'],
+  }
+
+  class { '::system::users::realize':
+    users   => $config['realize_users'],
+    stage   => second,
+    require => Class['::system::users'],
   }
 
   class { '::system::yumgroups':
