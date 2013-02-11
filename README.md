@@ -276,6 +276,24 @@ Defaults:
 Note: These resources are created last so any required users, groups or mount
 point directories have a chance to be created first.
 
+## ntp
+
+Manage NTP servers in /etc/ntp.conf
+
+Example 1:
+
+    system::ntp::iburst:  'true'
+    system::ntp::servers: [ 'ntp1.example.com' ]
+
+Example 2:
+
+    system::ntp::iburst:  'true'
+    system::ntp::country: 'uk'
+
+See https://github.com/erwbgy/puppet-ntp for more details
+
+Note: The NTP algorithm does not work properly with two NTP servers.
+
 ## packages
 
 Manage system packages

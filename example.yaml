@@ -86,6 +86,9 @@ system::mounts:
     fstype:  'nfs'
     options: 'rw,bg,hard,nointr,rsize=32768,wsize=32768,tcp,vers=3,timeo=600'
 
+system::ntp::iburst:  'true'
+system::ntp::country: 'uk'
+
 system::packages:
   AdobeReader_enu:
     ensure: '9.5.1-1'

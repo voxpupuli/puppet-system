@@ -65,6 +65,10 @@ class system (
     stage  => last,
   }
 
+  class { '::system::ntp':
+    config => $config['ntp'],
+  }
+
   class { '::system::packages':
     config  => $config['packages'],
     stage   => second,

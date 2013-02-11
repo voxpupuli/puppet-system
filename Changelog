@@ -1,3 +1,7 @@
+0.6.4:
+
+* Manage NTP servers in /etc/ntp.conf
+
 0.6.3:
 
 * Added support for managing SELinux booleans
