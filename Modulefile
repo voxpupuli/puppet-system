@@ -1,5 +1,5 @@
 name    'erwbgy-system'
-version '0.7.0'
+version '0.7.1'
 author 'erwbgy'
 license 'Apache License, Version 2.0'
 summary 'Manage Linux system resources and services from hiera configuration'
