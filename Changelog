@@ -1,6 +1,9 @@
 0.7.1:
 
-* Fixed silly typo in routes.pp
+* Added ldif2users script to create user/group config from an LDAP export
+
+* Fixed bugs in user and group realize preventing hiera data lookup from
+working and fixed silly typos in routes.pp
 
 0.7.0:
 
