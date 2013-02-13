@@ -1,0 +1,77 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+use Net::LDAP::LDIF;
+
+my (%users, %groups);
+
+sub user {
+  my $entry = shift;
+  my $username = $entry->get_value('uid');
+  my $comment  = $entry->get_value('gecos');
+  my $gid      = $entry->get_value('gidNumber');
+  my $home     = $entry->get_value('homeDirectory');
+  my $shell    = $entry->get_value('loginShell');
+  my $uid      = $entry->get_value('uidNumber');
+  my $password = $entry->get_value('userPassword');
+  $password =~ s/^\{.*?\}// if $password;
+  $users{$username}{ensure}   = 'present';
+  $users{$username}{comment}  = $comment if $comment;
+  $users{$username}{gid}      = $gid;
+  $users{$username}{home}     = $home if $home;
+  $users{$username}{shell}    = $shell if $shell;
+  $users{$username}{uid}      = $uid;
+  $users{$username}{password} = $password if $password;
+}
+
+sub group {
+  my $entry = shift;
+  my $group = $entry->get_value('cn');
+  $groups{$group}{ensure}  = 'present';
+  $groups{$group}{gid}     = $entry->get_value('gidNumber');
+}
+
+my $ldif = Net::LDAP::LDIF->new( $ARGV[0], "r", onerror => 'undef' );
+while (not $ldif->eof()) {
+  my $entry = $ldif->read_entry ( );
+  if ( $ldif->error ( ) ) {
+    print "Error msg: ", $ldif->error ( ), "\n";
+    print "Error lines:\n", $ldif->error_lines ( ), "\n";
+  }
+  else {
+    my @objectclasses = $entry->get_value('objectClass');
+    foreach my $objectclass (@objectclasses) {
+      if ($objectclass eq 'shadowAccount') {
+        user($entry);
+        last;
+      }
+      elsif ($objectclass eq 'posixGroup') {
+        group($entry);
+        last;
+      }
+    }
+  }
+}
+$ldif->done ( );
+
+print "system::groups:\n";
+foreach my $group (sort keys %groups) {
+  printf "  %s:\n", $group;
+  printf "    ensure: '%s'\n", $groups{$group}{ensure};
+  printf "    gid:    '%s'\n", $groups{$group}{gid};
+}
+print "\n";
+
+print "system::users:\n";
+foreach my $user (sort keys %users) {
+  printf "  %s:\n", $user;
+  printf "    ensure:   '%s'\n", $users{$user}{ensure};
+  printf "    comment:  '%s'\n", $users{$user}{comment} if exists $users{$user}{comment};
+  printf "    gid:      '%s'\n", $users{$user}{gid};
+  printf "    home:     '%s'\n", $users{$user}{home} if exists $users{$user}{home};
+  printf "    shell:    '%s'\n", $users{$user}{shell} if exists $users{$user}{shell};
+  printf "    uid:      '%s'\n", $users{$user}{uid};
+  printf "    password: '%s'\n", $users{$user}{password} if exists $users{$user}{password};
+}
+print "\n";
+
