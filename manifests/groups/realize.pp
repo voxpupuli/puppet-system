@@ -1,5 +1,5 @@
 class system::groups::realize (
-  $groups   = [],
+  $groups   = undef,
   $schedule = $::system::schedule,
 ) {
   if $groups {
