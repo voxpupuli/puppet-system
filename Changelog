@@ -1,3 +1,16 @@
+0.7.2:
+
+* Realize groups before users so that user primary groups exist when the user
+is created.
+
+* Make 'include system' work again (thanks mkm85) by avoiding mandatory
+parameters in network and adding checks instead.
+
+* Do not restart the network service when config file changes are made as this
+sometimes causes issues (like the default route going missing).  This should
+be fixed in a later release but for now the network service must be manually
+restarted.
+
 0.7.1:
 
 * Added ldif2users script to create user/group config from an LDAP export

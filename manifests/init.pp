@@ -118,7 +118,7 @@ class system (
   class { '::system::users::realize':
     users   => $config['realize_users'],
     stage   => second,
-    require => Class['::system::users'],
+    require => Class['::system::users', '::system::groups::realize'],
   }
 
   class { '::system::yumgroups':
