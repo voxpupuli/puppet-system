@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+use YAML;
+use warnings;
+use strict;
+
+my $filename = $ARGV[0] or die "Usage: $0 <filename.yaml>\n";
+
+my %current_packages;
+open(RPM,"rpm -qa --queryformat '%{NAME} %{VERSION} %{RELEASE}\n' |") or die "$!\n";
+while(<RPM>) {
+  chomp;
+  my ($name, $version, $release) = split(/\s+/, $_, 3);
+  $current_packages{$name} = "${version}-${release}";
+}
+
+close(RPM);
+my $data = YAML::LoadFile($filename) or die "$!\n";
+my $packages = $data->{'system::packages'};
+foreach my $package (sort keys %$packages) {
+  if (exists $current_packages{$package}) {
+    $data->{'system::packages'}{$package}{'ensure'} =
+      $current_packages{$package};
+  }
+  else {
+    warn "package $package not installed\n";
+  }
+}
+
+YAML::DumpFile("${filename}.new", $data);
