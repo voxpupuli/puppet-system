@@ -111,7 +111,7 @@ class system (
 
   class { '::system::templates':
     config => $config['templates'],
-    stage  => third,
+    stage  => last,
   }
 
   class { '::system::users':
