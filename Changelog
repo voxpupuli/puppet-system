@@ -1,3 +1,7 @@
+0.7.3:
+
+* Only apply SELinux boolean changes if SELinux is enabled
+
 0.7.2:
 
 * Realize groups before users so that user primary groups exist when the user
