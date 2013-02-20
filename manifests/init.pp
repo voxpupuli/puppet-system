@@ -109,6 +109,11 @@ class system (
     config => $config['sysctl'],
   }
 
+  class { '::system::templates':
+    config => $config['templates'],
+    stage  => third,
+  }
+
   class { '::system::users':
     config  => $config['users'],
     stage   => second,

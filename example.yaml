@@ -164,6 +164,18 @@ system::sysctl:
     value: '131072'
     comment: ' Controls the maximum size of a message, in bytes'
 
+system::templates:
+  /etc/motd:
+    owner:    'root'
+    group:    'root'
+    mode:     '0644'
+    template: "/var/lib/puppet/templates/motd-%{osfamily}.erb"
+  /etc/environment:
+    owner:    'root'
+    group:    'root'
+    mode:     '0644'
+    template: "environment.erb"
+
 system::users:
   'keith':
     ensure:    'present'

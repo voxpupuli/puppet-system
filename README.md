@@ -20,6 +20,7 @@ Manage Linux system resources and services from hiera configuration.
 * *sshd*: manage configuration in /etc/ssh/sshd_config including subsystems like sftp
 * *sysconfig*: manage files under /etc/sysconfig: clock, i18n, keyboard, puppet-dashboard, puppet, puppetmaster, selinux
 * *sysctl*: manage entries in /etc/sysctl.conf
+* *templates*: create files from ERB templates
 * *users*: manage users in /etc/passwd and /etc/shadow
 * *yumgroups*: manage system package groups
 * *yumrepos*: manage yum repository files under /etc/yum.repos.d
@@ -515,6 +516,34 @@ See:
 
 
 Note: Quote numeric values to avoid "can't convert Fixnum into String" errors
+
+## templates
+
+Create files from ERB templates
+
+Example configuration:
+
+    system::templates:
+      /etc/motd:
+        owner:    'root'
+        group:    'root'
+        mode:     '0644'
+        template: "/var/lib/puppet/templates/motd-%{osfamily}.erb"
+      /etc/environment:
+        owner:    'root'
+        group:    'root'
+        mode:     '0644'
+        template: "environment.erb"
+
+Default:
+
+* owner: root
+* group: root
+
+If **template** is a relative path then Puppet will look for template file in
+*template_dir* (eg. /var/lib/puppet/templates).
+
+Templates can use any facts set for the destination host.
 
 ## users
 

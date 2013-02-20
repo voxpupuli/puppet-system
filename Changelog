@@ -1,5 +1,7 @@
 0.7.3:
 
+* Enable files to be created from ERB templates
+
 * Only apply SELinux boolean changes if SELinux is enabled
 
 0.7.2:
