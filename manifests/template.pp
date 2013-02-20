@@ -4,7 +4,6 @@ define system::template(
   $group    = 'root',
   $mode     = undef,
   $schedule = 'always',
-  $usecache = true
 ) {
   file { $title:
     owner    => $owner,
