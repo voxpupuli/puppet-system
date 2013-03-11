@@ -10,7 +10,7 @@ Manage Linux system resources and services from hiera configuration.
 * *groups*: manage entries in /etc/group
 * *hosts*: manage entries in /etc/hosts
 * *limits*: manage entries in /etc/security/limits.conf
-* *mailaliases* manage entries in /etc/aliases
+* *mail* manage entries in /etc/aliases or set a relay host
 * *mounts*: manage entries in /etc/fstab
 * *network*: configure basic networking and dns
 * *ntp*: configure NTP servers in /etc/ntp.conf
@@ -120,13 +120,10 @@ Run idempotent external commands
 Example configuration:
 
     system::execs:
-      'update-tomcat-deploy':
-        command: '/usr/bin/svn up'
-        cwd:     '/apps/tomcat1/deploy'
-        user:    'tomcat1'
-      'create-deploy-dir':
-        command: '/bin/mkdir -p /apps/tomcat1/deploy'
+      '/bin/mkdir -p /apps/tomcat1/deploy':
         unless:  '/usr/bin/test -d /apps/tomcat1/deploy'
+      "/usr/bin/perl -pi -e 's: grep 1.6: egrep \"1.6/1.7\":' /apps/wso2esb1/product/wso2esb/bin/wso2server.sh":
+        onlyif: '/bin/grep -w "grep 1.6" /apps/wso2esb1/product/wso2esb/bin/wso2server.sh'
 
 Note: The commands will be run on every Puppet run unless you specify 'onlyif',
 'unless' or 'refreshonly' parameters.
@@ -248,21 +245,26 @@ Example configuration:
 
 No defaults.
 
-## mailaliases
+## mail
 
-Manage entries in /etc/aliases
+Manage entries in /etc/aliases or set a relay host
 
 Example configuration:
 
-    system::mailaliases:
-      postmaster:
-        recipient: 'root'
-      webmaster:
-        recipient: 'fred@domain.com'
+    system::mail:
+      aliases:
+        postmaster:
+          recipient: 'root'
+        webmaster:
+          recipient: 'fred@domain.com'
+      relayhost:     'mail.domain.com'
+      type:          'postfix'
 
 No defaults.
 
 See: http://docs.puppetlabs.com/references/latest/type.html#mailalias
+
+Currently only 'postfix' is supported for setting a relay host.
 
 ## mounts
 

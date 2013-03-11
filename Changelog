@@ -4,6 +4,9 @@
 
 * Only apply SELinux boolean changes if SELinux is enabled
 
+* Manage simple mail smart host configuration (initially just Postfix).  Mail
+aliases are now set under 'mail' instead of a separate 'mailaliases'.
+
 0.7.2:
 
 * Realize groups before users so that user primary groups exist when the user

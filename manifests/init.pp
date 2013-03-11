@@ -62,8 +62,8 @@ class system (
     config => $config['limits'],
   }
 
-  class { '::system::mailaliases':
-    config => $config['mailaliases'],
+  class { '::system::mail':
+    config => $config['mail'],
   }
 
   class { '::system::mounts':
