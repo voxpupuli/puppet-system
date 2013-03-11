@@ -20,13 +20,13 @@ define system::network::interface (
   }
   validate_bool($_dhcp)
   if $hwaddr {
+    if ! is_mac_address($hwaddr) {
+      fail("system::network::interface::hwaddr '$hwaddr' must be a MAC address: interface '${_interface}'")
+    }
     $_hwaddr = $hwaddr
   }
   else {
     $_hwaddr = inline_template("<%= scope.lookupvar('macaddress_${_interface}') %>")
-  }
-  if ! is_mac_address($_hwaddr) {
-    fail('system::network::interface::hwaddr must be a MAC address')
   }
   $_hotplug = $hotplug
   validate_bool($_hotplug)
@@ -42,6 +42,12 @@ define system::network::interface (
   validate_bool($onboot)
   $_type    = $type
   validate_string($_type)
+  if $_interface =~ /:/ {
+    $_alias = true
+  }
+  else {
+    $_alias = false
+  }
   file { "/etc/sysconfig/network-scripts/ifcfg-${_interface}":
     ensure  => present,
     owner   => 'root',
