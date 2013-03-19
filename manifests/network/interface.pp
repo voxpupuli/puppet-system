@@ -1,12 +1,17 @@
 define system::network::interface (
-  $dhcp      = undef,
-  $hwaddr    = undef,
-  $hotplug   = true,
-  $ipaddress = undef,
-  $netmask   = undef,
-  $onboot    = true,
-  $routes    = undef,
-  $type      = 'Ethernet',
+  $dhcp                  = undef,
+  $hwaddr                = undef,
+  $hotplug               = true,
+  $ipaddress             = undef,
+  $ipv6init              = false,
+  $ipv6addr              = undef,
+  $ipv6addr_secondaries  = undef,
+  $ipv6autoconf          = true,
+  $netmask               = undef,
+  $onboot                = true,
+  $routes                = undef,
+  $type                  = 'Ethernet',
+  $userctl               = false,
 ) {
   $_interface = $title
   validate_string($_interface)
@@ -48,6 +53,12 @@ define system::network::interface (
   else {
     $_alias = false
   }
+  $_ipv6init = $ipv6init
+  validate_bool($_ipv6init)
+  $_ipv6addr = $ipv6addr
+  $_ipv6addr_secondaries = $ipv6addr_secondaries
+  $_ipv6autoconf = $ipv6autoconf
+  validate_bool($_ipv6autoconf)
   file { "/etc/sysconfig/network-scripts/ifcfg-${_interface}":
     ensure  => present,
     owner   => 'root',

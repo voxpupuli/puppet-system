@@ -1,8 +1,10 @@
 class system::network (
-  $hostname   = undef,
-  $gateway    = undef,
-  $ipv6       = false,
-  $zeroconf   = false,
+  $hostname     = undef,
+  $gateway      = undef,
+  $ipv6         = false,
+  $ipv6init     = false,
+  $ipv6autoconf = true,
+  $zeroconf     = false,
 ) {
   if $hostname {
     validate_string($hostname)

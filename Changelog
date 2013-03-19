@@ -7,12 +7,17 @@
 * Manage simple mail smart host configuration (initially just Postfix).  Mail
 aliases are now set under 'mail' instead of a separate 'mailaliases'.
 
+* Do not try to set a MAC address on a virtual interface. Instead make virtual
+interfaces dependent on their parents (#3 thanks eglis).
+
+* Added basic IPv6 support (#2 thanks eglis)
+
 0.7.2:
 
 * Realize groups before users so that user primary groups exist when the user
 is created.
 
-* Make 'include system' work again (thanks mkm85) by avoiding mandatory
+* Make 'include system' work again (#1 thanks mkm85) by avoiding mandatory
 parameters in network and adding checks instead.
 
 * Do not restart the network service when config file changes are made as this
