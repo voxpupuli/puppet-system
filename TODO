@@ -7,7 +7,73 @@ templatedir
 
 * TODO: Add rspec-puppet tests for all classes and defines
 
+* TODO: sysctl: Make dynamic changes as well as updating /etc/sysctl.conf
+
 Future:
 
 * TODO: Changes to work on other Linux distributions like Ubuntu, Debian and SuSE
 
+* TODO: setfacl support
+
+setfacl -m u:tomcat1:x /apps/activemq1/service/activemq/supervise
+setfacl -m u:tomcat1:w /apps/activemq1/service/activemq/supervise/ok
+
+# setfacl --modify user::rwx supervise supervise/ok
+# setfacl --modify user:activemq1:r-x supervise supervise/ok
+# setfacl --modify group::r-x supervise supervise/ok
+# setfacl --modify mask::r-x supervise supervise/ok
+# setfacl --modify other::r-x supervise supervise/ok
+system::setfacl::modify:
+  - files: [ 'supervise', 'supervise/ok' ]
+    recursive: 'false' # -R
+    follow_symlinks: 'false' # true: -L; false: -P
+    no_mask: 'false'
+    entries:
+      - user::rwx
+      - user:activemq1:r-x
+      - group::r-x
+      - mask::r-x
+      - other::r-x
+
+# setfacl --set user:activemq1:r-x supervise supervise/ok
+system::setfacl::set:
+  - files: [ 'supervise', 'supervise/ok' ]
+    recursive: 'false' # -R
+    follow_symlinks: 'false' # true: -L; false: -P
+    no_mask: 'false'
+    entries:
+      - user:activemq1:r-x
+
+# setfacl --remove group:staff supervise supervise/ok
+system::setfacl::remove:
+  - files: [ 'supervise', 'supervise/ok' ]
+    recursive: 'false' # -R
+    follow_symlinks: 'false' # true: -L; false: -P
+    remove_all: 'false'
+    remove_default: 'false'
+    no_mask: 'false'
+    entries:
+      - group:staff
+
+# getfacl -R >file
+# setfacl --restore=file
+system:setfacl::restore:
+  test:
+    cwd: '/apps/tomcat'
+    owner: tomcat1
+    group: tomcat
+    setuid: 'true' # flags: sst
+    setgid: 'true'
+    sticky: 'true'
+    entries:
+      - user::rwx
+      - group::r-x
+      - other::r-x
+      - user::rwx
+      - user:activemq1:r-x
+      - group::r-x
+      - mask::r-x
+      - other::r-x
+      - default:user::rwx
+      - default:group::r-x
+      - default:other::-w-
