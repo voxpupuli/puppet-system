@@ -654,15 +654,8 @@ Example configuration:
 
 ## Notes
 
-* When requiring packages in other modules wrap them in an "if !defined" check
-  to avoid conflicts with system::packages - for example:
-
-    if ! defined(Package['bash']) { package { 'bash': ensure => installed } }
-
-* Put the system class *first* in the list of classes to include when using
-  hiera_include. This avoids problems with conflicting package declarations -
-  which shouldn't be a problem because system::packages is run in an earlier 
-  run stage but is.
+* Do not specify resources that are managed by other Puppet modules otherwise
+  you will get conflict errors.
 
 * As with many default types you can often specify a 'target' parameter to
   specify a different configuration filename to change.
