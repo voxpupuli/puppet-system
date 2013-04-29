@@ -181,7 +181,7 @@ Example 2 - create a file with the given content:
         content: "Authorised access only\nIf unauthorised log off now or face prosecution\n"
 
 Note: Use double-quotes if your content contains embedded newlines (\n) or tabs
-(\t).  Normaly you will also want a terminating newline.
+(\t).  Normally you will also want a terminating newline.
 
 ## groups
 
@@ -205,7 +205,7 @@ Defaults:
 By default virtual group resources are created that must then be realized.  To
 create real resources instead (as with earlier versions of this module) use:
 
-    system::groups::true: 'true'
+    system::groups::real: 'true'
 
 ## hosts
 
