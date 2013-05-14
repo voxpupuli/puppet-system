@@ -1,0 +1,44 @@
+#!/usr/bin/perl                                                                          
+use warnings;                                                                            
+use strict;                                                                              
+
+my %interfaces;
+my ($interface, $type);
+open(IFCONFIG,"/sbin/ifconfig | ") or die "$!\n";
+while(<IFCONFIG>) {
+  chomp;
+  if (/^(\S+)\s+Link.*?HWaddr\s+(\S+)/) {
+    $interface   = $1;
+    $type = $interface =~ /:/o ? 'alias' : 'static';
+    $interfaces{$type}{$interface}{'macaddress'} = $2;
+  }
+  elsif (/^(\S+)\s+Link.*?Loopback/) {
+    $interface   = $1;
+    $type = $interface =~ /:/o ? 'alias' : 'static';
+  }
+  elsif (/inet addr:(\S+)\s+.*?Mask:(\S+)/) {
+    die unless $interface;
+    $interfaces{$type}{$interface}{'ipaddress'} = $1;
+    $interfaces{$type}{$interface}{'netmask'}   = $2;
+  }
+}
+close(IFCONFIG);
+
+print "network:\n";
+print "  if:\n";
+foreach my $type (reverse sort keys %interfaces) {
+  print "    $type:\n";
+  foreach my $interface (sort keys %{ $interfaces{$type} }) {
+    unless ($interfaces{$type}{$interface}{'ipaddress'}) {
+      warn "Skipping $interface as it has no IP address\n";
+      next;
+    }
+    printf "      '%s':\n", $interface;
+    printf "        ensure: 'up'\n";
+    printf "        ipaddress: '%s'\n",  $interfaces{$type}{$interface}{'ipaddress'};
+    printf "        macaddress: '%s'\n", $interfaces{$type}{$interface}{'macaddress'}
+      if $interfaces{$type}{$interface}{'macaddress'};
+    printf "        netmask: '%s'\n",    $interfaces{$type}{$interface}{'netmask'}
+      if $interfaces{$type}{$interface}{'netmask'};
+  }
+}
