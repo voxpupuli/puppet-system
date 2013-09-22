@@ -1,3 +1,11 @@
+0.7.4:
+
+* Documentation fixes
+
+* Script to generate hiera network config on an existing host
+
+* Change dependency from ripienaar/concat to puppetlabs/concat (thanks #eshkay)
+
 0.7.3:
 
 * Enable files to be created from ERB templates
