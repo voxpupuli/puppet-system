@@ -9,8 +9,12 @@ ONBOOT=<% if @_onboot %>yes<% else %>no<% end %>
 HOTPLUG=<% if @_hotplug %>yes<% else %>no<% end %>
 <% end -%>
 TYPE=<%= @_type %>
+<% if @_ipaddr %>
 IPADDR=<%= @_ipaddr %>
+<% end %>
+<% if @_netmask %>
 NETMASK=<%= @_netmask %>
+<% end %>
 <% if @_ipv6init -%>
 IPV6INIT=yes
 <% if @_ipv6addr %>IPV6ADDR=<%= @_ipv6addr %><% end %>
