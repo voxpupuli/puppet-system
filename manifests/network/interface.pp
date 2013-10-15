@@ -36,11 +36,11 @@ define system::network::interface (
   $_hotplug = $hotplug
   validate_bool($_hotplug)
   $_ipaddr  = $ipaddress
-  if ! is_ip_address($_ipaddr) {
+  if ! is_ip_address($_ipaddr) and ! $_dhcp {
     fail('system::network::interface::ipaddress must be an IP address')
   }
   $_netmask = $netmask
-  if ! is_ip_address($_netmask) {
+  if ! is_ip_address($_netmask) and ! $_dhcp {
     fail('system::network::interface::netmask must be an IP address')
   }
   $_onboot  = $onboot
