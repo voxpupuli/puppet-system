@@ -97,9 +97,6 @@ system::mounts:
     fstype:  'nfs'
     options: 'rw,bg,hard,nointr,rsize=32768,wsize=32768,tcp,vers=3,timeo=600'
 
-system::ntp::iburst:  'true'
-system::ntp::country: 'uk'
-
 system::network::hostname: 'puppet.domain.com'
 system::network::gateway:  '10.7.0.1'
 system::network::ipv6:     'false'

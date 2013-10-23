@@ -1,3 +1,7 @@
+1.0.0:
+
+* Remove references to 'erwbgy/ntp'
+
 0.7.4:
 
 * Documentation fixes

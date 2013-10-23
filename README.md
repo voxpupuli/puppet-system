@@ -13,7 +13,6 @@ Manage Linux system resources and services from hiera configuration.
 * *mail* manage entries in /etc/aliases or set a relay host
 * *mounts*: manage entries in /etc/fstab
 * *network*: configure basic networking and dns
-* *ntp*: configure NTP servers in /etc/ntp.conf
 * *packages*: manage system packages
 * *schedules*: determine when resource config should not be applied and how often
 * *services*: manage system services
@@ -64,23 +63,13 @@ configuration file changes to be made without writing new classes.
 Example 1:
 
     system::augeas:
-      'ntp':
-        context: '/files/etc/ntp.conf'
-        changes:
-          - 'set server[1] 0.uk.pool.ntp.org'
-          - 'set server[2] 1.uk.pool.ntp.org'
-          - 'set server[3] 2.uk.pool.ntp.org'
-
-Example 2:
-
-    system::augeas:
       'test1':
         context: '/files/etc/sysconfig/firstboot'
         changes:
           - 'set RUN_FIRSTBOOT YES'
         onlyif:  'match other_value size > 0'
 
-Example 3:
+Example 2:
 
     system::augeas:
       'jboss_conf':
@@ -309,24 +298,6 @@ Example configuration:
         routes:
           '10.0.0.0/8':
             via: '10.16.0.250'
-
-## ntp
-
-Manage NTP servers in /etc/ntp.conf
-
-Example 1:
-
-    system::ntp::iburst:  'true'
-    system::ntp::servers: [ 'ntp1.example.com' ]
-
-Example 2:
-
-    system::ntp::iburst:  'true'
-    system::ntp::country: 'uk'
-
-See https://github.com/erwbgy/puppet-ntp for more details
-
-Note: The NTP algorithm does not work properly with two NTP servers.
 
 ## packages
 
