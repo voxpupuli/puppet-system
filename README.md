@@ -2,6 +2,8 @@
 
 Manage Linux system resources and services from hiera configuration.
 
+Please take note that this module works only with RedHat like systems.
+
 * *augeas*: apply file changes using the augeas tool
 * *crontabs*: set user crontab entries
 * *execs*:  run idempotent external commands
