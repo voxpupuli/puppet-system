@@ -89,7 +89,7 @@ class system (
   }
 
   class { '::system::selbooleans':
-    config => $config['selbooleana'],
+    config => $config['selbooleans'],
     stage  => first,
   }
 
