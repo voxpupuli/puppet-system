@@ -11,8 +11,10 @@ class system::network::dns (
   if $_config {
     $domains     = $_config['domains']
     $nameservers = $_config['nameservers']
+    $options     = $_config['options']
     validate_array($domains)
     validate_array($nameservers)
+    validate_array($options)
     file { '/etc/resolv.conf':
       ensure  => 'present',
       owner   => 'root',

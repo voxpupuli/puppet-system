@@ -5,3 +5,6 @@ nameserver <%= @ip %>
 <% for @domain in @domains -%>
 search <%= @domain %>
 <% end -%>
+<% for @option in @options -%>
+options <%= @option %>
+<% end -%>
