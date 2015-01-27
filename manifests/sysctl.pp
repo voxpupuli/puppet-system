@@ -1,9 +1,9 @@
 class system::sysctl (
   $config   = undef,
-  $schedule = $::system::schedule,
+  $sys_schedule = 'always',
 ) {
   $defaults = {
-    schedule => $schedule,
+    schedule => $sys_schedule,
   }
   if $config {
     include augeasproviders

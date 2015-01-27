@@ -1,6 +1,6 @@
 class system::users::realize (
   $users    = undef,
-  $schedule = $::system::schedule,
+  $sys_schedule = 'always',
 ) {
   if $users {
     realize(User[$users])

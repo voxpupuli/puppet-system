@@ -1,39 +1,39 @@
 class system::sysconfig (
   $config   = {},
-  $schedule = $::system::schedule,
+  $sys_schedule = 'always',
 ) {
   class { '::system::sysconfig::clock':
     config   => $config['clock'],
-    schedule => $schedule,
+    schedule => $sys_schedule,
   }
 
   class { '::system::sysconfig::i18n':
     config   => $config['i18n'],
-    schedule => $schedule,
+    schedule => $sys_schedule,
   }
 
   class { '::system::sysconfig::keyboard':
     config   => $config['keyboard'],
-    schedule => $schedule,
+    schedule => $sys_schedule,
   }
 
   class { '::system::sysconfig::puppetdashboard':
     config   => $config['puppetdashboard'],
-    schedule => $schedule,
+    schedule => $sys_schedule,
   }
 
   class { '::system::sysconfig::puppetmaster':
     config   => $config['puppetmaster'],
-    schedule => $schedule,
+    schedule => $sys_schedule,
   }
 
   class { '::system::sysconfig::puppet':
     config   => $config['puppet'],
-    schedule => $schedule,
+    schedule => $sys_schedule,
   }
 
   class { '::system::sysconfig::selinux':
     config   => $config['selinux'],
-    schedule => $schedule,
+    schedule => $sys_schedule,
   }
 }
