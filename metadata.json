@@ -1,0 +1,49 @@
+{
+  "name": "jakeb-system",
+  "version": "1.0.0",
+  "author": "jakeb",
+  "license": "Apache-2.0",
+  "summary": "Manage Linux system resources and services from hiera configuration.",
+  "source": "https://github.com/bergerjac/puppet-system",
+  "project_page": "https://forge.puppetlabs.com/jakeb/system",
+  "issues_url": "https://github.com/bergerjac/puppet-system/issues",
+  "tags": [
+    "augeas",
+    "crontabs",
+    "execs",
+    "facts",
+    "files",
+    "groups",
+    "hosts",
+    "limits",
+    "mail",
+    "mounts",
+    "network",
+    "packages",
+    "schedules",
+    "services",
+    "sshd",
+    "sysconfig",
+    "sysctl",
+    "templates",
+    "users",
+    "yumgroups",
+    "yumrepos"
+  ],
+  "operatingsystem_support": [
+    {
+    "operatingsystem":"CentOS",
+    "operatingsystemrelease":[ "6.5", "7.0" ]
+    },
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": [ "12.04", "14.04" ]
+    }
+   ],
+  "dependencies": [
+    { "name": "erwbgy/limits", "version_requirement": ">= 0.3.1 <= 0.3.9" },
+    { "name": "domcleal/augeasproviders", "version_requirement": ">= 0.5.1" },
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 2.6.0" },
+    { "name": "puppetlabs/concat", "version_requirement": ">= 0.2.0" }
+  ]
+}
