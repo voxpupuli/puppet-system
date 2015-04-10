@@ -1,3 +1,20 @@
+# = Class: system::crontabs
+#
+# Set user crontab entries
+#
+# == Parameters:
+#
+# [*ensure*]
+#   Enables or disables a cronjob
+#   Default: present
+#
+# [*schedule*]
+#   Defines the schedule of a cronjob
+#
+# [*user*]
+#   Sets the user of a cronjob
+#   Default: root
+#
 class system::crontabs (
   $config   = undef,
   $schedule = $::system::schedule,

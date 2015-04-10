@@ -1,3 +1,7 @@
+# = Class: system::sysconfig
+#
+# Manage settings in files under /etc/sysconfig
+#
 class system::sysconfig (
   $config   = {},
   $schedule = $::system::schedule,

@@ -1,3 +1,7 @@
+# = Class: system::subsystem
+#
+# Manage subsystems like sftp for system::sshd
+#
 class system::sshd::subsystem (
   $config = undef
 ) {

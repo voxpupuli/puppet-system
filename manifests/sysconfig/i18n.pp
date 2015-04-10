@@ -1,3 +1,7 @@
+# = Class: system::sysconfig::i18n
+#
+# Manages /etc/sysconfig/i18n
+#
 class system::sysconfig::i18n (
   $config   = undef,
   $schedule = undef,

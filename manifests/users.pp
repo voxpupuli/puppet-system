@@ -1,3 +1,7 @@
+# = Class: system::users
+#
+# Manage users entries in /etc/passwd and /etc/shadow
+#
 class system::users (
   $config   = undef,
   $schedule = $::system::schedule,

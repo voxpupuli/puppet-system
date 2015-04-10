@@ -1,3 +1,7 @@
+# = Class: system::sysconfig::header
+#
+# Adds header to files managed by system::sysconfig
+#
 define system::sysconfig::header (
   $schedule = undef,
 ) {

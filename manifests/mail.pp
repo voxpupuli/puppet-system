@@ -1,3 +1,7 @@
+# = Class: system::mail
+#
+# Manage entries in /etc/aliases or set a relay host
+#
 class system::mail (
   $config   = undef,
   $schedule = $::system::schedule,

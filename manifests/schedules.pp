@@ -1,3 +1,8 @@
+# = Class: system::schedules
+#
+# Create schedules that determine when a resource should not be applied and the
+# number times it should be applied within a specified time period.
+#
 class system::schedules (
   $config = undef,
 ) {

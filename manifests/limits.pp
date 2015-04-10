@@ -1,3 +1,7 @@
+# = Class: system::limits
+#
+# Manage entries in /etc/security/limits.conf
+#
 class system::limits (
   $config   = undef,
   $schedule = $::system::schedule,

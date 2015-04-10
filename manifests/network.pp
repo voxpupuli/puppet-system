@@ -1,3 +1,7 @@
+# = Class: system::network
+#
+# Configure basic networking
+#
 class system::network (
   $hostname     = undef,
   $gateway      = undef,

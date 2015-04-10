@@ -1,3 +1,7 @@
+# = Class: system::sysctl
+#
+# Manage settings in /etc/sysctl.conf
+#
 class system::sysctl (
   $config   = undef,
   $schedule = $::system::schedule,

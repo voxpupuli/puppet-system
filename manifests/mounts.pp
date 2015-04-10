@@ -1,3 +1,7 @@
+# = Class: system::mounts
+#
+# Manage entries in /etc/fstab
+#
 class system::mounts (
   $config   = undef,
   $schedule = $::system::schedule,

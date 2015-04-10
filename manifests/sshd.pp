@@ -1,3 +1,7 @@
+# = Class: system::sshd
+#
+# Manage configuration in /etc/ssh/sshd_config including subsystems like sftp
+#
 class system::sshd (
   $config   = undef,
   $schedule = $::system::schedule,

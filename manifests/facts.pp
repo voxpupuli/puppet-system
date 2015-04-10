@@ -1,3 +1,7 @@
+# = Class: system::facts
+#
+# Set custom facts
+#
 class system::facts (
   $config   = undef,
   $cleanold = false,

@@ -1,3 +1,7 @@
+# = Class: system::network::interfaces
+#
+# Configure network interfaces
+#
 class system::network::interfaces (
   $config = undef,
 ) {

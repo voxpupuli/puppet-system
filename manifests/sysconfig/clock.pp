@@ -1,3 +1,7 @@
+# = Class: system::sysconfig::clock
+#
+# Manages /etc/sysconfig/clock
+#
 class system::sysconfig::clock (
   $config   = undef,
   $schedule = undef,

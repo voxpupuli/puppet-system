@@ -1,3 +1,7 @@
+# = Class: system::selbooleans
+#
+# Manage SELinux booleans
+#
 class system::selbooleans (
   $config   = undef,
   $schedule = $::system::schedule,

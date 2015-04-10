@@ -1,3 +1,7 @@
+# = Class: system::files
+#
+# Create or update files or directories
+#
 class system::files (
   $config   = undef,
   $schedule = $::system::schedule,

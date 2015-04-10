@@ -1,3 +1,7 @@
+# = Class: system
+#
+# Manage Linux system resources and services from hiera configuration.
+#
 class system (
   $config   = {},
   $schedule = undef,

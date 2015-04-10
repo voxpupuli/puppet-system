@@ -1,3 +1,7 @@
+# = Class: system::groups::realize
+#
+# Realizes instructions for system::groups
+#
 class system::groups::realize (
   $groups   = undef,
   $schedule = $::system::schedule,

@@ -1,3 +1,20 @@
+# = Class: system::yumrepos
+#
+# Manage yum repository files under /etc/yum.repos.d
+#
+# == Parameters:
+#
+# [*enabled*]
+#   Enables or disables a YUM repository
+#   Default: 1
+#
+# [*gpgcheck*]
+#   Enables or disables GPG key checking
+#   Default: 1
+#
+# [*schedule*]
+#   Sets the schedule
+#
 class system::yumrepos (
   $config   = undef,
   $schedule = $::system::schedule,

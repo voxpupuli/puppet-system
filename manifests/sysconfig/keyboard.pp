@@ -1,3 +1,7 @@
+# = Class: system::sysconfig::keyboard
+#
+# Manages Keyboard models, layouts, types
+#
 class system::sysconfig::keyboard (
   $config   = undef,
   $schedule = undef,

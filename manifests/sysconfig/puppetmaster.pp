@@ -1,3 +1,7 @@
+# = Class: system::sysconfig::puppetmaster
+#
+# Manages sysconfig entries for Puppet Masters
+#
 class system::sysconfig::puppetmaster (
   $config   = undef,
   $schedule = undef,

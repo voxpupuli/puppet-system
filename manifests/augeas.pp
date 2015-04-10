@@ -1,3 +1,7 @@
+# = Class: system::augeas
+#
+# Apply file changes using the augeas tool
+#
 class system::augeas (
   $config   = undef,
   $schedule = $::system::schedule,

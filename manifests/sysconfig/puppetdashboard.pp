@@ -1,3 +1,7 @@
+# = Class: system::sysconfig::puppetdashboard
+#
+# Manages sysconfig entries for Puppet Dashboard
+#
 class system::sysconfig::puppetdashboard (
   $config   = undef,
   $schedule = undef,

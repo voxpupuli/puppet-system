@@ -1,3 +1,7 @@
+# = Class: system::services
+#
+# Manage system services
+#
 class system::services (
   $config   = undef,
   $schedule = $::system::schedule,

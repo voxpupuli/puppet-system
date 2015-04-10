@@ -1,3 +1,7 @@
+# = Class: system::sysconfig::entry
+#
+# Manages files under /etc/sysconfig
+#
 define system::sysconfig::entry (
   $file,
   $var,

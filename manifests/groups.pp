@@ -1,3 +1,7 @@
+# = Class: system::groups
+#
+# Manages entries in /etc/group
+#
 class system::groups (
   $config   = undef,
   $schedule = $::system::schedule,

@@ -1,3 +1,7 @@
+# = Class: system::templates
+#
+# Creates files from ERB templates
+#
 class system::templates (
   $config   = undef,
   $schedule = $::system::schedule,

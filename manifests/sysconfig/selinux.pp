@@ -1,3 +1,7 @@
+# = Class: system::sysconfig::selinux
+#
+# Manage SELinux booleans
+#
 class system::sysconfig::selinux (
   $config   = undef,
   $schedule = undef,

@@ -1,3 +1,7 @@
+# = Class: system::hosts
+#
+# Manage entries in /etc/hosts
+#
 class system::hosts (
   $config   = undef,
   $schedule = $::system::schedule,

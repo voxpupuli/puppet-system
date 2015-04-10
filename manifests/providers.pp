@@ -1,3 +1,8 @@
+# = Class: system::providers
+#
+# The augeasproviders module can be an alternate provider for the host,
+# mailalias and mounttab types.
+#
 class system::providers (
   $config   = undef,
 ) {

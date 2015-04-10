@@ -1,3 +1,7 @@
+# = Class: system::network::dns
+#
+# Manage entries in /etc/resolv.conf for system::network
+#
 class system::network::dns (
   $config = undef,
 ) {

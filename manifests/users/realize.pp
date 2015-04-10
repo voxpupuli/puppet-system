@@ -1,3 +1,7 @@
+# = Class: system::users::realize
+#
+# Realizes instructions for system::users
+#
 class system::users::realize (
   $users    = undef,
   $schedule = $::system::schedule,

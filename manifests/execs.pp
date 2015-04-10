@@ -1,3 +1,7 @@
+# = Class: system::execs
+#
+# Run idempotent external commands
+#
 class system::execs (
   $config   = undef,
   $schedule = $::system::schedule,
