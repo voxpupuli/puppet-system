@@ -1,7 +1,7 @@
 name    'jakeb-system'
 version '1.0.0'
 author 'jakeb'
-license 'Apache License, Version 2.0'
+license 'Apache-2.0'
 summary 'Manage Linux system resources and services from hiera configuration.'
 project_page 'https://github.com/bergerjac/puppet-system'
 dependency 'erwbgy/limits', '>= 0.3.1'
