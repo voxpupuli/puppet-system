@@ -17,7 +17,7 @@ Manage Linux system resources and services from hiera configuration.
 * *schedules*: determine when resource config should not be applied and how often
 * *services*: manage system services
 * *sshd*: manage configuration in `/etc/ssh/sshd_config` including subsystems like sftp
-* *sysconfig*: manage files under `/etc/sysconfig` : clock, i18n, keyboard, puppet-dashboard, puppet, puppetmaster, selinux
+* *sysconfig*: manage files under `/etc/sysconfig` or `/etc/default` : clock, i18n, keyboard, puppet-dashboard, puppet, puppetmaster, selinux
 * *sysctl*: manage entries in `/etc/sysctl.conf`
 * *templates*: create files from ERB templates
 * *users*: manage users in `/etc/passwd` and `/etc/shadow`
@@ -610,7 +610,7 @@ Defaults:
 * usecache: true
 * schedule: daily
 
-Notes: 
+Notes:
 
 * Set `usecache: false` if `yum -C grouplist` does not work on your system and you are getting `system::yumgroup` resources created on every Puppet run.
 * By default the yumgroup type has a 'daily' schedule to reduce the time Puppet runs take - package group changes are usually rare after the host is first set up. This means that it will run once every 24 hours. You override this by supplying your own schedule parameter - see system::schedules to create your own custom schedules.

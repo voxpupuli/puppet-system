@@ -57,8 +57,8 @@ class system::facts (
       ensure => absent,
     }
     exec { 'fact-remove-sysconfig-puppet':
-      command  => "/usr/bin/perl -pi -e 's/^\s*#?\s*(export )?FACTER_.*?=.*?$//' /etc/sysconfig/puppet", # lint:ignore:80chars
-      onlyif   => '/bin/grep -q FACTER_ /etc/sysconfig/puppet',
+      command  => "/usr/bin/perl -pi -e 's/^\s*#?\s*(export )?FACTER_.*?=.*?$//' ${system::sysconfig_path}/puppet", # lint:ignore:80chars
+      onlyif   => "/bin/grep -q FACTER_ ${system::sysconfig_path}/puppet",
       schedule => $schedule,
     }
   }

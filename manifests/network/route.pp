@@ -9,7 +9,7 @@ define system::network::route (
     fail('system::network::route::via must be an IP address')
   }
   concat::fragment { "route-${interface}-${to}":
-    target  => "/etc/sysconfig/network-scripts/route-${interface}",
+    target  => "${system::sysconfig_path}/network-scripts/route-${interface}",
     content => template('system/network/route.erb'),
     #notify  => Class['system::network::service'],
   }

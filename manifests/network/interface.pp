@@ -59,7 +59,7 @@ define system::network::interface (
   $_ipv6addr_secondaries = $ipv6addr_secondaries
   $_ipv6autoconf = $ipv6autoconf
   validate_bool($_ipv6autoconf)
-  file { "/etc/sysconfig/network-scripts/ifcfg-${_interface}":
+  file { "${system::sysconfig_path}/network-scripts/ifcfg-${_interface}":
     ensure  => present,
     owner   => 'root',
     group   => 'root',
@@ -69,7 +69,7 @@ define system::network::interface (
   }
   if $routes {
     validate_hash($routes)
-    concat { "/etc/sysconfig/network-scripts/route-${_interface}":
+    concat { "${system::sysconfig_path}/network-scripts/route-${_interface}":
       owner => 'root',
       group => 'root',
       mode  => '0644',

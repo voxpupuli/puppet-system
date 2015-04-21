@@ -17,7 +17,7 @@ class system::network (
     }
     validate_bool($ipv6)
     validate_bool($zeroconf)
-    file { '/etc/sysconfig/network':
+    file { "${system::sysconfig_path}/network":
       ensure  => present,
       owner   => 'root',
       group   => 'root',
