@@ -10,9 +10,6 @@ class system (
   # Ubuntu and Debian store sysconfig files in /etc/default
   # Other OS store sysconfig files in /etc/sysconfig
   if $::operatingsystem == 'Debian' or $::operatingsystem == 'Ubuntu' {
-    # 12.04 uses ""
-    # 14.04 uses ""
-
     $sysconfig_path = '/etc/default'
   } else {
     $sysconfig_path = '/etc/sysconfig'
