@@ -1,3 +1,13 @@
+# = Class: system::packages
+#
+# Manage system package
+#
+# == Parameters:
+#
+# [*ensure*]
+#   Sets the status of a package
+#   Default: installed
+#
 class system::packages (
   $config   = undef,
   $schedule = $::system::schedule,
