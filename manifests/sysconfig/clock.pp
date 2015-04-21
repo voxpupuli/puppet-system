@@ -25,7 +25,7 @@ class system::sysconfig::clock (
       schedule => $schedule,
     }
     exec { '/etc/localtime':
-      command     => "/bin/rm -f /etc/localtime && /bin/cp /usr/share/zoneinfo/${timezone} /etc/localtime",
+      command     => "/bin/rm -f /etc/localtime && /bin/cp /usr/share/zoneinfo/${timezone} /etc/localtime", # lint:ignore:80chars
       refreshonly => true,
       schedule    => $schedule,
     }

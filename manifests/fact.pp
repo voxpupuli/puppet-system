@@ -18,7 +18,13 @@ define system::fact (
       'value' => '%s'
     }
     $created_resource_hash =
-      create_resources_hash_from($resource_name, $value, $parameters, $dynamic_parameters)
+      create_resources_hash_from(
+        $resource_name,
+        $value,
+        $parameters,
+        $dynamic_parameters
+      )
+
     create_resources('system::fact', $created_resource_hash)
   }
   else {

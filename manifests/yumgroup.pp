@@ -17,7 +17,7 @@ define system::yumgroup(
     present,installed: {
       exec { "Installing ${name} yum group":
         command  => "/usr/bin/yum -y groupinstall ${pkg_types_arg} '${name}'",
-        unless   => "/usr/bin/yum ${cache} grouplist 2>/dev/null | /usr/bin/perl -ne 'last if /^Available/o; next if /^\w/o; print' | /bin/grep -qw '${name}'",
+        unless   => "/usr/bin/yum ${cache} grouplist 2>/dev/null | /usr/bin/perl -ne 'last if /^Available/o; next if /^\w/o; print' | /bin/grep -qw '${name}'", # lint:ignore:80chars
         timeout  => 600,
         schedule => $schedule,
       }
@@ -25,13 +25,13 @@ define system::yumgroup(
     absent: {
       exec { "Removing ${name} yum group":
         command  => "/usr/bin/yum -y groupremove ${pkg_types_arg} '${name}'",
-        unless   => "/usr/bin/yum ${cache} grouplist 2>/dev/null | /usr/bin/perl -ne 'last if /^Available/o; next if /^\w/o; print' | /bin/grep -qw '${name}'",
+        unless   => "/usr/bin/yum ${cache} grouplist 2>/dev/null | /usr/bin/perl -ne 'last if /^Available/o; next if /^\w/o; print' | /bin/grep -qw '${name}'", # lint:ignore:80chars
         timeout  => 600,
         schedule => $schedule,
       }
     }
     default: {
-      fail('Unknown ensure value - valid values are: present, installed or absent')
+      fail('Unknown ensure value - valid values are: present, installed or absent') # lint:ignore:80chars
     }
   }
 }

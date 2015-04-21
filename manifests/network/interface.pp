@@ -26,7 +26,7 @@ define system::network::interface (
   validate_bool($_dhcp)
   if $hwaddr {
     if ! is_mac_address($hwaddr) {
-      fail("system::network::interface::hwaddr '${hwaddr}' must be a MAC address: interface '${_interface}'")
+      fail("system::network::interface::hwaddr '${hwaddr}' must be a MAC address: interface '${_interface}'") # lint:ignore:80chars
     }
     $_hwaddr = $hwaddr
   }
@@ -74,6 +74,6 @@ define system::network::interface (
       group => 'root',
       mode  => '0644',
     }
-    create_resources('system::network::route', $routes, { interface => $_interface } )
+    create_resources('system::network::route', $routes, { interface => $_interface } ) # lint:ignore:80chars
   }
 }
