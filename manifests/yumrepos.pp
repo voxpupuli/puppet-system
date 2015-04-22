@@ -24,13 +24,19 @@ class system::yumrepos (
     gpgcheck => '1',
     schedule => $schedule,
   }
-  if $config {
-    create_resources(yumrepo, $config, $defaults)
-  }
-  else {
-    $hiera_config = hiera_hash('system::yumrepos', undef)
-    if $hiera_config {
-      create_resources(yumrepo, $hiera_config, $defaults)
+
+  # only run this on RedHat-based OS (RHEL, CentOS)
+  if $::osfamily == 'RedHat' {
+    if $config {
+      create_resources(yumrepo, $config, $defaults)
     }
+    else {
+      $hiera_config = hiera_hash('system::yumrepos', undef)
+      if $hiera_config {
+        create_resources(yumrepo, $hiera_config, $defaults)
+      }
+    }
+  } else {
+    debug("${::osfamily} does not have support for \"yumrepos\"")
   }
 }
