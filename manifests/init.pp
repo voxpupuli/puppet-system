@@ -110,6 +110,12 @@ class system (
     config => $config['sshd'],
   }
 
+  class { '::system::ssh_authorized_keys':
+    config  => $config['ssh_authorized_keys'],
+    stage   => second,
+    require => Class['::system::users::realize'],
+  }
+
   class { '::system::sysconfig':
     config => $config['sysconfig'],
   }
