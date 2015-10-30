@@ -43,6 +43,11 @@ class system (
     stage  => third,
   }
 
+  class { '::system::file_lines':
+    config => $config['file_lines'],
+    stage => third,
+  }
+
   class { '::system::groups':
     config => $config['groups'],
     stage  => second
