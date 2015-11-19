@@ -1,13 +1,13 @@
 class system::limits (
   $config   = undef,
-  $schedule = $::system::schedule,
+  $sys_schedule = 'always',
 ) {
   if $config {
     include limits
     class { '::limits':
       config    => $config,
       use_hiera => false,
-      #schedule => $schedule,
+      #schedule => $sys_schedule,
     }
   }
   else {
@@ -17,7 +17,7 @@ class system::limits (
       class { '::limits':
         config    => $hiera_config,
         use_hiera => false,
-        #schedule => $schedule,
+        #schedule => $sys_schedule,
       }
     }
   }

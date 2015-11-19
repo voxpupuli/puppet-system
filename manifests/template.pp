@@ -3,13 +3,13 @@ define system::template(
   $owner    = 'root',
   $group    = 'root',
   $mode     = undef,
-  $schedule = 'always',
+  $sys_schedule = 'always',
 ) {
   file { $title:
     owner    => $owner,
     group    => $group,
     mode     => $mode,
-    schedule => $schedule,
+    schedule => $sys_schedule,
     content  => template($template),
   }
 }
