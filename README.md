@@ -1,3 +1,7 @@
+# _Unmaintained_
+
+I no longer use Puppet actively and this software has not been maintained for some time.  
+
 # puppet-system
 
 Manage Linux system resources and services from hiera configuration.
