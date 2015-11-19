@@ -18,6 +18,7 @@ Please take note that this module works only with RedHat like systems.
 * *ntp*: configure NTP servers in /etc/ntp.conf
 * *packages*: manage system packages
 * *schedules*: determine when resource config should not be applied and how often
+* *selbooleans*: manage SELinux booleans
 * *services*: manage system services
 * *sshd*: manage configuration in /etc/ssh/sshd_config including subsystems like sftp
 * *sysconfig*: manage files under /etc/sysconfig: clock, i18n, keyboard, puppet-dashboard, puppet, puppetmaster, selinux
