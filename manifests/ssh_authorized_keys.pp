@@ -9,7 +9,7 @@ class system::ssh_authorized_keys (
   $defaults = {
     ensure   => 'present',
     schedule => $schedule,
-    type     => 'ssh-rsa',
+    'type'     => 'ssh-rsa',
   }
   if $config {
     create_resources(ssh_authorized_key, $config, $defaults)
