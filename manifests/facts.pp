@@ -24,7 +24,6 @@ class system::facts (
       require => File['/etc/facter'],
     }
   }
-  include concat::setup
   concat { '/etc/facter/facts.d/system_facts.yaml':
     owner   => 'root',
     group   => 'root',
