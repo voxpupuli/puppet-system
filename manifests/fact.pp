@@ -11,7 +11,7 @@ define system::fact (
     $resource_name = "${var}%index%"
     $parameters = {
       schedule => $schedule,
-      type     => $type,
+      'type'   => $type,
       ttl      => $ttl,
     }
     $dynamic_parameters = {
