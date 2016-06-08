@@ -45,7 +45,7 @@ working and fixed silly typos in routes.pp
 * By default virtual user and group resources are now created that must then
 be realized rather than real resources as before.  This allows all of the user
 and group configuration to be added to a common part of the hiera hierarchy
-but only the relevent users and groups created on each host.
+but only the relevant users and groups created on each host.
 
 To create real resources instead (and make things work as they did with
 earlier versions of this module) use:
