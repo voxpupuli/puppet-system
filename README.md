@@ -1,6 +1,4 @@
-# _Unmaintained_
-
-I no longer use Puppet actively and this software has not been maintained for some time.  
+Transferred to the good people at Vox Pupuli.
 
 # puppet-system
 
