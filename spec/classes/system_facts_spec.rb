@@ -1,24 +1,23 @@
 require 'spec_helper'
 
-#system::facts:
+# system::facts:
 #  location:
 #    value: 'London'
 
-describe 'system::facts', :type => 'class' do
+describe 'system::facts', type: 'class' do
   describe 'config parameter' do
-    let(:params) {
+    let(:params) do
       {
-        :config => {
+        config: {
           'location' => {
-            'value'  => 'London',
+            'value'  => 'London'
           }
         }
       }
-    }
+    end
+
     it {
-      should create_system__fact('location').with( {
-        'value'  => 'London',
-      } )
+      is_expected.to create_system__fact('location').with('value' => 'London')
     }
   end
 end
