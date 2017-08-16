@@ -1,0 +1,118 @@
+{
+  "name": "puppet-system",
+  "version": "0.7.5-rc0",
+  "author": "Vox Pupuli",
+  "summary": "Manage Linux system resources and services from hiera configuration",
+  "license": "Apache-2.0",
+  "source": "https://github.com/voxpupuli/puppet-system.git",
+  "project_page": "https://github.com/voxpupuli/puppet-system",
+  "issues_url": "https://github.com/voxpupuli/puppet-system/issues",
+  "tags": [
+    "system",
+    "linux"
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "OracleLinux",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Scientific",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "14.04",
+        "16.04"
+      ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "10",
+        "11",
+        "12"
+      ]
+    },
+    {
+      "operatingsystem": "OpenSuSE",
+      "operatingsystemrelease": [
+        "13.1"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7",
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "Fedora",
+      "operatingsystemrelease": [
+        "24",
+        "25"
+      ]
+    },
+    {
+      "operatingsystem": "Solaris",
+      "operatingsystemrelease": [
+        "10",
+        "11"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.6.1 < 5.0.0"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.13.0 < 5.0.0"
+    },
+    {
+      "name": "puppetlabs-concat",
+      "version_requirement": ">= 2.2.1 < 5.0.0"
+    },
+    {
+      "name": "erwbgy-limits",
+      "version_requirement": ">= 0.3.1 < 1.0.0"
+    },
+    {
+      "name": "erwbgy-ntp",
+      "version_requirement": ">= 0.7.1 < 1.0.0"
+    },
+    {
+      "name": "domcleal-augeasproviders",
+      "version_requirement": ">= 0.5.1 < 1.0.0"
+    }
+  ]
+}
