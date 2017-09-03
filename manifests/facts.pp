@@ -20,7 +20,6 @@ class system::facts (
       require => File['/etc/facter'],
     }
   }
-  include concat::setup
   concat { '/etc/facter/facts.d/system_facts.yaml':
     owner   => 'root',
     group   => 'root',
@@ -28,9 +27,9 @@ class system::facts (
     require => File['/etc/facter/facts.d'],
   }
   concat::fragment { 'system_facts_header':
-    target   => '/etc/facter/facts.d/system_facts.yaml',
-    content  => "---\n",
-    order    => '01',
+    target  => '/etc/facter/facts.d/system_facts.yaml',
+    content => "---\n",
+    order   => '01',
   }
   $defaults = {
     schedule => $sys_schedule,
@@ -52,7 +51,7 @@ class system::facts (
     file { [ $sh_filename, $csh_filename ]:
       ensure => absent,
     }
-    exec { "fact-remove-sysconfig-puppet":
+    exec { 'fact-remove-sysconfig-puppet':
       command  => "/usr/bin/perl -pi -e 's/^\s*#?\s*(export )?FACTER_.*?=.*?$//' /etc/sysconfig/puppet",
       onlyif   => '/bin/grep -q FACTER_ /etc/sysconfig/puppet',
       schedule => $sys_schedule,

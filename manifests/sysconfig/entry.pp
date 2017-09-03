@@ -3,7 +3,6 @@ define system::sysconfig::entry (
   $var,
   $val,
   $nudge = [],
-  $schedule = undef,
 ) {
   if $val {
     augeas { "system-sysconfig-${file}-${var}":

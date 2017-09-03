@@ -26,7 +26,7 @@ define system::network::interface (
   validate_bool($_dhcp)
   if $hwaddr {
     if ! is_mac_address($hwaddr) {
-      fail("system::network::interface::hwaddr '$hwaddr' must be a MAC address: interface '${_interface}'")
+      fail("system::network::interface::hwaddr '${hwaddr}' must be a MAC address: interface '${_interface}'")
     }
     $_hwaddr = $hwaddr
   }
@@ -70,9 +70,9 @@ define system::network::interface (
   if $routes {
     validate_hash($routes)
     concat { "/etc/sysconfig/network-scripts/route-${_interface}":
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644',
+      owner => 'root',
+      group => 'root',
+      mode  => '0644',
     }
     create_resources('system::network::route', $routes, { interface => $_interface } )
   }

@@ -1,3 +1,11 @@
 fixtures:
+  forge_modules:
+    augeasproviders: "herculesteam-augeasproviders"
+  repositories:
+    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib"
+    concat: "https://github.com/puppetlabs/puppetlabs-concat"
+    limits: "https://github.com/erwbgy/puppet-limits"
+    ntp: "https://github.com/erwbgy/puppet-ntp"
+    #augeasproviders: "https://github.com/hercules-team/augeasproviders"
   symlinks:
     system: "#{source_dir}"
