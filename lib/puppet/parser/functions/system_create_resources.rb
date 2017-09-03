@@ -58,14 +58,12 @@ Puppet::Parser::Functions.newfunction(:system_create_resources, arity: -3, doc: 
   end
   if type_name == 'class'
     type_of_resource = :class
+  elsif resource == Puppet::Type.type(type_name.to_sym)
+    type_of_resource = :type
+  elsif resource == find_definition(type_name.downcase)
+    type_of_resource = :define
   else
-    if resource = Puppet::Type.type(type_name.to_sym)
-      type_of_resource = :type
-    elsif resource = find_definition(type_name.downcase)
-      type_of_resource = :define
-    else
-      raise ArgumentError, "could not create resource of unknown type #{type_name}"
-    end
+    raise ArgumentError, "could not create resource of unknown type #{type_name}"
   end
   # iterate through the resources to create
   defaults = args[2] || {}
