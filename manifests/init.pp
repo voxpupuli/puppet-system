@@ -45,7 +45,7 @@ class system (
 
   class { '::system::groups':
     config => $config['groups'],
-    stage  => second
+    stage  => second,
   }
 
   class { '::system::groups::realize':
@@ -139,6 +139,6 @@ class system (
 
   class { '::system::providers':
     config => $config['providers'],
-    stage  => first
+    stage  => first,
   }
 }

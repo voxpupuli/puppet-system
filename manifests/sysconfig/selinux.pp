@@ -1,6 +1,5 @@
 class system::sysconfig::selinux (
   $config   = undef,
-  $schedule = undef,
 ) {
   if $config {
     $selinux = $config

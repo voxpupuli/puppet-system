@@ -1,4 +1,4 @@
-Puppet::Parser::Functions::newfunction(:system_create_resources, :arity => -3, :doc => <<-'ENDHEREDOC') do |args|
+Puppet::Parser::Functions.newfunction(:system_create_resources, arity: -3, doc: <<-'ENDHEREDOC') do |args|
     Converts a hash into a set of resources and adds them to the catalog.
 
     This function takes two mandatory arguments: a resource type, and a hash describing
@@ -43,7 +43,7 @@ Puppet::Parser::Functions::newfunction(:system_create_resources, :arity => -3, :
         system_create_resources("@user", $myusers)
 
   ENDHEREDOC
-  raise ArgumentError, ("system_create_resources(): wrong number of arguments (#{args.length}; must be 2 or 3)") if args.length > 3
+  raise ArgumentError, "system_create_resources(): wrong number of arguments (#{args.length}; must be 2 or 3)" if args.length > 3
 
   # figure out what kind of resource we are
   type_of_resource = nil
@@ -58,31 +58,29 @@ Puppet::Parser::Functions::newfunction(:system_create_resources, :arity => -3, :
   end
   if type_name == 'class'
     type_of_resource = :class
+  elsif resource == Puppet::Type.type(type_name.to_sym)
+    type_of_resource = :type
+  elsif resource == find_definition(type_name.downcase)
+    type_of_resource = :define
   else
-    if resource = Puppet::Type.type(type_name.to_sym)
-      type_of_resource = :type
-    elsif resource = find_definition(type_name.downcase)
-      type_of_resource = :define
-    else
-      raise ArgumentError, "could not create resource of unknown type #{type_name}"
-    end
+    raise ArgumentError, "could not create resource of unknown type #{type_name}"
   end
   # iterate through the resources to create
   defaults = args[2] || {}
   args[1].each do |title, params|
     params = Puppet::Util.symbolizehash(defaults.merge(params))
-    raise ArgumentError, 'params should not contain title' if(params[:title])
+    raise ArgumentError, 'params should not contain title' if params[:title]
     case type_of_resource
     # JJM The only difference between a type and a define is the call to instantiate_resource
     # for a defined type.
     when :type, :define
-      p_resource = Puppet::Parser::Resource.new(type_name, title, :scope => self, :source => resource)
+      p_resource = Puppet::Parser::Resource.new(type_name, title, scope: self, source: resource)
       p_resource.virtual = type_virtual
       p_resource.exported = type_exported
-      {:name => title}.merge(params).each do |k,v|
-        p_resource.set_parameter(k,v)
+      { name: title }.merge(params).each do |k, v|
+        p_resource.set_parameter(k, v)
       end
-      if type_of_resource == :define then
+      if type_of_resource == :define
         resource.instantiate_resource(self, p_resource)
       end
       compiler.add_resource(self, p_resource)

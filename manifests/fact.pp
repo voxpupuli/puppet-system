@@ -15,7 +15,7 @@ define system::fact (
       ttl      => $ttl,
     }
     $dynamic_parameters = {
-      'value' => '%s'
+      'value' => '%s',
     }
     $created_resource_hash =
       create_resources_hash_from($resource_name, $value, $parameters, $dynamic_parameters)
@@ -25,25 +25,25 @@ define system::fact (
     case $type {
       'script': {
         file { "/etc/facter/facts.d/system_facts_${var}.sh":
-          owner    => 'root',
-          group    => 'root',
-          mode     => '0744',
-          content  => $value,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0744',
+          content => $value,
         }
         if $ttl {
           file { "/etc/facter/facts.d/system_facts_${var}.sh.ttl":
-            owner    => 'root',
-            group    => 'root',
-            mode     => '0744',
-            content  => "${ttl}\n",
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0744',
+            content => "${ttl}\n",
           }
         }
       }
       default: {
         concat::fragment { "system_facts_${var}":
-          target   => '/etc/facter/facts.d/system_facts.yaml',
-          content  => "${var}: ${value}\n",
-          order    => '02',
+          target  => '/etc/facter/facts.d/system_facts.yaml',
+          content => "${var}: ${value}\n",
+          order   => '02',
         }
       }
     }

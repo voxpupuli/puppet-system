@@ -6,7 +6,7 @@ class system::users (
   $defaults = {
     ensure   => 'present',
     schedule => $sys_schedule,
-    shell    => '/bin/bash'
+    shell    => '/bin/bash',
   }
   if $real {
     $type = 'user'

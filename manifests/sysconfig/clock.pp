@@ -1,6 +1,5 @@
 class system::sysconfig::clock (
   $config   = undef,
-  $schedule = undef,
 ) {
   if $config {
     $clock = $config

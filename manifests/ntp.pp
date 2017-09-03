@@ -45,7 +45,7 @@ class system::ntp (
     elsif $continent {
       class { '::ntp':
         continent => $continent,
-        iburst  => $iburst,
+        iburst    => $iburst,
       }
     }
     else {

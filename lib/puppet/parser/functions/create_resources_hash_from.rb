@@ -17,7 +17,7 @@
 # erwbgy: small change to allow the array index number to be included
 
 module Puppet::Parser::Functions
-  newfunction(:create_resources_hash_from, :type => :rvalue, :doc => <<-EOS
+  newfunction(:create_resources_hash_from, type: :rvalue, doc: <<-EOS
 Given:
     A formatted string (to use as the resource name)
     An array to loop through (because puppet cannot loop)
@@ -91,10 +91,12 @@ $created_resource_hash could then be used with create_resources
 To create a bunch of resources in a way that would only otherwise be possible
 with a loop of some description.
     EOS
-  ) do |arguments|
+             ) do |arguments|
 
-    raise Puppet::ParseError, "create_resources_hash_from(): Wrong number of arguments " +
-      "given (#{arguments.size} for 3 or 4)" if arguments.size < 3 or arguments.size > 4
+    if arguments.size < 3 || arguments.size > 4
+      raise Puppet::ParseError, 'create_resources_hash_from(): Wrong number of arguments ' \
+                                "given (#{arguments.size} for 3 or 4)"
+    end
 
     formatted_string = arguments[0]
 
@@ -129,12 +131,12 @@ with a loop of some description.
           if my_resource_hash.member?(param)
             raise(Puppet::ParseError, "create_resources_hash_from(): dynamic_parameter '#{param}' already exists in resource hash")
           end
-          my_resource_hash[param] = value..gsub('%index%', "#{index}")
-          my_resource_hash[param] = sprintf(value,[i])
+          my_resource_hash[param] = value..gsub('%index%', index.to_s)
+          my_resource_hash[param] = format(value, [i])
         end
       end
-      key = formatted_string.gsub('%index%', "#{index}")
-      result[sprintf(key,[i])] = my_resource_hash
+      key = formatted_string.gsub('%index%', index.to_s)
+      result[format(key, [i])] = my_resource_hash
     end
 
     result

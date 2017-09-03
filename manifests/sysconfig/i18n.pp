@@ -1,6 +1,5 @@
 class system::sysconfig::i18n (
   $config   = undef,
-  $schedule = undef,
 ) {
   if $config {
     $i18n = $config
