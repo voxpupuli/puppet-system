@@ -49,7 +49,7 @@ class system::ntp (
       }
     }
     else {
-      class { '::ntp': }
+      include '::ntp'
     }
   }
 }
