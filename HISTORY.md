@@ -1,4 +1,4 @@
-0.7.4:
+## [v0.7.4](https://github.com/voxpupuli/puppet-system/tree/v0.7.4) (2013-09-22)
 
 * Documentation fixes
 
@@ -6,7 +6,7 @@
 
 * Change dependency from ripienaar/concat to puppetlabs/concat (thanks #eshkay)
 
-0.7.3:
+## v0.7.3 (2013-03-19)
 
 * Enable files to be created from ERB templates
 
@@ -20,7 +20,7 @@ interfaces dependent on their parents (#3 thanks eglis).
 
 * Added basic IPv6 support (#2 thanks eglis)
 
-0.7.2:
+## v0.7.2 (2013-02-19)
 
 * Realize groups before users so that user primary groups exist when the user
 is created.
@@ -33,14 +33,14 @@ sometimes causes issues (like the default route going missing).  This should
 be fixed in a later release but for now the network service must be manually
 restarted.
 
-0.7.1:
+## v0.7.1 (2013-02-13)
 
 * Added ldif2users script to create user/group config from an LDAP export
 
 * Fixed bugs in user and group realize preventing hiera data lookup from
 working and fixed silly typos in routes.pp
 
-0.7.0:
+## v0.7.0 (2013-02-11)
 
 * By default virtual user and group resources are now created that must then
 be realized rather than real resources as before.  This allows all of the user
@@ -59,35 +59,36 @@ routes, configure nameserver resolvers and domains
 
 * Manage NTP servers in /etc/ntp.conf
 
-0.6.3:
+## v0.6.3 (2013-02-11)
 
 * Added support for managing SELinux booleans
 
-0.6.2:
+## v0.6.2 (Never released)
 
 * Facts that have array values now create multiple facts with the array index
 as a suffix.  For example:
 
     system::facts:
       software: [ 'jboss', 'httpd' ]
-    
+
 creates the facts:
 
     software0: 'jboss'
     software1: 'httpd'
 
-0.6.1:
+## [v0.6.1](https://github.com/voxpupuli/puppet-system/tree/v0.6.1) (2013-01-26)
+[Full Changelog](https://github.com/voxpupuli/puppet-system/compare/v0.6.0...v0.6.1)
 
 * Set custom facts using the facter_dot_d Facter plugin that loads facts from
 /etc/facter/facts.d.  Set 'system::facts::cleanold: true' to remove facts from
-the old locations under /etc/profile.d and in /etc/sysconfig/puppet.  
+the old locations under /etc/profile.d and in /etc/sysconfig/puppet.
 
 * Facts can now be set by running scripts - see example.yaml.
 
-0.6.0:
+## [v0.6.0](https://github.com/voxpupuli/puppet-system/tree/v0.6.0) (2013-01-25)
 
 * Refactoring to make it easier to use without hiera (ie. just as
-parameterised classes).  
+parameterised classes).
 
 * Added support for schedules so that configuration does not need to be
 applied with every Puppet run.  All classes other than system::providers and
@@ -112,13 +113,13 @@ limitation is that all values are now unquoted so they can't have any
 whitespace. This only appears to potentially affect system::sysconfig::puppet
 puppet-extra_opts.
 
-0.5.3:
+## v0.5.3 (2013-01-06)
 
 * Added 'crontabs' to create user crontab entries
 
 * Added 'execs' to run idempotent external commands
 
-0.5.2:
+## v0.5.2 (2012-12-21)
 
 * limits: Fixed examples to show changes due to multiple entry support
 
@@ -133,7 +134,8 @@ into String" errors
 
 * yumgroups: added a usecache option for when 'yum -C grouplist' does not work
 
-0.5.1:
+## [v0.5.1](https://github.com/voxpupuli/puppet-system/tree/v0.5.1) (2012-12-21)
+[Full Changelog](https://github.com/voxpupuli/puppet-system/compare/v0.5.0...v0.5.1)
 
 * Added 'files' to create directories and populate the content of files.  The
 initial reason was to create mount points for NFS shares.
@@ -147,4 +149,3 @@ points can be created first.
 'puppet apply'.
 
 * Require limits > 0.3.1 as this allows more than one entry per user or group.
-

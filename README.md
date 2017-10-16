@@ -1,6 +1,11 @@
 Transferred to the good people at Vox Pupuli.
 
 # puppet-system
+[![License](https://img.shields.io/github/license/voxpupuli/puppet-system.svg)](https://github.com/voxpupuli/puppet-system/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-system.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-system)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/system.svg)](https://forge.puppetlabs.com/puppet/system)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/system.svg)](https://forge.puppetlabs.com/puppet/system)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/system.svg)](https://forge.puppetlabs.com/puppet/system)
 
 Manage Linux system resources and services from hiera configuration.
 
@@ -664,9 +669,3 @@ Example configuration:
 
 * As with many default types you can often specify a 'target' parameter to
   specify a different configuration filename to change.
-
-## Support
-
-License: Apache License, Version 2.0
-
-GitHub URL: https://github.com/erwbgy/puppet-system
