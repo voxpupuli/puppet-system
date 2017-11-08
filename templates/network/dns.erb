@@ -2,9 +2,11 @@
 <% for @ip in @nameservers -%>
 nameserver <%= @ip %>
 <% end -%>
-<% for @domain in @domains -%>
-search <%= @domain %>
-<% end -%>
-<% for @option in @options -%>
-options <%= @option %>
-<% end -%>
+<% if defined?@domains && @domains.any? -%>
+search <% for @domain in @domains -%>
+ <%= @domain -%>
+<% end -%><% end %>
+<% if defined?@options && @options.any? -%>
+options <% for @option in @options -%>
+ <%= @option -%>
+<% end -%><%end %>
