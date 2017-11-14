@@ -26,7 +26,7 @@ class system::sshd (
     # and https://wiki.xkyle.com/Managing_SSH_Keys_With_Puppet
 
     # export host key
-    $hostonly = regsubst($::fqdn, "\.${::domain}$", '')
+    $hostonly = regsubst($::fqdn, "\\.${::domain}$", '')
     $host_aliases = [ $::ipaddress, $hostonly ]
     @@sshkey { $::fqdn:
       ensure       => present,
