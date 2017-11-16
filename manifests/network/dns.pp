@@ -1,3 +1,15 @@
+# Create resolv.conf file utilizing the template/dns.erb
+# The resolv.conf has basically 3 parts:
+#  nameservers
+#  domains
+#  options
+#
+# If specified, each of these should be an array of strings
+# None of them are actually required.  See resolv.conf(5)
+#
+# For simplicity, this implementation always uses the 
+# "search" keyword with the values for "domains"
+
 class system::network::dns (
   $config = undef,
 ) {
