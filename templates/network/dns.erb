@@ -2,9 +2,9 @@
 <% for @ip in @nameservers -%>
 nameserver <%= @ip %>
 <% end -%>
-<% for @domain in @domains -%>
-search <%= @domain %>
-<% end -%>
-<% for @option in @options -%>
-options <%= @option %>
-<% end -%>
+<%- unless @domains.empty? -%>
+  search <%= @domains.join(' ') -%>
+<%- end %>
+<%- unless @options.empty? -%>
+  options <%= @options.join(' ') -%>
+<%- end %>

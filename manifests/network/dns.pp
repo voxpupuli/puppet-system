@@ -9,9 +9,9 @@ class system::network::dns (
     $_config = hiera_hash('system::network::dns', undef)
   }
   if $_config {
-    $domains     = $_config['domains']
-    $nameservers = $_config['nameservers']
-    $options     = $_config['options']
+    $domains     = pick($_config['domains'],[])
+    $nameservers = pick($_config['nameservers'],[])
+    $options     = pick($_config['options'],[])
     validate_array($domains)
     validate_array($nameservers)
     validate_array($options)
