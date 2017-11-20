@@ -1,13 +1,8 @@
 define system::network::route (
-  $interface,
-  $via,
+  String $interface,
+  Stdlib::Compat::Ip_address $via,
 ) {
   $to = $title
-  validate_string($to)
-  validate_string($interface)
-  if ! is_ip_address($via) {
-    fail('system::network::route::via must be an IP address')
-  }
   concat::fragment { "route-${interface}-${to}":
     target  => "/etc/sysconfig/network-scripts/route-${interface}",
     content => template('system/network/route.erb'),
