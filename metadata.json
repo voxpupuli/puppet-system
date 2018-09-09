@@ -1,6 +1,6 @@
 {
   "name": "puppet-system",
-  "version": "0.8.2-rc0",
+  "version": "0.8.2",
   "author": "Vox Pupuli",
   "summary": "Manage Linux system resources and services from hiera configuration",
   "license": "Apache-2.0",
