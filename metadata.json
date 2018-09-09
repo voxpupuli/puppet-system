@@ -83,11 +83,11 @@
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_requirement": ">= 4.13.0 < 6.0.0"
+      "version_requirement": ">= 4.13.1 < 6.0.0"
     },
     {
       "name": "puppetlabs-concat",
-      "version_requirement": ">= 2.2.1 < 5.0.0"
+      "version_requirement": ">= 2.2.1 < 6.0.0"
     },
     {
       "name": "erwbgy-limits",
@@ -99,7 +99,7 @@
     },
     {
       "name": "herculesteam-augeasproviders",
-      "version_requirement": ">= 0.5.1 < 1.0.0"
+      "version_requirement": ">= 0.5.1 < 3.0.0"
     }
   ]
 }
