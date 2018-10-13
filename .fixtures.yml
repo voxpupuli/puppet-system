@@ -6,6 +6,3 @@ fixtures:
     concat: "https://github.com/puppetlabs/puppetlabs-concat"
     limits: "https://github.com/erwbgy/puppet-limits"
     ntp: "https://github.com/erwbgy/puppet-ntp"
-    #augeasproviders: "https://github.com/hercules-team/augeasproviders"
-  symlinks:
-    system: "#{source_dir}"
