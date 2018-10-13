@@ -6,6 +6,6 @@ fixtures:
     concat: "https://github.com/puppetlabs/puppetlabs-concat"
     limits: "https://github.com/erwbgy/puppet-limits"
     ntp: "https://github.com/erwbgy/puppet-ntp"
-    #augeasproviders: "https://github.com/hercules-team/augeasproviders"
-  symlinks:
-    system: "#{source_dir}"
+    cron_core:
+      repo: https://github.com/puppetlabs/puppetlabs-cron_core.git
+      puppet_version: ">= 6.0.0"
