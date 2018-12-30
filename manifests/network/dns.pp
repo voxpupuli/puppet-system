@@ -1,8 +1,8 @@
 class system::network::dns (
-  $config = undef,
+  Optional[Hash] $config = undef,
 ) {
   if $config {
-    validate_hash($config)
+    assert_type(Hash, $config)
     $_config = $config
   }
   else {
@@ -12,9 +12,10 @@ class system::network::dns (
     $domains     = $_config['domains']
     $nameservers = $_config['nameservers']
     $options     = $_config['options']
-    validate_array($domains)
-    validate_array($nameservers)
-    validate_array($options)
+    assert_type(Array, $domains)
+    assert_type(Array, $nameservers)
+    assert_types(Array, $options)
+
     file { '/etc/resolv.conf':
       ensure  => 'present',
       owner   => 'root',
