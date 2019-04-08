@@ -4,25 +4,25 @@ class system::ntp (
 ) {
   if $config {
     if $config['servers'] {
-      class { '::ntp':
+      class { 'ntp':
         servers => $config['servers'],
         iburst  => $config['iburst'],
       }
     }
     elsif $config['country'] {
-      class { '::ntp':
+      class { 'ntp':
         country => $config['country'],
         iburst  => $config['iburst'],
       }
     }
     elsif $config['continent'] {
-      class { '::ntp':
+      class { 'ntp':
         continent => $config['continent'],
         iburst    => $config['iburst'],
       }
     }
     else {
-      class { '::ntp': }
+      class { 'ntp': }
     }
   }
   else {
@@ -31,25 +31,25 @@ class system::ntp (
     $continent = hiera('system::ntp::continent', undef)
     $iburst    = hiera('system::ntp::iburst',    true)
     if $servers {
-      class { '::ntp':
+      class { 'ntp':
         servers => $servers,
         iburst  => $iburst,
       }
     }
     elsif $country {
-      class { '::ntp':
+      class { 'ntp':
         country => $country,
         iburst  => $iburst,
       }
     }
     elsif $continent {
-      class { '::ntp':
+      class { 'ntp':
         continent => $continent,
         iburst    => $iburst,
       }
     }
     else {
-      include '::ntp'
+      include 'ntp'
     }
   }
 }

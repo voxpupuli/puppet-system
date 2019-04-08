@@ -21,123 +21,123 @@ class system (
     stage { 'last': require => Stage['main'] }
   }
 
-  class { '::system::augeas':
+  class { 'system::augeas':
     config => $config['augeas'],
   }
 
-  class { '::system::crontabs':
+  class { 'system::crontabs':
     config => $config['crontabs'],
   }
 
-  class { '::system::execs':
+  class { 'system::execs':
     config => $config['execs'],
     stage  => last,
   }
 
-  class { '::system::facts':
+  class { 'system::facts':
     config => $config['facts'],
   }
 
-  class { '::system::files':
+  class { 'system::files':
     config => $config['files'],
     stage  => third,
   }
 
-  class { '::system::groups':
+  class { 'system::groups':
     config => $config['groups'],
     stage  => second,
   }
 
-  class { '::system::groups::realize':
+  class { 'system::groups::realize':
     groups  => $config['realize_groups'],
     stage   => second,
     require => Class['::system::groups'],
   }
 
-  class { '::system::hosts':
+  class { 'system::hosts':
     config => $config['hosts'],
   }
 
-  class { '::system::limits':
+  class { 'system::limits':
     config => $config['limits'],
   }
 
-  class { '::system::mail':
+  class { 'system::mail':
     config => $config['mail'],
   }
 
-  class { '::system::mounts':
+  class { 'system::mounts':
     config => $config['mounts'],
     stage  => last,
   }
 
-  include '::system::network'
+  include 'system::network'
 
-  class { '::system::ntp':
+  class { 'system::ntp':
     config => $config['ntp'],
   }
 
-  class { '::system::packages':
+  class { 'system::packages':
     config  => $config['packages'],
     stage   => second,
     require => Class['::system::yumgroups'],
   }
 
-  class { '::system::schedules':
+  class { 'system::schedules':
     config => $config['schedules'],
     stage  => first,
   }
 
-  class { '::system::selbooleans':
+  class { 'system::selbooleans':
     config => $config['selbooleans'],
     stage  => first,
   }
 
-  class { '::system::services':
+  class { 'system::services':
     config => $config['services'],
   }
 
-  class { '::system::sshd':
+  class { 'system::sshd':
     config => $config['sshd'],
   }
 
-  class { '::system::sysconfig':
+  class { 'system::sysconfig':
     config => $config['sysconfig'],
   }
 
-  class { '::system::sysctl':
+  class { 'system::sysctl':
     config => $config['sysctl'],
   }
 
-  class { '::system::templates':
+  class { 'system::templates':
     config => $config['templates'],
     stage  => last,
   }
 
-  class { '::system::users':
+  class { 'system::users':
     config  => $config['users'],
     stage   => second,
     require => Class['::system::groups'],
   }
 
-  class { '::system::users::realize':
+  class { 'system::users::realize':
     users   => $config['realize_users'],
     stage   => second,
     require => Class['::system::users', '::system::groups::realize'],
   }
 
-  class { '::system::yumgroups':
+  class { 'system::yumgroups':
     config => $config['yumgroups'],
     stage  => second,
   }
 
-  class { '::system::yumrepos':
+  class { 'system::yumrepos':
     config  => $config['yumrepos'],
     stage   => first,
     require => Class['::system::schedules'],
   }
 
-  class { '::system::providers':
+  class { 'system::providers':
     config => $config['providers'],
     stage  => first,
   }

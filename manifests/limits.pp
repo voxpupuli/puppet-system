@@ -3,8 +3,8 @@ class system::limits (
   $sys_schedule = 'always',
 ) {
   if $config {
-    include ::limits
-    class { '::limits':
+    include limits
+    class { 'limits':
       config    => $config,
       use_hiera => false,
       #schedule => $sys_schedule,
@@ -13,8 +13,8 @@ class system::limits (
   else {
     $hiera_config = hiera_hash('system::limits', undef)
     if $hiera_config {
-      include ::limits
-      class { '::limits':
+      include limits
+      class { 'limits':
         config    => $hiera_config,
         use_hiera => false,
         #schedule => $sys_schedule,
