@@ -207,7 +207,7 @@ Example configuration:
         gid:    '1503'
     system::groups::realize:
       - 'keith'
- 
+
 Defaults:
 
 * ensure: present
