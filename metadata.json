@@ -82,12 +82,12 @@
   ],
   "dependencies": [
     {
-      "name": "puppetlabs-stdlib",
-      "version_requirement": ">= 4.25.0 < 6.0.0"
+      "name": "puppetlabs-concat",
+      "version_requirement": ">= 4.1.0 < 7.0.0"
     },
     {
-      "name": "puppetlabs-concat",
-      "version_requirement": ">= 2.2.1 < 6.0.0"
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.25.0 < 7.0.0"
     },
     {
       "name": "erwbgy-limits",
