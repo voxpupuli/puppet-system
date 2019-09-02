@@ -1,6 +1,6 @@
 class system::services (
-  $config   = undef,
-  $sys_schedule = 'always',
+  Hash[String, Hash] $config = {},
+  String $sys_schedule       = 'always',
 ) {
   $defaults = {
     ensure     => 'running',
@@ -8,13 +8,5 @@ class system::services (
     hasstatus  => true,
     schedule   => $sys_schedule,
   }
-  if $config {
-    create_resources(service, $config, $defaults)
-  }
-  else {
-    $hiera_config = hiera_hash('system::services', undef)
-    if $hiera_config {
-      create_resources(service, $hiera_config, $defaults)
-    }
-  }
+  create_resources(service, $config, $defaults)
 }

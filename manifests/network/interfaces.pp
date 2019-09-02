@@ -1,15 +1,8 @@
 class system::network::interfaces (
-  $config = undef,
+  Hash[String, Hash] $config = {},
 ) {
-  if $config {
-    $_config = $config
-  }
-  else {
-    $_config = hiera_hash('system::network::interfaces', undef)
-  }
-  $defaults = {
-  }
-  create_resources('system::network::interface', $_config, $defaults)
+  $defaults = {}
+  create_resources('system::network::interface', $config, $defaults)
 }
 #system::network::interfaces:
 #  eth0:

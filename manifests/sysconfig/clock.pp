@@ -1,14 +1,8 @@
 class system::sysconfig::clock (
-  $config   = undef,
+  Hash[String, Hash] $config = {},
 ) {
   if $config {
-    $clock = $config
-  }
-  else {
-    $clock = hiera_hash('system::sysconfig::clock', undef)
-  }
-  if $clock {
-    $timezone = $clock['timezone']
+    $timezone = $config['timezone']
     system::sysconfig::header { 'clock':
       schedule => $schedule,
     }

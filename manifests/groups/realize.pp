@@ -1,6 +1,6 @@
 class system::groups::realize (
-  $groups   = undef,
-  $sys_schedule = 'always',
+  $groups              = undef,
+  String $sys_schedule = 'always',
 ) {
   if $groups {
     realize(Group[$groups])

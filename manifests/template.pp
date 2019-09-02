@@ -1,9 +1,9 @@
 define system::template(
   $template,
-  $owner    = 'root',
-  $group    = 'root',
-  $mode     = undef,
-  $sys_schedule = 'always',
+  String $owner        = 'root',
+  String $group        = 'root',
+  $mode                = undef,
+  String $sys_schedule = 'always',
 ) {
   file { $title:
     owner    => $owner,

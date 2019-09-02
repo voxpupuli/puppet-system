@@ -1,9 +1,9 @@
 # Based on http://serverfault.com/questions/127460/how-do-i-install-a-yum-package-group-with-puppet
 define system::yumgroup(
-  $ensure   = 'present',
-  $optional = false,
-  $sys_schedule = 'daily',
-  $usecache = true
+  String $ensure       = 'present',
+  Boolean $optional    = false,
+  String $sys_schedule = 'daily',
+  Boolean $usecache    = true
 ) {
   $pkg_types_arg = $optional ? {
     true    => '--setopt=group_package_types=optional,default,mandatory',

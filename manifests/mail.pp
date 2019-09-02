@@ -1,23 +1,13 @@
 class system::mail (
-  $config   = undef,
-  $sys_schedule = 'always',
+  Hash[String, Hash] $config = {},
+  String $sys_schedule       = 'always',
 ) {
   $defaults = {
     schedule => $sys_schedule,
   }
-  if $config {
     $aliases   = $config['aliases']
     $relayhost = $config['relayhost']
     $type      = $config['type']
-  }
-  else {
-    $hiera_config = hiera_hash('system::mail', undef)
-    if $hiera_config {
-      $aliases   = $hiera_config['aliases']
-      $relayhost = $hiera_config['relayhost']
-      $type      = $hiera_config['hiera_config']
-    }
-  }
   if $aliases {
     create_resources(mailalias, $aliases, $defaults)
   }

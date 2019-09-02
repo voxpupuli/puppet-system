@@ -1,7 +1,7 @@
 class system::facts (
-  $config   = undef,
-  $cleanold = false,
-  $sys_schedule = 'always',
+  Hash[String, Hash] $config = {},
+  Boolean $cleanold          = false,
+  String $sys_schedule       = 'always',
 ) {
   if ! defined(File['/etc/facter']) {
     file { '/etc/facter':
@@ -34,15 +34,7 @@ class system::facts (
   $defaults = {
     schedule => $sys_schedule,
   }
-  if $config {
-    create_resources('system::fact', $config, $defaults)
-  }
-  else {
-    $hiera_config = hiera_hash('system::facts', undef)
-    if $hiera_config {
-      create_resources('system::fact', $hiera_config, $defaults)
-    }
-  }
+  create_resources('system::fact', $config, $defaults)
 
   if $cleanold {
     # Clean up facts from old locations

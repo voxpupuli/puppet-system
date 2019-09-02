@@ -1,17 +1,11 @@
 class system::network::dns (
-  Optional[Hash] $config = undef,
+  Hash[String, Hash] $config = {},
 ) {
+
   if $config {
-    assert_type(Hash, $config)
-    $_config = $config
-  }
-  else {
-    $_config = hiera_hash('system::network::dns', undef)
-  }
-  if $_config {
-    $domains     = $_config['domains']
-    $nameservers = $_config['nameservers']
-    $options     = $_config['options']
+    $domains     = $config['domains']
+    $nameservers = $config['nameservers']
+    $options     = $config['options']
     assert_type(Array, $domains)
     assert_type(Array, $nameservers)
     assert_types(Array, $options)

@@ -1,16 +1,10 @@
 class system::schedules (
-  $config = undef,
+  Hash[String, Hash] $config = {},
 ) {
   $defaults = {}
-  if $config {
-    create_resources(schedule, $config, $defaults)
-  }
-  else {
-    $hiera_config = hiera_hash('system::schedules', undef)
-    if $hiera_config {
-      create_resources(schedule, $hiera_config, $defaults)
-    }
-  }
+
+  create_resources(schedule, $config, $defaults)
+
   schedule { 'always':
     range => '0 - 23',
   }

@@ -1,8 +1,8 @@
 define system::fact (
-  $value    = undef,
-  $sys_schedule = 'always',
-  $type     = 'yaml',
-  $ttl      = undef,
+  $value               = undef,
+  String $sys_schedule = 'always',
+  String $type         = 'yaml',
+  $ttl          = undef,
 ) {
   # This uses facter_dot_d which is a Facter plugin that loads facts from
   # /etc/facter/facts.d

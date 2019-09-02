@@ -1,9 +1,7 @@
 class system::sshd::subsystem (
-  $config = undef
+  Hash[String, Hash] $config = {},
 ) {
-  if $config {
-    include augeasproviders
-    $defaults = {}
-    create_resources(sshd_config_subsystem, $config, $defaults)
-  }
+  include augeasproviders
+  $defaults = {}
+  create_resources(sshd_config_subsystem, $config, $defaults)
 }

@@ -1,6 +1,6 @@
 class system::ntp (
-  $config   = undef,
-  $sys_schedule = 'always',
+  $config              = undef,
+  String $sys_schedule = 'always',
 ) {
   if $config {
     if $config['servers'] {

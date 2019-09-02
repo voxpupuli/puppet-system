@@ -1,7 +1,7 @@
 class system::users (
-  $config   = undef,
-  $sys_schedule = 'always',
-  $real     = false,
+  Hash[String, Hash] $config = {},
+  String $sys_schedule       = 'always',
+  Boolean $real              = false,
 ) {
   $defaults = {
     ensure   => 'present',
@@ -14,13 +14,5 @@ class system::users (
   else {
     $type = '@user'
   }
-  if $config {
-    system_create_resources($type, $config, $defaults)
-  }
-  else {
-    $hiera_config = hiera_hash('system::users', undef)
-    if $hiera_config {
-      system_create_resources($type, $hiera_config, $defaults)
-    }
-  }
+  system_create_resources($type, $config, $defaults)
 }
