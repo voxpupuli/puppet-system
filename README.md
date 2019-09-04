@@ -320,23 +320,9 @@ Example configuration:
           '10.0.0.0/8':
             via: '10.16.0.250'
 
-## ntp
+## ntp (DEPRECATED)
 
-Manage NTP servers in /etc/ntp.conf
-
-Example 1:
-
-    system::ntp::iburst:  'true'
-    system::ntp::servers: [ 'ntp1.example.com' ]
-
-Example 2:
-
-    system::ntp::iburst:  'true'
-    system::ntp::country: 'uk'
-
-See https://github.com/erwbgy/puppet-ntp for more details
-
-Note: The NTP algorithm does not work properly with two NTP servers.
+Please use module puppetlabs/ntp. See: https://forge.puppet.com/puppetlabs/ntp
 
 ## packages
 
