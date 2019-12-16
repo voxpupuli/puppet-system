@@ -22,13 +22,13 @@ class system::sshd (
     # and https://wiki.xkyle.com/Managing_SSH_Keys_With_Puppet
 
     # export host key
-    $hostonly = regsubst($::fqdn, "\\.${::domain}$", '')
-    $host_aliases = [ $::ipaddress, $hostonly ]
-    @@sshkey { $::fqdn:
+    $hostonly = regsubst($facts['networking']['fqdn'], "\\.${facts['networking']['domain']}$", '')
+    $host_aliases = [ $facts['networking']['ip'], $hostonly ]
+    @@sshkey { $facts['networking']['fqdn']:
       ensure       => present,
       host_aliases => $host_aliases,
       type         => 'rsa',
-      key          => $::sshrsakey,
+      key          => $facts['ssh']['rsa']['key'],
     }
 
     # import all other host keys
