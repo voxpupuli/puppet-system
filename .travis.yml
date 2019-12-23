@@ -4,7 +4,6 @@ language: ruby
 cache: bundler
 before_install:
   - yes | gem update --system
-  - gem update bundler
   - bundle --version
 script:
   - 'bundle exec rake $CHECK'
@@ -29,6 +28,7 @@ branches:
   - /^v\d/
 notifications:
   email: false
+  webhooks: https://voxpupu.li/incoming/travis
   irc:
     on_success: always
     on_failure: always
