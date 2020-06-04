@@ -7,13 +7,11 @@ class system::sshd (
     schedule => $sys_schedule,
   }
   if $config {
-    include augeasproviders
     create_resources(sshd_config, $config, $defaults)
   }
   else {
     $hiera_config = hiera_hash('system::sshd', undef)
     if $hiera_config {
-      include augeasproviders
       create_resources(sshd_config, $hiera_config, $defaults)
     }
   }
