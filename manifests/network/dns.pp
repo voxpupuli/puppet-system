@@ -17,7 +17,7 @@ class system::network::dns (
     assert_types(Array, $options)
 
     file { '/etc/resolv.conf':
-      ensure  => 'present',
+      ensure  => 'file',
       owner   => 'root',
       group   => 'root',
       mode    => '0644',

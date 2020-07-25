@@ -1,5 +1,5 @@
 # Based on http://serverfault.com/questions/127460/how-do-i-install-a-yum-package-group-with-puppet
-define system::yumgroup(
+define system::yumgroup (
   $ensure   = 'present',
   $optional = false,
   $sys_schedule = 'daily',

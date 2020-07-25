@@ -13,7 +13,6 @@ define system::network::interface (
   String[1] $type                          = 'Ethernet',
   Boolean $userctl                         = false,
 ) {
-
   $_interface = $title
   assert_type(String[1], $_interface)
   if $dhcp == undef {
@@ -53,7 +52,7 @@ define system::network::interface (
   $_ipv6addr_secondaries = $ipv6addr_secondaries
   $_ipv6autoconf = $ipv6autoconf
   file { "/etc/sysconfig/network-scripts/ifcfg-${_interface}":
-    ensure  => present,
+    ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -66,6 +65,6 @@ define system::network::interface (
       group => 'root',
       mode  => '0644',
     }
-    create_resources('system::network::route', $routes, { interface => $_interface } )
+    create_resources('system::network::route', $routes, { interface => $_interface })
   }
 }

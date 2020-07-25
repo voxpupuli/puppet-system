@@ -1,4 +1,4 @@
-define system::template(
+define system::template (
   $template,
   $owner    = 'root',
   $group    = 'root',

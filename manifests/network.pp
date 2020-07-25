@@ -10,7 +10,7 @@ class system::network (
     assert_type(Stdlib::IP::Address, $gateway)
 
     file { '/etc/sysconfig/network':
-      ensure  => present,
+      ensure  => file,
       owner   => 'root',
       group   => 'root',
       mode    => '0644',

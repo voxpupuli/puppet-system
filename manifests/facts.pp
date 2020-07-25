@@ -48,7 +48,7 @@ class system::facts (
     # Clean up facts from old locations
     $sh_filename  = '/etc/profile.d/custom_facts.sh'
     $csh_filename = '/etc/profile.d/custom_facts.csh'
-    file { [ $sh_filename, $csh_filename ]:
+    file { [$sh_filename, $csh_filename]:
       ensure => absent,
     }
     exec { 'fact-remove-sysconfig-puppet':
