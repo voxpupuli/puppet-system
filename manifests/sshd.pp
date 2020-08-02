@@ -21,7 +21,7 @@ class system::sshd (
 
     # export host key
     $hostonly = regsubst($facts['networking']['fqdn'], "\\.${facts['networking']['domain']}$", '')
-    $host_aliases = [ $facts['networking']['ip'], $hostonly ]
+    $host_aliases = [$facts['networking']['ip'], $hostonly]
     @@sshkey { $facts['networking']['fqdn']:
       ensure       => present,
       host_aliases => $host_aliases,

@@ -26,7 +26,7 @@ class system::mail (
       undef, 'postfix': {
         augeas { 'system-mail-postfix-relayhost':
           context  => '/files/etc/postfix/main.cf',
-          changes  => [ "set relayhost ${relayhost}" ],
+          changes  => ["set relayhost ${relayhost}"],
           notify   => Service['postfix'],
           schedule => $sys_schedule,
         }
