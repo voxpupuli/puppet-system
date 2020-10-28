@@ -51,7 +51,7 @@ class system (
   class { 'system::groups::realize':
     groups  => $config['realize_groups'],
     stage   => second,
-    require => Class['::system::groups'],
+    require => Class['system::groups'],
   }
 
   class { 'system::hosts':
@@ -80,7 +80,7 @@ class system (
   class { 'system::packages':
     config  => $config['packages'],
     stage   => second,
-    require => Class['::system::yumgroups'],
+    require => Class['system::yumgroups'],
   }
 
   class { 'system::schedules':
@@ -117,13 +117,13 @@ class system (
   class { 'system::users':
     config  => $config['users'],
     stage   => second,
-    require => Class['::system::groups'],
+    require => Class['system::groups'],
   }
 
   class { 'system::users::realize':
     users   => $config['realize_users'],
     stage   => second,
-    require => Class['::system::users', '::system::groups::realize'],
+    require => Class['system::users', 'system::groups::realize'],
   }
 
   class { 'system::yumgroups':
@@ -134,7 +134,7 @@ class system (
   class { 'system::yumrepos':
     config  => $config['yumrepos'],
     stage   => first,
-    require => Class['::system::schedules'],
+    require => Class['system::schedules'],
   }
 
   class { 'system::providers':
