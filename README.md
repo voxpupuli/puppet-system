@@ -1,3 +1,5 @@
+**This module is deprecated. Do not use it anymore**
+
 Transferred to the good people at Vox Pupuli.
 
 # puppet-system
